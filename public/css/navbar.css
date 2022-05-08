@@ -2,11 +2,12 @@ div{
     margin: auto;
     text-align: center;
 }
+/* hamburger css */
 #hamburger {
-    width: 60px;
-    height: 45px;
+    width: 30px;
+    height: 15px;
     position: relative;
-    margin: 50px auto;
+    margin: 10px auto;
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
@@ -20,10 +21,10 @@ div{
 #hamburger span {
     display: block;
     position: absolute;
-    height: 9px;
+    height: 4px;
     width: 100%;
-    background: #d3531a;
-    border-radius: 9px;
+    background: black;
+    border-radius: 4px;
     opacity: 1;
     left: 0;
     -webkit-transform: rotate(0deg);
@@ -41,15 +42,15 @@ div{
 
 #hamburger span:nth-child(2),
 #hamburger span:nth-child(3) {
-    top: 18px;
+    top: 10px;
 }
 
 #hamburger span:nth-child(4) {
-    top: 36px;
+    top: 20px;
 }
 
 #hamburger.open span:nth-child(1) {
-    top: 18px;
+    top: 10px;
     width: 0%;
     left: 50%;
 }
@@ -69,7 +70,22 @@ div{
 }
 
 #hamburger.open span:nth-child(4) {
-    top: 18px;
+    top: 10px;
     width: 0%;
     left: 50%;
+}
+/* navbar css */
+nav.navbar{
+    background-color: #E8DDD8;
+}
+div#navbarNav{
+    text-align: center;
+}
+ul{
+    position: relative;
+    display: table;
+    margin: 0 auto;
+}
+li {
+    right: 100%;
 }

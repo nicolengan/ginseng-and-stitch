@@ -1,32 +1,35 @@
 <link rel="stylesheet" href="css/navbar.css">
+
 <script>
-  function hamburger(){
+  function hamburger() {
     var element = document.getElementById("hamburger");
     element.classList.toggle("open");
   }
 </script>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
+    {{!-- hamburger --}}
     <div id="hamburger" onclick="hamburger()">
       <span></span>
       <span></span>
       <span></span>
       <span></span>
     </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
+    {{!-- navbar --}}
     <div class="collapse navbar-collapse" id="navbarNav">
+      {{#unless user}}
       <ul class="navbar-nav">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="/">Ginseng & Stich</a>
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+          <a class="nav-link" href="/login">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+          <a class="nav-link" href="/register">Register</a>
         </li>
       </ul>
+      {{/unless}}
     </div>
   </div>
 </nav>
