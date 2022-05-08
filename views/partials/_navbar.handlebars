@@ -7,10 +7,10 @@
   }
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light ">
   <div class="container-fluid">
     {{!-- hamburger --}}
-    <div id="hamburger" onclick="hamburger()">
+    <div id="hamburger" d data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" onclick="hamburger()">
       <span></span>
       <span></span>
       <span></span>
@@ -20,16 +20,27 @@
     {{!-- navbar --}}
     <div class="collapse navbar-collapse" id="navbarNav">
       {{#unless user}}
-      <ul class="navbar-nav">
-        <a class="navbar-brand" href="/">Ginseng & Stich</a>
-        <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/register">Register</a>
-        </li>
-      </ul>
+        <a class="navbar-brand position-absolute top-50 start-50 translate-middle" id="logo" href="/">Ginseng & Stich</a>
+        <a class="nav-link ms-auto" href="/login">Login</a>
+        <a class="nav-link" href="/register">Register</a>
       {{/unless}}
     </div>
   </div>
 </nav>
+
+{{!-- menu dropdown --}}
+<div class="collapse" id="collapseExample">
+  <hr class="line">
+  <div class="card card-body">
+    <a href="">balls</a>
+  </div>
+  <div class="card card-body">
+    <a href="">balls</a>
+  </div>
+  <div class="card card-body">
+    <a href="">balls</a>
+  </div>
+  <div class="card card-body">
+    <a href="">balls</a>
+  </div>
+</div>

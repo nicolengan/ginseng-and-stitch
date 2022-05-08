@@ -21,10 +21,10 @@ div{
 #hamburger span {
     display: block;
     position: absolute;
-    height: 4px;
+    height: 2px;
     width: 100%;
     background: black;
-    border-radius: 4px;
+    border-radius: 2px;
     opacity: 1;
     left: 0;
     -webkit-transform: rotate(0deg);
@@ -77,6 +77,7 @@ div{
 /* navbar css */
 nav.navbar{
     background-color: #E8DDD8;
+    padding: 0.6%;
 }
 div#navbarNav{
     text-align: center;
@@ -86,6 +87,13 @@ ul{
     display: table;
     margin: 0 auto;
 }
-li {
-    right: 100%;
+div.card-body{
+    background-color: #E8DDD8;
+    border: none;
+}
+hr.line{
+    margin: 0;
+    height: 2px;
+    background-color: black;
+    color: black;
 }
