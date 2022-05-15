@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="/css/navbar.css">
 
 <script>
   function hamburger() {
@@ -21,8 +21,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       {{#unless user}}
         <a class="navbar-brand position-absolute top-50 start-50 translate-middle" id="logo" href="/">Ginseng & Stitch</a>
-        <a class="nav-link ms-auto" href="/login">LOGIN</a>
-        <a class="nav-link" href="/register">REGISTER</a>
+        <a class="nav-link ms-auto" href="/user/login">LOGIN</a>
+        <a class="nav-link" href="/user/register">REGISTER</a>
       {{/unless}}
     </div>
   </div>
@@ -31,16 +31,16 @@
 {{!-- menu dropdown --}}
 <div class="collapse" id="collapseExample">
   <hr class="line">
-  <div class="card card-body">
+  <div class="card card-body menu-options">
     <a href="">ABOUT</a>
   </div>
-  <div class="card card-body">
+  <div class="card card-body menu-options">
     <a href="">DIY KITS</a>
   </div>
-  <div class="card card-body">
+  <div class="card card-body menu-options">
     <a href="">ACCOUNT</a>
   </div>
-  <div class="card card-body">
+  <div class="card card-body menu-options">
     <a href="">CONTACT US</a>
   </div>
 </div>
