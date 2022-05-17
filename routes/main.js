@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
 router.get('/about', (req, res) => {
     res.render('about');
 });
-
 router.get('/products', (req, res) => {
     res.render('products');
 });
