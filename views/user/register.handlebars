@@ -1,11 +1,29 @@
-<div class="row">
-	<div class="col-md-6 mx-auto">
-		<div class="card card-body">
-			<h3 class="text-center">Account Register</h3>
-			<form action="" method="post">
-				<div class="form-group">
-					<label for="name">Name</label>
-					<input type="text" class="form-control" name="name" value="" required>
+<link rel="stylesheet" href="/css/user/user.css">
+<div class="user-img p-5"></div>
+<div class="card w-25 p-3 position-absolute bottom-50 start-0 rounded" id="register">
+	<div class="card-title">
+		<h2>Register</h2>
+	</div>
+	{{!-- ADD VALIDATION!!!!!!! --}}
+		<form class="needs-validation" novalidate>
+			<div class="mb-3">
+				<div class="row">
+					<div class="col">
+						<div class="form-floating">
+							<input type="text" class="form-control" id="floatingFirstName" placeholder="First Name"
+								required>
+							<label for="floatingFirstName">First Name</label>
+						</div>
+						{{!-- <div class="valid-feedback">
+							Looks good!
+						</div> --}}
+					</div>
+					<div class="col">
+						<div class="form-floating">
+							<input type="text" class="form-control" id="floatingLastName" placeholder="Last Name">
+							<label for="floatingLastName">Last Name</label>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label for="email">Email</label>
