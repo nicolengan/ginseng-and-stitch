@@ -3,6 +3,7 @@
 * in this JS file.
 * */
 const express = require('express');
+// const mysql = require('mysql');
 const { engine } = require('express-handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const Handlebars = require('handlebars');
@@ -46,11 +47,25 @@ app.use(cookieParser());
 
 // To store session information. By default it is stored as a cookie on browser
 app.use(session({
-	key: 'vidjot_session',
+	key: 'fullstack_session',
 	secret: 'tojdiv',
 	resave: false,
 	saveUninitialized: false,
 }));
+// sql create connection
+// const db = mysql.createConnection({
+//   host     : 'localhost',
+//   user     : 'root',
+//   password : '',
+//   database : 'fullstack'
+// });
+
+// db.connect((err) => {
+// 	if (err){
+// 		throw err;
+// 	}
+// 	console.log("mysql connected...");
+// });
 
 // Place to define global variables
 app.use(function (req, res, next) {
@@ -64,8 +79,28 @@ const userRoute = require('./routes/user');
 app.use('/', mainRoute);
 app.use('/user', userRoute);
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
-app.use('/', mainRoute);
 
+// sql create database
+
+// app.get('/createdb', (req, res) => {
+// 	let sql = 'CREATE DATABASE fullstack'
+// 	db.query(sql, (err, result) => {
+// 		if (err) throw err;
+// 		console.log(result);
+// 		res.send('database created...');
+// 	});
+// });
+
+// // create table
+
+// app.get('/createpoststable', (req, res) => {
+// 	let sql = 'CREATE TABLE posts (id int AUTO_INCREMENT, title VARCHAR(255), body VARCHAR(255), PRIMARY KEY (id))';
+// 	db.query(sql, (err, result) => {
+// 		if(err) throw err;
+// 		console.log(result);
+// 		res.send('Posts table created...');
+// 	});
+// });
 /*
 * Creates a port for express server since we don't want our app to clash with well known
 * ports such as 80 or 8080.
