@@ -18,6 +18,30 @@ router.get('/workshops', (req, res) => {
     res.render('workshops');
 });
 
+router.get('/book', (req, res) => {
+    res.render('book');
+});
+
+router.get('/checkout', (req, res) => {
+    res.render('checkout');
+});
+
+router.get('/confirm', (req, res) => {
+    res.render('confirm');
+});
+
+router.get('/payment', (req, res) => {
+    res.render('payment');
+});
+
+router.get('/successful', (req, res) => {
+    res.render('successful');
+});
+
+router.get('/search', (req, res) => {
+    res.render('search');
+});
+
 router.get('/contactUs', (req, res) => {
     res.render('contactUs');
 });
