@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 
@@ -18,31 +19,34 @@ router.get('/workshops', (req, res) => {
     res.render('workshops');
 });
 
-router.get('/book', (req, res) => {
-    res.render('book');
-});
-
-router.get('/checkout', (req, res) => {
-    res.render('checkout');
-});
-
-router.get('/confirm', (req, res) => {
-    res.render('confirm');
-});
-
-router.get('/payment', (req, res) => {
-    res.render('payment');
-});
-
-router.get('/successful', (req, res) => {
-    res.render('successful');
-});
-
-router.get('/search', (req, res) => {
-    res.render('search');
-});
 
 router.get('/contactUs', (req, res) => {
     res.render('contactUs');
 });
+
+// BOOKING SESSION
+router.get('/book', (req, res) => {
+    res.render('booking/book');
+});
+
+router.get('/checkout', (req, res) => {
+    res.render('booking/checkout');
+});
+
+router.get('/confirm', (req, res) => {
+    res.render('booking/confirm');
+});
+
+router.get('/payment', (req, res) => {
+    res.render('booking/payment');
+});
+
+router.get('/successful', (req, res) => {
+    res.render('booking/successful');
+});
+
+router.get('/search', (req, res) => {
+    res.render('booking/search');
+});
+
 module.exports = router;

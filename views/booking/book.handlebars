@@ -17,14 +17,13 @@
 <br> <p>16/05/2022</p>
 </p>
 
-<p>Instructor:</p>
-<select id="instructor">
+<label for="instructor">Instructor:</label>
+<select id="instructor" name="instructor" required>
   <option value="ben">Mr Ben Dover</option>
   <option value="drop">Mr Mic Drop</option>
 </select>
-<br>
-<p>Timing:</p>
-<select id="timing">
+<label for="timing">Timing:</label>
+<select id="timing" name="timing" required>
   <option value="0930">0930AM</option>
   <option value="1030">1030AM</option>
   <option value="1130">1130AM</option>
@@ -32,20 +31,19 @@
   <option value="1230">1230PM</option>
   <option value="1400">1400PM</option>
 </select>
-<br>
-<p>Pax:</p>
-<select id="pax">
-    <p>Adult:</p>
-    <option value="0">0</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <p>Children:</p>
-    <option value="0">0</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
+<label for="pax"> Adult Pax:</label>
+<select id="adultpax" name="adultpax" required>
+  <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
 </select>
-
-</div>
-<button type="button" class="btn btn-light"><a href="/confirm">Confirm Now</a></button>
+<label for="pax"> Children Pax:</label>
+<select id="childpax" name="childpax" required>
+  <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+</select>
+<br>
+<button type="button" class="btn btn-link"><a href="/confirm">Confirm Now</a></button>
