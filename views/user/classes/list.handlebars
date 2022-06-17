@@ -1,0 +1,78 @@
+<style type="type/css">
+    .search-button{
+      width: 25%; 
+      height: 25%; 
+    }
+    div.container-fluid {
+		width: 80%;
+		margin: auto;
+		margin-top: 30px;
+	}
+</style>
+
+<script>
+  // search button
+  const searchButton = document.getElementById('search-button');
+  const searchInput = document.getElementById('search-input');
+  searchButton.addEventListener('click', () => {
+    const inputValue = searchInput.value;
+    alert(inputValue);
+  });
+
+  //  for the icons
+  	function generate_actions(value, row, index) {
+      	<div>
+				<a href="views/user/classes/update"><i class="bi bi-pencil-square"></i></a>
+				<a href="views/user/classes/delete"><i class="bi bi-trash"></i></a>
+		</div>
+	}
+</script>
+
+<!--search button -->
+  <div class="input-group">
+    <div class="form-outline">
+      <input id="search-input" type="search" id="form1" class="form-control" width="48" height="48"/>
+      <button id="search-button" type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+    </div>
+  </div>
+
+<!--create button -->
+<div id="button">
+	<a  class="btn btn-outline-dark"
+	    href="/classes/create"
+		data-toggle="tooltip"
+		title="Create">
+		<i class="bi bi-plus">+</i>
+	</a>
+</div>
+
+<h3>Classes</h3>
+
+<div class="container-fluid">
+	<table
+		class="table table-striped text-dark table-light"
+		{{!-- data-url="/admin/products/retrieve" --}}
+		data-page-list="[10, 25, 50, 100, all]"
+		data-pagination="true"
+		data-search="true"
+		data-side-pagination="server"
+		data-filter-control="true"
+		data-toggle="table">
+		<thead class="thead-light">
+			<tr>
+				<th data-field="course_id"  data-sortable="true"  data-filter-control="input">Course ID</th>
+				<th data-field="class_id"  data-sortable="true"  data-filter-control="input">Class ID</th>
+				<th data-field="instructor_id" data-sortable="true"  data-filter-control="input">Instructor ID</th>
+				<th data-field="name" data-sortable="true" data-filter-control="input">Name</th>
+				<th data-field="difficulty" data-sortable="true" data-filter-control="input">Difficulty</th>
+				<th data-field="time" data-sortable="true" data-filter-control="input">Time</th>
+				<th data-field="date" data-sortable="true" data-filter-control="input">Date</th>
+				<th data-field="class" data-sortable="true" data-filter-control="input">Class</th>
+				<th data-field="pax" data-sortable="true" data-filter-control="input">Pax</th>
+				<th data-sortable="false"    data-formatter="generate_actions"></th>	
+			</tr>
+		</thead>
+	</table>
+</div>
+
+
