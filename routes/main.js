@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const flashMessage = require('../helpers/messenger');
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
