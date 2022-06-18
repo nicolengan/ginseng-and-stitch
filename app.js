@@ -76,6 +76,10 @@ app.use(session({
     saveUninitialized: false,
 }));
 
+const flash = require('connect-flash');
+app.use(flash());
+const flashMessenger = require('flash-messenger');
+app.use(flashMessenger.middleware);
 // Bring in database connection 
 const DBConnection = require('./config/DBConnection');
 
@@ -93,9 +97,9 @@ app.use(passport.session());
 
 // Place to define global variables
 app.use(function(req, res, next) {
-    res.locals.messages = req.flash('message');
-    res.locals.errors = req.flash('error');
-    res.locals.user = req.user || null;
+    // res.locals.messages = req.flash('message');
+    // res.locals.errors = req.flash('error');
+    // res.locals.user = req.user || null;
     next();
 });
 
