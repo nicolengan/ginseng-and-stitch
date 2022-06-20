@@ -22,8 +22,18 @@
   //  for the icons
   	function generate_actions(value, row, index) {
       	<div>
-				<a href="views/user/classes/update"><i class="bi bi-pencil-square"></i></a>
-				<a href="views/user/classes/delete"><i class="bi bi-trash"></i></a>
+			<p>
+				<a href="user/classes/updateClasses" class="card-link mb-2">
+					<i class="fas fa-pencil-alt"></i>
+					Edit
+					</a>
+				</p>
+				<p>
+				<a href="" class="card-link" data-toggle="confirmation" data-title="Confirm delete?">
+					<i class="far fa-trash-alt"></i>
+					Delete
+					</a>
+				</p>
 		</div>
 	}
 </script>
@@ -35,16 +45,6 @@
       <button id="search-button" type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
     </div>
   </div>
-
-<!--create button -->
-<div id="button">
-	<a  class="btn btn-outline-dark"
-	    href="/classes/create"
-		data-toggle="tooltip"
-		title="Create">
-		<i class="bi bi-plus">+</i>
-	</a>
-</div>
 
 <h3>Classes</h3>
 

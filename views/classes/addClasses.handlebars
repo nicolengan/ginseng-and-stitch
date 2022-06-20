@@ -1,0 +1,89 @@
+<style>
+label {
+  display: inline-block;
+}
+
+.container {
+		width: 40%;
+		margin: auto;
+}
+
+.col-75 {
+  margin-top: 2px;
+}
+
+.submit {
+	width: 20%; 
+	margin: auto;
+	text-align: center;
+}
+</style>
+
+<!--admin create classes -->
+<h4><u>New Class Creation</u></h4>
+
+	<div class="container">
+		<form method="POST" action="">
+				<div class="row">
+				<div class="col-25">
+					<label for="class_id">Class ID</label>
+				</div>
+				<div class="col-75"> 
+					<select id="class_id" name="class_id" required>
+					<option value="1">1</option>
+					</select>
+				</div>
+				</div>
+				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="course_id">Course ID</label>
+				</div>
+				<div class="col-75">
+					<select id="course_id" name="course_id" required>
+					<option value="1">1</option>
+					</select>
+				</div>
+				</div>
+				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="time">Timing</label>
+				</div>
+				<div class="col-75">
+					<select id="time" name="time" required>
+					<option value="0930">0930AM</option>
+					<option value="1130">1130AM</option>
+					<option value="1230">1230PM</option>
+					<option value="1400">1400PM</option>
+					<option value="1500">1500PM</option>
+					</select>
+				</div>
+				</div>
+				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="date">Date</label>
+				</div>
+				<div class="col-75">
+					<select id="date" name="date" required>
+					<option value="235">23/5/2022</option>
+					<option value="295">29/5/2022</option>
+					<option value="166">16/6/2022</option>
+					<option value="307">30/7/2022</option>
+					<option value="266">26/6/2022</option>
+					<option value="276">27/6/2022</option>
+					<option value="265">26/5/2022</option>
+					<option value="165">16/5/2022</option>
+					</select>
+				</div>
+				</div>
+				<br>
+		</form>
+		</div>
+		<div class="submit">
+			<button class="btn btn-primary waves-effect" type="submit">+ Create</button>
+		</div>
