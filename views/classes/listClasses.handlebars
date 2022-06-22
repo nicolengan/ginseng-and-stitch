@@ -3,40 +3,12 @@
       width: 25%; 
       height: 25%; 
     }
-    div.container-fluid {
+    div.container {
 		width: 80%;
 		margin: auto;
 		margin-top: 30px;
 	}
 </style>
-
-<script>
-  // search button
-  const searchButton = document.getElementById('search-button');
-  const searchInput = document.getElementById('search-input');
-  searchButton.addEventListener('click', () => {
-    const inputValue = searchInput.value;
-    alert(inputValue);
-  });
-
-  //  for the icons
-  	function generate_actions(value, row, index) {
-      	<div>
-			<p>
-				<a href="user/classes/updateClasses" class="card-link mb-2">
-					<i class="fas fa-pencil-alt"></i>
-					Edit
-					</a>
-				</p>
-				<p>
-				<a href="" class="card-link" data-toggle="confirmation" data-title="Confirm delete?">
-					<i class="far fa-trash-alt"></i>
-					Delete
-					</a>
-				</p>
-		</div>
-	}
-</script>
 
 <!--search button -->
   <div class="input-group">
@@ -46,33 +18,107 @@
     </div>
   </div>
 
-<h3>Classes</h3>
+<div class="container">
+	{{#if classes}}
+	<div class="card card-body">
+		<h3 class="text-primary">Classes</h3>
+		{{#each classes}}
+		<div class="card border-primary mb-2 w-100 mx-auto">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Class ID</p>
+						<p class="text-info">
+							{{class_id}}
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Course ID</p>
+						<p class="text-info">
+							{{course_id}}
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">User ID</p>
+						<p class="text-info">
+							{{user_id}}
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Instructor ID</p>
+						<p class="text-info">
+							{{instructor_id}}
+						</p>
+					</div>
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p>
+							<a href="/classes/editClasses/{{id}}" class="card-link mb-2">
+								<i class="fas fa-pencil-alt"></i>
+								Edit
+							</a>
+						</p>
+						<p>
+							<a href="/classes/deleteClasses/{{id}}" class="card-link" data-toggle="confirmation"
+								data-title="Confirm delete?">
+								<i class="far fa-trash-alt"></i>
+								Delete
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
 
-<div class="container-fluid">
-	<table
-		class="table table-striped text-dark table-light"
-		{{!-- data-url="/admin/products/retrieve" --}}
-		data-page-list="[10, 25, 50, 100, all]"
-		data-pagination="true"
-		data-search="true"
-		data-side-pagination="server"
-		data-filter-control="true"
-		data-toggle="table">
-		<thead class="thead-light">
-			<tr>
-				<th data-field="course_id"  data-sortable="true"  data-filter-control="input">Course ID</th>
-				<th data-field="class_id"  data-sortable="true"  data-filter-control="input">Class ID</th>
-				<th data-field="instructor_id" data-sortable="true"  data-filter-control="input">Instructor ID</th>
-				<th data-field="name" data-sortable="true" data-filter-control="input">Name</th>
-				<th data-field="difficulty" data-sortable="true" data-filter-control="input">Difficulty</th>
-				<th data-field="time" data-sortable="true" data-filter-control="input">Time</th>
-				<th data-field="date" data-sortable="true" data-filter-control="input">Date</th>
-				<th data-field="class" data-sortable="true" data-filter-control="input">Class</th>
-				<th data-field="pax" data-sortable="true" data-filter-control="input">Pax</th>
-				<th data-sortable="false"    data-formatter="generate_actions"></th>	
-			</tr>
-		</thead>
-	</table>
+			<div class="accordion" id="detailsAccordion">
+				<div class="card-header" id="headingOne">
+					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne{{id}}"
+						aria-expanded="false" aria-controls="collapseOne{{id}}" style="text-decoration: none;">
+						Details <i class="fas fa-chevron-down"></i>
+					</button>
+				</div>
+				<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#storyAccordion">
+					<div class="card-body">
+						<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Name</p>
+						<p class="text-info">{{name}}</p>
+						</div>
+
+						<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Difficulty</p>
+						<p class="text-info">{{difficulty}}</p>
+						</div>
+						
+						<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Time</p>
+						<p class="text-info">{{Time}}</p>
+						</div>
+
+						<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Date</p>
+						<p class="text-info">{{formatDate date 'DD MMM YYYY'}}</p>
+						</div>
+												
+						<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Class</p>
+						<p class="text-info">{{class_no}}</p>
+						</div>
+						
+						<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Pax</p>
+						<p class="text-info">{{pax}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</div>
+	{{else}}
+	<h3>No Classes</h3>
+	{{/if}}
 </div>
 
-
+<script>
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+	});
+</script>

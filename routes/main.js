@@ -1,7 +1,8 @@
-
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
+const Classes = require('../models/Classes');
+const ensureAuthenticated = require("../helpers/auth");
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
@@ -19,7 +20,6 @@ router.get('/products', (req, res) => {
 router.get('/workshops', (req, res) => {
     res.render('workshops');
 });
-
 
 router.get('/contactUs', (req, res) => {
     res.render('contactUs');

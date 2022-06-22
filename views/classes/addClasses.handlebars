@@ -23,7 +23,7 @@ label {
 <h4><u>New Class Creation</u></h4>
 
 	<div class="container">
-		<form method="POST" action="">
+		<form method="POST" action="/addClasses">
 				<div class="row">
 				<div class="col-25">
 					<label for="class_id">Class ID</label>
@@ -31,6 +31,11 @@ label {
 				<div class="col-75"> 
 					<select id="class_id" name="class_id" required>
 					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
 					</select>
 				</div>
 				</div>
@@ -43,6 +48,61 @@ label {
 				<div class="col-75">
 					<select id="course_id" name="course_id" required>
 					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					</select>
+				</div>
+				</div>
+				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="user_id">User ID</label>
+				</div>
+				<div class="col-75">
+					<select id="user_id" name="user_id" required>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					</select>
+				</div>
+				</div>
+				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="instructor_id">Instructor ID</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="instructor_id" name="instructor_id" value=""><br>
+				</div>
+				</div>
+				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="name">Name</label>
+				</div>
+				<div class="col-75">
+					<select id="name" name="name" required>
+					<option value="jacket">Make your own Jacket</option>
+					<option value="introduction">Introduction to Sewing</option>
+					<option value="pattern">Pattern Drafting</option>
+					</select>
+				</div>
+				</div>
+				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="difficulty">Difficulty</label>
+				</div>
+				<div class="col-75">
+					<select id="difficulty" name="difficulty" required>
+					<option value="beginner">Beginner</option>
+					<option value="advanced">Advanced</option>
+					<option value="master">Master</option>
 					</select>
 				</div>
 				</div>
@@ -69,21 +129,43 @@ label {
 					<label for="date">Date</label>
 				</div>
 				<div class="col-75">
-					<select id="date" name="date" required>
-					<option value="235">23/5/2022</option>
-					<option value="295">29/5/2022</option>
-					<option value="166">16/6/2022</option>
-					<option value="307">30/7/2022</option>
-					<option value="266">26/6/2022</option>
-					<option value="276">27/6/2022</option>
-					<option value="265">26/5/2022</option>
-					<option value="165">16/5/2022</option>
+						<label class="date">Dates</label>
+						<input id="date" width="200" name="date" readonly />				</div>
+				</div>
+				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="class_no">Class</label>
+				</div>
+				<div class="col-75">
+					<select id="class_no" name="class_no" required>
+					<option value="1">Class 1</option>
+					<option value="2">Class 2</option>
 					</select>
 				</div>
 				</div>
 				<br>
+
+				<div class="row">
+				<div class="col-25">
+					<label for="pax">Pax</label>
+				</div>
+				<div class="col-75">
+					<input type="number" id="pax" name="pax" min="1" max="5">
+				</div>
+				</div>
+				<br>
+
+				<div class="submit">
+				<button class="btn btn-primary waves-effect" type="submit">+ Create</button>
+				</div>
 		</form>
 		</div>
-		<div class="submit">
-			<button class="btn btn-primary waves-effect" type="submit">+ Create</button>
-		</div>
+
+<script>
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		uiLibrary: 'bootstrap4',
+	});
+</script>

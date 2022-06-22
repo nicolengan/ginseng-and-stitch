@@ -1,0 +1,68 @@
+<style>
+	.container{
+		width: 40%;
+		margin: auto;
+	}
+</style>
+
+<h4><u>Updating Class</u></h4>
+
+<div class="container">
+{{#each classes}}
+	<form action="/listClasses" method="POST">
+		<div class="form-row">
+			<div class="col">
+				<div class="form-row md-form">
+					<label for="class_id">Class ID</label>
+					<input class="form-control" id="class_id"  name="class_id" required value={{this.class_id}}>
+				</div>
+
+				<div class="form-row md-form">
+					<label for="course_id">Course ID</label>
+					<input class="form-control" id="course_id"  name="course_id" required value={{this.course_id}}>
+				</div>
+
+				<div class="form-row md-form">
+					<label for="user_id">User ID</label>
+					<input class="form-control" id="user_id"  name="user_id" required value={{this.user_id}}>
+				</div>
+
+          		<div class="form-row md-form">
+					<label for="instructor_id">Instructor ID</label>
+					<input class="form-control" id="instructor_id"  name="instructor_id" required value={{this.instructor_id}}>
+				</div>
+
+				<div class="form-row md-form">
+					<label for="name">Name</label>
+					<input class="form-control" id="name" name="name" required value={{this.name}}>
+				</div>
+				
+				<div class="form-row md-form">
+					<label for="difficulty">Difficulty</label>
+					<input class="form-control" id="difficulty"  name="difficulty" required value={{this.difficulty}}>
+				</div>
+
+				<div class="form-row md-form">
+					<label for="time">Time</label>
+					<input class="form-control" id="time" name="time" required value={{this.time}}>
+				</div>
+
+				<div class="form-row md-form">
+					<label for="date">Date</label>
+					<input class="form-control" id="date"  name="date" required value={{this.date}}>
+            	</div>
+
+				<div class="form-row md-form">
+					<label for="class_no">Class</label>
+					<input class="form-control" id="class_no" name="class_no" required value={{this.class_no}}>
+				</div>
+
+      			<div class="form-row md-form">
+					<label for="pax">Pax</label>
+					<input class="form-control" id="pax" name="pax" required value={{this.pax}}>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+	{{/each}}
