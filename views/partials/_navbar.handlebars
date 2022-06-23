@@ -24,7 +24,7 @@
       <button type="button" class="btn-close text-reset mt-4 ms-4" data-bs-dismiss="offcanvas"
         aria-label="Close"></button>
       <div class="offcanvas-header">
-        <h4 class="offcanvas-title display-5" id="offcanvasScrollingLabel">Ginseng & Stitch</h4>
+        <a class="offcanvas-title h4 display-5" href="/"id="offcanvasScrollingLabel">Ginseng & Stitch</a>
       </div>
 
       <div class="offcanvas-body">
@@ -39,11 +39,21 @@
 
     {{!-- navbar --}}
     <div class="collapse navbar-collapse" id="navbarNav">
-      {{#unless user}}
       <a class="navbar-brand position-absolute top-50 start-50 translate-middle" id="logo" href="/">Ginseng & Stitch</a>
-      <a class="nav-link ms-auto" href="/user/login">LOGIN</a>
-      <a class="nav-link" href="/user/register">REGISTER</a>
-      {{/unless}}
+			<ul class="navbar-nav me-2 d-flex flex-row position-absolute top-0 end-0">
+				{{#if user}}
+				<li class="nav-item p-1">
+					<a href="/user/logout" class="nav-link">Logout</a>
+				</li>
+				{{else}}
+				<li class="nav-item p-1">
+					<a href="/user/login" class="nav-link">Login</a>
+				</li>
+				<li class="nav-item p-1">
+					<a href="/user/register" class="nav-link">Register</a>
+				</li>
+				{{/if}}
+			</ul>
     </div>
   </div>
 </nav>

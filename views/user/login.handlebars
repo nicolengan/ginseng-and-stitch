@@ -1,14 +1,14 @@
 <link rel="stylesheet" href="/css/user/user.css">
-<div class="user-img p-5"></div>
+<div class="position-relative user-img p-5">
 <div class="card w-25 p-3 position-absolute bottom-50 start-0 rounded" id="register">
 	<div class="card-title">
 		<h2>Login</h2>
 	</div>
 	{{!-- ADD VALIDATION!!!!!!! --}}
-	<form class="needs-validation" novalidate>
+	<form class="needs-validation" method="post" action="" novalidate>
 		<div class="mb-3">
 			<div class="form-floating">
-				<input type="email" class="form-control" id="floatingEmail" placeholder="Email"
+				<input type="email" class="form-control" id="floatingEmail" placeholder="Email" name="email"
 					aria-describedby="emailHelp">
 				<label for="floatingEmail">Email</label>
 			</div>
@@ -17,23 +17,17 @@
 
 		<div class="mb-3">
 			<div class="form-floating">
-				<input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+				<input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
 				<label for="floatingPassword">Password</label>
 			</div>
 		</div>
-		<div class="mb-3">
-			<div class="form-floating">
-				<input type="password" class="form-control" id="floatingConfirmPassword" placeholder="Confirm Password">
-				<label for="floatingConfirmPassword">Confirm Password</label>
-			</div>
-		</div>
-
+		{{> _flashmsg }}
 		{{!-- <div class="mb-3 form-check">
 			<input type="checkbox" class="form-check-input" id="exampleCheck1">
 			<label class="form-check-label" for="exampleCheck1">Check me out</label>
 		</div> --}}
 
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="mt-1 btn btn-primary">Submit</button>
 
 	</form>
 

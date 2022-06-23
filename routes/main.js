@@ -22,4 +22,5 @@ router.get('/workshops', (req, res) => {
 router.get('/contactUs', (req, res) => {
     res.render('contactUs');
 });
+
 module.exports = router;

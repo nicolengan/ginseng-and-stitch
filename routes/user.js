@@ -4,6 +4,7 @@ const flashMessage = require('../helpers/messenger');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const ensureAuthenticated = require('../helpers/auth');
 
 router.get('/login', (req, res) => {
     res.render('user/login');
@@ -18,7 +19,7 @@ router.post('/register', async function(req, res) {
 
     let isValid = true;
     if (password.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 char-acters');
+        flashMessage(res, 'error', 'Password must be at least 6 characters');
         isValid = false;
     }
     if (password != password2) {
@@ -70,9 +71,15 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+router.get('/logout', (req, res, next) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+        console.log("User logged out successfully");
+    });
 });
 
+router.get('/account', ensureAuthenticated, (req, res) => {
+    res.render('user/account');
+});
 module.exports = router;

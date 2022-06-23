@@ -93,12 +93,12 @@ div#navbarNav {
 }
 
 a,
-a.nav-link {
+a.nav-item {
     color: black;
     text-decoration: none;
 }
 
-a.nav-link {
+a.nav-item {
     font-size: 12px;
 }
 
