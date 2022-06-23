@@ -28,9 +28,7 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-2">
 						<p class="font-italic">Class ID</p>
-						<p class="text-info">
-							{{class_id}}
-						</p>
+						<p class="text-info">{{class_id}}</p>
 					</div>
 					<div class="col-sm-12 col-md-12 col-lg-2">
 						<p class="font-italic">Course ID</p>
@@ -41,7 +39,7 @@
 					<div class="col-sm-12 col-md-12 col-lg-2">
 						<p class="font-italic">User ID</p>
 						<p class="text-info">
-							{{user_id}}
+							{{userId}}
 						</p>
 					</div>
 					<div class="col-sm-12 col-md-12 col-lg-2">
@@ -75,7 +73,7 @@
 						Details <i class="fas fa-chevron-down"></i>
 					</button>
 				</div>
-				<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#storyAccordion">
+				<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#detailsAccordion">
 					<div class="card-body">
 						<div class="col-sm-12 col-md-12 col-lg-2">
 						<p class="font-italic">Name</p>
@@ -116,9 +114,3 @@
 	<h3>No Classes</h3>
 	{{/if}}
 </div>
-
-<script>
-	$('[data-toggle=confirmation]').confirmation({
-		rootSelector: '[data-toggle=confirmation]',
-	});
-</script>

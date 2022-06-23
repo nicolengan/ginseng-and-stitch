@@ -4,6 +4,7 @@ const flashMessage = require('../helpers/messenger');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const ensureAuthenticated = require('../helpers/auth');
 
 router.get('/login', (req, res) => {
     res.render('user/login');
@@ -16,17 +17,17 @@ router.get('/register', (req, res) => {
 router.post('/register', async function(req, res) {
     let { name, email, password, password2 } = req.body;
     let isValid = true;
-        if (password.length < 6) {
-            flashMessage(res, 'error', 'Password must be at least 6 char-acters');
-           isValid = false;
-     }
-     if (password != password2) {
-         flashMessage(res, 'error', 'Passwords do not match');
-         isValid = false;
-     }
-     if (!isValid) {
-         res.render('user/register', {
-             name,
+    if (password.length < 6) {
+        flashMessage(res, 'error', 'Password must be at least 6 characters');
+        isValid = false;
+    }
+    if (password != password2) {
+        flashMessage(res, 'error', 'Passwords do not match');
+        isValid = false;
+    }
+    if (!isValid) {
+        res.render('user/register', {
+            name,
             email
          });
          return;
@@ -63,15 +64,22 @@ router.post('/login', (req, res, next) => {
          failureRedirect: '/user/login',
          /* Setting the failureFlash option to true instructs Passport to flash +         
         an error message using the message given by the strategy's verify callback.
-         When a failure occur passport passes the message object as error */
-         failureFlash: true
-     })(req, res, next);
- });
- 
-router.get('/logout', (req, res) => {
-     req.logout();
-     res.redirect('/');
+        When a failure occur passport passes the message object as error */
+        failureFlash: true
+    })(req, res, next);
+});
+
+router.get('/logout', (req, res, next) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+        console.log("User logged out successfully");
+    });
 });
  
 module.exports = router;
 
+router.get('/account', ensureAuthenticated, (req, res) => {
+    res.render('user/account');
+});
+module.exports = router;

@@ -1,21 +1,34 @@
 const express = require('express');
 const router = express.Router(); 
+const Classes = require('../models/Classes');
+const ensureAuthenticated = require('../helpers/auth');
+const flashMessage = require('../helpers/messenger');
 
-router.get('/listClasses', (req, res) => {
-    res.render('classes/listClasses')
+router.get('/listClasses', ensureAuthenticated, (req, res) => {
+    Classes.findAll({
+        where: { userId: req.user.id },
+        raw: true
+    })
+        .then((classes) => {
+            res.render('classes/listClasses', { classes });
+        })
+        .catch(err => console.log(err));
 });
 
-router.get('/addClasses', (req, res) => {
+// router.get('/listClasses', (req, res) => {
+//     res.render('classes/listClasses')
+// });
+
+router.get('/addClasses', ensureAuthenticated, (req, res) => {
     res.render('classes/addClasses');
 });
 
-router.post('/addClasses', async function (req,res) {
+router.post('/addClasses', ensureAuthenticated, async function (req,res) {
     let { class_id,course_id,user_id,instructor_id,name,difficulty,time,date,class_no,pax } = req.body;
     try{
         await Classes.create({
             class_id: req.body.class_id,
             course_id: req.body.course_id,
-            user_id: req.body.user_id,
             instructor_id: req.body.instructor_id,
             name: req.body.name,
             difficulty: req.body.difficulty,
@@ -33,7 +46,7 @@ router.post('/addClasses', async function (req,res) {
     }
 })
  
-router.get('/editClasses', (req, res) => {
+router.get('/editClasses', ensureAuthenticated, (req, res) => {
     res.render('classes/editClasses');
 });
 

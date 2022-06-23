@@ -9,7 +9,6 @@ const Classes = db.define('classes',
     {
         class_id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
         course_id: { type: Sequelize.INTEGER, primaryKey: true },
-        user_id: { type: Sequelize.INTEGER },
         instructor_id: { type: Sequelize.INTEGER },
         name: { type: Sequelize.STRING  },
         difficulty: { type: Sequelize.STRING },

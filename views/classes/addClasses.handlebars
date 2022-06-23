@@ -23,7 +23,7 @@ label {
 <h4><u>New Class Creation</u></h4>
 
 	<div class="container">
-		<form method="POST" action="/addClasses">
+		<form method="POST" action="">
 				<div class="row">
 				<div class="col-25">
 					<label for="class_id">Class ID</label>
@@ -56,7 +56,7 @@ label {
 				</div>
 				<br>
 
-				<div class="row">
+				{{!-- <div class="row">
 				<div class="col-25">
 					<label for="user_id">User ID</label>
 				</div>
@@ -68,7 +68,7 @@ label {
 					</select>
 				</div>
 				</div>
-				<br>
+				<br> --}}
 
 				<div class="row">
 				<div class="col-25">
@@ -129,8 +129,16 @@ label {
 					<label for="date">Date</label>
 				</div>
 				<div class="col-75">
-						<label class="date">Dates</label>
-						<input id="date" width="200" name="date" readonly />				</div>
+				<select id="date" name="date" required>
+					<option value="235">23/5/2022</option>
+					<option value="295">29/5/2022</option>
+					<option value="166">16/6/2022</option>
+					<option value="307">30/7/2022</option>
+					<option value="266">26/6/2022</option>
+					<option value="276">27/6/2022</option>
+					<option value="265">26/5/2022</option>
+					<option value="165">16/5/2022</option>			
+				</select>
 				</div>
 				<br>
 
@@ -164,8 +172,9 @@ label {
 		</div>
 
 <script>
-	$('#datepicker').datepicker({
+	$('#date').date({
 		format: 'dd/mm/yyyy',
 		uiLibrary: 'bootstrap4',
+		value: moment().format('DD/MM/YYYY'),
 	});
 </script>

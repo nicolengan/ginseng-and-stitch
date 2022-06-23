@@ -5,7 +5,7 @@
 	}
 </style>
 
-<h4><u>Updating Class</u></h4>
+<h4><u>Editing Class</u></h4>
 
 <div class="container">
 {{#each classes}}
@@ -21,11 +21,16 @@
 					<label for="course_id">Course ID</label>
 					<input class="form-control" id="course_id"  name="course_id" required value={{this.course_id}}>
 				</div>
-
+				
 				<div class="form-row md-form">
-					<label for="user_id">User ID</label>
-					<input class="form-control" id="user_id"  name="user_id" required value={{this.user_id}}>
+					<label for="name">User ID</label>
+					<input type="text" class="form-control" name="name" value="{{userId}}" required>
 				</div>
+
+				{{!-- <div class="form-row md-form">
+					<label for="user_id">User ID</label>
+					<input class="form-control" id="user_id"  name="user_id" required value={{this.userId}}>
+				</div> --}}
 
           		<div class="form-row md-form">
 					<label for="instructor_id">Instructor ID</label>
