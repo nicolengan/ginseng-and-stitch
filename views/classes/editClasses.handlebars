@@ -8,30 +8,19 @@
 <h4><u>Editing Class</u></h4>
 
 <div class="container">
-{{#each classes}}
-	<form action="/listClasses" method="POST">
-		<div class="form-row">
+	<form action="/" method="post">
+		<div class="form-group">
 			<div class="col">
-				<div class="form-row md-form">
+				{{!-- <div class="form-row md-form">
 					<label for="class_id">Class ID</label>
 					<input class="form-control" id="class_id"  name="class_id" required value={{this.class_id}}>
-				</div>
+				</div> --}}
 
 				<div class="form-row md-form">
 					<label for="course_id">Course ID</label>
 					<input class="form-control" id="course_id"  name="course_id" required value={{this.course_id}}>
 				</div>
 				
-				<div class="form-row md-form">
-					<label for="name">User ID</label>
-					<input type="text" class="form-control" name="name" value="{{userId}}" required>
-				</div>
-
-				{{!-- <div class="form-row md-form">
-					<label for="user_id">User ID</label>
-					<input class="form-control" id="user_id"  name="user_id" required value={{this.userId}}>
-				</div> --}}
-
           		<div class="form-row md-form">
 					<label for="instructor_id">Instructor ID</label>
 					<input class="form-control" id="instructor_id"  name="instructor_id" required value={{this.instructor_id}}>
@@ -52,9 +41,15 @@
 					<input class="form-control" id="time" name="time" required value={{this.time}}>
 				</div>
 
-				<div class="form-row md-form">
+				{{!-- <div class="form-row md-form">
 					<label for="date">Date</label>
 					<input class="form-control" id="date"  name="date" required value={{this.date}}>
+            	</div> --}}
+				
+				<div class="form-row md-form">
+					<label for="date">Date</label>
+					<br>
+					<input id="datepicker" width="200" name="dateClasses" value="{{formatDate classes.dateClasses 'dd/mm/yyyy'}}" readonly />
             	</div>
 
 				<div class="form-row md-form">
@@ -68,6 +63,13 @@
 				</div>
 			</div>
 		</div>
+		<br>
+		<button id="btnSubmit" type="submit" class="btn btn-primary">Save</button>
 	</form>
 	</div>
-	{{/each}}
+
+{{!-- <script>
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy'
+	});
+</script> --}}

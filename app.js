@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 require('dotenv').config();
+
 /*
  * Creates an Express server - Express is a web application framework for creating web applications
  * in Node JS.
@@ -27,7 +28,9 @@ const app = express();
  * 3. 'defaultLayout' specifies the main.handlebars file under views/layouts as the main template
  *
  * */
+const helpers = require('./helpers/handlebars');
 app.engine('handlebars', engine({
+    helpers: helpers,
     handlebars: allowInsecurePrototypeAccess(Handlebars),
     defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));
@@ -44,14 +47,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Enables session to be stored using browser's Cookie ID
 app.use(cookieParser());
-
-// To store session information. By default it is stored as a cookie on browser
-app.use(session({
-    key: 'fullstack_session',
-    secret: 'tojdiv',
-    resave: false,
-    saveUninitialized: false,
-}));
 
 // sql create connection
 const MySQLStore = require('express-mysql-session');
@@ -83,9 +78,9 @@ const DBConnection = require('./config/DBConnection');
 // Connects to MySQL database 
 DBConnection.setUpDB(false); // To set up database with new tables (true)
 
+//Messaging library
 const flash = require('connect-flash');
 app.use(flash());
-
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 

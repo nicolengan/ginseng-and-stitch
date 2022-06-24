@@ -26,28 +26,54 @@
 		<div class="card border-primary mb-2 w-100 mx-auto">
 			<div class="card-body">
 				<div class="row">
-					<div class="col-sm-12 col-md-12 col-lg-2">
+					{{!-- <div class="col-sm-12 col-md-12 col-lg-2">
 						<p class="font-italic">Class ID</p>
 						<p class="text-info">{{class_id}}</p>
-					</div>
+					</div> --}}
 					<div class="col-sm-12 col-md-12 col-lg-2">
 						<p class="font-italic">Course ID</p>
-						<p class="text-info">
-							{{course_id}}
-						</p>
+						<p class="text-info">{{course_id}}</p>
 					</div>
+
 					<div class="col-sm-12 col-md-12 col-lg-2">
 						<p class="font-italic">User ID</p>
-						<p class="text-info">
-							{{userId}}
-						</p>
+						<p class="text-info">{{userId}}</p>
 					</div>
+
 					<div class="col-sm-12 col-md-12 col-lg-2">
 						<p class="font-italic">Instructor ID</p>
-						<p class="text-info">
-							{{instructor_id}}
-						</p>
+						<p class="text-info">{{instructor_id}}</p>
 					</div>
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Name</p>
+						<p class="text-info">{{name}}</p>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Difficulty</p>
+						<p class="text-info">{{difficulty}}</p>
+					</div>
+						
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Time</p>
+						<p class="text-info">{{time}}</p>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Date</p>
+						<p class="text-info">{{formatDate dateClasses 'dd/mm/yyyy'}}</p>
+					</div>
+												
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Class</p>
+						<p class="text-info">{{class_no}}</p>
+					</div>
+						
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Pax</p>
+						<p class="text-info">{{pax}}</p>
+					</div>
+
 					<div class="col-sm-12 col-md-12 col-lg-2">
 						<p>
 							<a href="/classes/editClasses/{{id}}" class="card-link mb-2">
@@ -65,52 +91,15 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="accordion" id="detailsAccordion">
-				<div class="card-header" id="headingOne">
-					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne{{id}}"
-						aria-expanded="false" aria-controls="collapseOne{{id}}" style="text-decoration: none;">
-						Details <i class="fas fa-chevron-down"></i>
-					</button>
-				</div>
-				<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#detailsAccordion">
-					<div class="card-body">
-						<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="font-italic">Name</p>
-						<p class="text-info">{{name}}</p>
-						</div>
-
-						<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="font-italic">Difficulty</p>
-						<p class="text-info">{{difficulty}}</p>
-						</div>
-						
-						<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="font-italic">Time</p>
-						<p class="text-info">{{Time}}</p>
-						</div>
-
-						<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="font-italic">Date</p>
-						<p class="text-info">{{formatDate date 'DD MMM YYYY'}}</p>
-						</div>
-												
-						<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="font-italic">Class</p>
-						<p class="text-info">{{class_no}}</p>
-						</div>
-						
-						<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="font-italic">Pax</p>
-						<p class="text-info">{{pax}}</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		{{/each}}
 	</div>
 	{{else}}
 	<h3>No Classes</h3>
 	{{/if}}
 </div>
+
+<script>
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+	});
+</script>
