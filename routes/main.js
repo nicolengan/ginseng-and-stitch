@@ -14,6 +14,9 @@ router.get('/about', (req, res) => {
 router.get('/products', (req, res) => {
     res.render('products');
 });
+router.get('/courses', (req, res) => {
+    res.render('courses');
+});
 
 router.get('/workshops', (req, res) => {
     res.render('workshops');
