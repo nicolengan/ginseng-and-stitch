@@ -4,6 +4,7 @@ const flashMessage = require('../helpers/messenger');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const crypto = require('crypto');
 const ensureAuthenticated = require('../helpers/auth');
 
 router.get('/login', (req, res) => {
@@ -39,7 +40,7 @@ router.post('/register', async function(req, res) {
         let user = await User.findOne({ where: { email: email } });
         if (user) {
             // If user is found, that means email has already been registered
-            flashMessage(res, 'error', email + ' alreay registered');
+            flashMessage(res, 'error', email + ' already registered');
             res.render('user/register', {
                 name,
                 email
@@ -49,7 +50,9 @@ router.post('/register', async function(req, res) {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
-            let user = await User.create({ name, email, password: hash });
+            var uuid = crypto.randomUUID();
+            console.log(uuid)
+            let user = await User.create({ name, uuid, email, password: hash });
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/user/login');
         }
