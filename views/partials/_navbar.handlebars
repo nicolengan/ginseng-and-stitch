@@ -43,6 +43,14 @@
       <a class="navbar-brand position-absolute top-50 start-50 translate-middle" id="logo" href="/">Ginseng & Stitch</a>
 			<ul class="navbar-nav me-2 d-flex flex-row position-absolute top-0 end-0">
 				{{#if user}}
+        <li class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+						id="navbarDropdownMenuLink">Courses</a>
+					<div class="dropdown-menu">
+						<a href="/courses/listCourses" class="dropdown-item">Courses</a>
+						<a href="/courses/addCourses" class="dropdown-item">Add Courses</a>
+					</div>
+				</li>
 				<li class="nav-item p-1">
 					<a href="/user/logout" class="nav-link">Logout</a>
 				</li>
