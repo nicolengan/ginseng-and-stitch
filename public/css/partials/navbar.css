@@ -98,15 +98,15 @@ a.nav-item {
     text-decoration: none;
 }
 
-a.nav-item {
+#navbarNav a.nav-item {
     font-size: 12px;
 }
 
-a {
+#navbarNav a {
     font-size: 20px;
 }
 
-ul {
+#navbarNav ul {
     position: relative;
     display: table;
     margin: 0 auto;

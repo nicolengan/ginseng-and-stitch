@@ -7,7 +7,7 @@ const User = db.define('user', {
     uuid: { type: Sequelize.STRING },
     email: { type: Sequelize.STRING },
     password: { type: Sequelize.STRING },
-    admin: {type: Sequelize.BOOLEAN }
+    role: { type: Sequelize.STRING }
 });
 
 module.exports = User;

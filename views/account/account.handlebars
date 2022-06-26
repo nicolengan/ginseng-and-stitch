@@ -1,0 +1,17 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Account</li>
+  </ol>
+</nav>
+<div class="card mt-2 w-75">
+    {{#if users}}
+    {{#each users}}
+    <h5 class="card-header">Account</h5>
+    <div class="card-body">
+        <h5 class="card-title">Welcome {{name}}<a class="bi bi-pencil-square" href="/"></a></h5>
+        <p class="card-text">email: {{email}}</p>
+    </div>
+    {{/each}}
+    {{/if}}
+</div>
