@@ -7,12 +7,23 @@ const passport = require('passport');
 const crypto = require('crypto');
 const ensureAuthenticated = require('../helpers/auth');
 
+router.get('/', ensureAuthenticated, (req, res) => {
+    User.findAll({
+            where: { uuid: req.user.uuid },
+            raw: true
+        })
+        .then((users) => {
+            res.render('account/account', { users });
+        })
+        .catch(err => console.log(err));
+});
+
 router.get('/login', (req, res) => {
-    res.render('user/login');
+    res.render('account/login');
 });
 
 router.get('/register', (req, res) => {
-    res.render('user/register');
+    res.render('account/register');
 });
 
 router.post('/register', async function(req, res) {
@@ -28,7 +39,7 @@ router.post('/register', async function(req, res) {
         isValid = false;
     }
     if (!isValid) {
-        res.render('user/register', {
+        res.render('account/register', {
             name,
             email
         });
@@ -41,7 +52,7 @@ router.post('/register', async function(req, res) {
         if (user) {
             // If user is found, that means email has already been registered
             flashMessage(res, 'error', email + ' already registered');
-            res.render('user/register', {
+            res.render('account/register', {
                 name,
                 email
             });
@@ -54,7 +65,7 @@ router.post('/register', async function(req, res) {
             console.log(uuid)
             let user = await User.create({ name, uuid, email, password: hash });
             flashMessage(res, 'success', email + ' registered successfully');
-            res.redirect('/user/login');
+            res.redirect('/account/login');
         }
     } catch (err) {
         console.log(err);
@@ -64,9 +75,9 @@ router.post('/register', async function(req, res) {
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         // Success redirect URL
-        successRedirect: '/',
+        successRedirect: '/account',
         // Failure redirect URL 
-        failureRedirect: '/user/login',
+        failureRedirect: '/account/login',
         /* Setting the failureFlash option to true instructs Passport to flash 
         an error message using the message given by the strategy's verify callback.
         When a failure occur passport passes the message object as error */
@@ -82,7 +93,7 @@ router.get('/logout', (req, res, next) => {
     });
 });
 
-router.get('/account', ensureAuthenticated, (req, res) => {
-    res.render('user/account');
+router.get('/test', (req, res) => {
+
 });
 module.exports = router;

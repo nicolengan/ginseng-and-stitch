@@ -108,10 +108,10 @@ app.use(function(req, res, next) {
 
 // mainRoute is declared to point to routes/main.js
 const mainRoute = require('./routes/main');
-const userRoute = require('./routes/user');
+const userRoute = require('./routes/account');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/', mainRoute);
-app.use('/user', userRoute);
+app.use('/account', userRoute);
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 const port = 5000;
 
