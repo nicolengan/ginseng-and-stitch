@@ -21,29 +21,6 @@ router.get('/addClasses', ensureAuthenticated, (req, res) => {
     res.render('classes/addClasses');
 });
 
-// router.post('/addClasses', ensureAuthenticated, async function (req,res) {
-//     let { class_id,course_id,user_id,instructor_id,name,difficulty,time,date,class_no,pax } = req.body;
-//     try{
-//         await Classes.create({
-//             class_id: req.body.class_id,
-//             course_id: req.body.course_id,
-//             instructor_id: req.body.instructor_id,
-//             name: req.body.name,
-//             difficulty: req.body.difficulty,
-//             time: req.body.time,
-//             date: req.body.date,
-//             class_no: req.body.class_no,
-//             pax: req.body.pax
-//           });
-//           flashMessage(res,'success', 'Classes Added Successfully');
-//           res.redirect("/listClasses")
-          
-//     }catch(e){
-//          console.log(e)
-//          res.redirect("/listClasses")
-//     }
-// })
-
 router.post('/addClasses', ensureAuthenticated, (req, res) => {
     let course_id = req.body.course_id;
     let instructor_id = req.body.instructor_id;
@@ -92,9 +69,9 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
 router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
        let course_id = req.body.course_id;
        let instructor_id = req.body.instructor_id;
-       let name = req.body.name.toString();
-       let difficulty = req.body.difficulty.toString();
-       let time = req.body.name.time();
+       let name = req.body.name;
+       let difficulty = req.body.difficulty;
+       let time = req.body.time;
        let dateClasses = moment(req.body.dateClasses, 'dd/mm/yyyy');
        let class_no = req.body.class_no;
        let pax = req.body.pax;

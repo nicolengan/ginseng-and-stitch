@@ -8,44 +8,35 @@
 <h4><u>Editing Class</u></h4>
 
 <div class="container">
-	<form action="/" method="post">
+	<form action="" method="post">
 		<div class="form-group">
 			<div class="col">
-				{{!-- <div class="form-row md-form">
-					<label for="class_id">Class ID</label>
-					<input class="form-control" id="class_id"  name="class_id" required value={{this.class_id}}>
-				</div> --}}
 
 				<div class="form-row md-form">
 					<label for="course_id">Course ID</label>
-					<input class="form-control" id="course_id"  name="course_id" required value={{this.course_id}}>
+					<input class="form-control" type="select" id="course_id"  name="course_id" value="course_id" {{ selectCheck classes.course_id "course_id"}}>
 				</div>
 				
           		<div class="form-row md-form">
 					<label for="instructor_id">Instructor ID</label>
-					<input class="form-control" id="instructor_id"  name="instructor_id" required value={{this.instructor_id}}>
+					<input class="form-control" type="text" id="instructor_id"  name="instructor_id" value="instructor_id" {{ checkValue classes.instructor_id "instructor_id"}}>
 				</div>
 
 				<div class="form-row md-form">
 					<label for="name">Name</label>
-					<input class="form-control" id="name" name="name" required value={{this.name}}>
+					<input class="form-control" type="select" id="name" name="name" value="name" {{ selectCheck classes.course_id "name"}}>
 				</div>
 				
 				<div class="form-row md-form">
 					<label for="difficulty">Difficulty</label>
-					<input class="form-control" id="difficulty"  name="difficulty" required value={{this.difficulty}}>
+					<input class="form-control" type="select" id="difficulty" name="difficulty" value="difficulty" {{ selectCheck classes.difficulty "difficulty"}}>
 				</div>
 
 				<div class="form-row md-form">
 					<label for="time">Time</label>
-					<input class="form-control" id="time" name="time" required value={{this.time}}>
+					<input class="form-control" type="select" id="time" name="time" value="time" {{ selectCheck classes.time "time"}}>
 				</div>
 
-				{{!-- <div class="form-row md-form">
-					<label for="date">Date</label>
-					<input class="form-control" id="date"  name="date" required value={{this.date}}>
-            	</div> --}}
-				
 				<div class="form-row md-form">
 					<label for="date">Date</label>
 					<br>
@@ -54,12 +45,12 @@
 
 				<div class="form-row md-form">
 					<label for="class_no">Class</label>
-					<input class="form-control" id="class_no" name="class_no" required value={{this.class_no}}>
+					<input class="form-control" type="select" id="class_no" name="class_no" value="class_no" {{ selectCheck classes.class_no "class_no"}}>
 				</div>
 
       			<div class="form-row md-form">
 					<label for="pax">Pax</label>
-					<input class="form-control" id="pax" name="pax" required value={{this.pax}}>
+					<input class="form-control" type="number"  min="1" max="5" id="pax" name="pax" value="pax" {{ checkValue classes.pax "pax"}}>
 				</div>
 			</div>
 		</div>
@@ -68,8 +59,8 @@
 	</form>
 	</div>
 
-{{!-- <script>
+<script>
 	$('#datepicker').datepicker({
 		format: 'dd/mm/yyyy'
 	});
-</script> --}}
+</script>
