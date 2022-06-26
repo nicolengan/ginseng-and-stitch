@@ -7,6 +7,6 @@ const Courses = db.define('courses',
 title: { type: Sequelize.STRING },
 uuid: { type: Sequelize.STRING },
 Description: { type: Sequelize.STRING(2000) },
-Price: { type: Sequelize.INTEGER },
+price: { type: Sequelize.INTEGER },
 });
 module.exports = Courses;

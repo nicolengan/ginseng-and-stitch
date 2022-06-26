@@ -2,21 +2,20 @@
 
 <div class="container">
 	{{#if courses}}
-	<div class="card card-body">
-		<h3 class="text-primary">Courses Listed</h3>
+		<h2 class="text-primary">Courses Listed</h2>
 		{{#each courses}}
-		<div class="card border-primary mb-2 w-100 mx-auto">
-			<div class="card-header">
-				<h5 class="card-title">{{title}}</h5>
-			</div>
-			<div class="accordion" id="storyAccordion">
-				<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#storyAccordion">
-					<div class="card-body">
-						{{description}}
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="card-body"></div>
+            <div class="card border-primary mb-2 w-50 mx-auto">
+                <div class="card-header">
+                    <h1 class="card-title">{{title}}</h>
+                </div>
+                <div class="card-body">
+                    <h3>Description of the Course</h3>
+                    <p class="card-text">{{Description}}</p>
+                    <h3>Price</h3>
+                    <p class="card-text">${{price}}</p>
+                </div>
+            </div>
 		{{/each}}
 	</div>
 
