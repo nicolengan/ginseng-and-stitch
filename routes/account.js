@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
 const ensureAuthenticated = require('../helpers/auth');
+const isAdmin = require('../helpers/admin');
 
 router.get('/', ensureAuthenticated, (req, res) => {
     User.findAll({
@@ -63,7 +64,7 @@ router.post('/register', async function(req, res) {
             // Use hashed password
             var uuid = crypto.randomUUID();
             console.log(uuid)
-            let user = await User.create({ name, uuid, email, password: hash });
+            let user = await User.create({ name, uuid, email, password: hash, role: "admin" });
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/account/login');
         }
@@ -93,7 +94,7 @@ router.get('/logout', (req, res, next) => {
     });
 });
 
-router.get('/test', (req, res) => {
-
+router.get('/test', isAdmin, (req, res) => {
+    res.redirect('/');
 });
 module.exports = router;

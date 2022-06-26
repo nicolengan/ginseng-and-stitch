@@ -1,4 +1,5 @@
 const flashMessage = require('../helpers/messenger');
+
 const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
@@ -6,4 +7,6 @@ const ensureAuthenticated = (req, res, next) => {
     flashMessage(res, 'error', 'Not logged in, please log in and try again.');
     res.redirect('/account/login');
 };
-module.exports = ensureAuthenticated;
+
+module.exports =
+    ensureAuthenticated;

@@ -105,14 +105,25 @@ app.use(function(req, res, next) {
     res.locals.user = req.user || null;
     next();
 });
+const isAdmin = require('./helpers/admin');
 
 // mainRoute is declared to point to routes/main.js
+
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/account');
+const adminRoute = require('./routes/admin');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
+
 app.use('/', mainRoute);
 app.use('/account', userRoute);
-// Any URL with the pattern ‘/*’ is directed to routes/main.js
+app.use('/admin', isAdmin, adminRoute);
+
+// redirects error to page
+app.use((err, req, res, next) => {
+        console.error(err.stack)
+        res.status(500).send('Something broke!')
+    })
+    // Any URL with the pattern ‘/*’ is directed to routes/main.js
 const port = 5000;
 
 // Starts the server and listen to port
