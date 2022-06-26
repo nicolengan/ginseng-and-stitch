@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
+const courses = require("./courses");
+const admin = require("../helpers/admin");
+const isAdmin = require("../helpers/admin");
+const User = require('../models/User');
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
@@ -14,6 +18,11 @@ router.get('/about', (req, res) => {
 router.get('/products', (req, res) => {
     res.render('products');
 });
+
+router.use('/courses', courses)
+
+router.use('/admin', isAdmin, admin);
+
 router.get('/courses', (req, res) => {
     res.render('courses');
 });

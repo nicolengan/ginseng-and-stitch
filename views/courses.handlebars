@@ -1,1 +1,32 @@
 <h1>Our Courses</h1>
+
+<div class="container">
+	{{#if courses}}
+	<div class="card card-body">
+		<h3 class="text-primary">Courses Listed</h3>
+		{{#each courses}}
+		<div class="card border-primary mb-2 w-100 mx-auto">
+			<div class="card-header">
+				<h5 class="card-title">{{title}}</h5>
+			</div>
+			<div class="accordion" id="storyAccordion">
+				<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne" data-parent="#storyAccordion">
+					<div class="card-body">
+						{{description}}
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</div>
+
+</div>
+{{else}}
+<h3>No Courses listed</h3>
+{{/if}}
+
+<script>
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+	});
+</script>
