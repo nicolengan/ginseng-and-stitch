@@ -56,7 +56,7 @@ router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
         raw: true
     })
     .then((course) =>{
-        res.render("course/editCourse",  {course});
+        res.render("courses/editCourses",  {course});
     })
     .catch(err => console.log(err));
 });
