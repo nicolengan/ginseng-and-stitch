@@ -1,3 +1,26 @@
-<input class="form-control" id="title" name="title" value="{{courses.title}}" />
+<div class="container">
+	<div class="card card-body">
+		<h3>Edit Video Jot</h3>
+		<form action="" method="post">
+			<div class="form-group">
+				{{!-- Practical 5 Exercise 2: Add a title input text here named 'title'--}}
+				<label class="font-italic" for="title">Title</label>
+				<input class="form-control" id="title" name="title" value="{{courses.title}}"
+					onblur="initialiseTitle()" />
+			</div>
+			<div class="form-group mb-4">
+				<label class="font-italic" for="description">Description</label>
+				<textarea class="form-control" id="Description" name="Description" rows="7"
+					maxlength="2000">{{courses.Description}}</textarea>
+			</div>
+            <div class="form group mb-4">
+                <label class="font-italic" for="price">Price</label>
+                <input class="form-control" id="price" name="price" value="{{courses.price}}"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{!-- <input class="form-control" id="title" name="title" value="{{courses.title}}" />
 <textarea class="form-control" id="Description" name="Description" rows="7" maxlength="2000">{{courses.Description}}</textarea>
-<input class="form-control" id="price" name="price" value="{{courses.price}}"/>
+<input class="form-control" id="price" name="price" value="{{courses.price}}"/> --}}

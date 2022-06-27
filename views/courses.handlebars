@@ -1,6 +1,5 @@
 <h1>Our Courses</h1>
 
-<div class="container">
 	{{#if courses}}
 		<h2 class="text-primary">Courses Listed</h2>
 		{{#each courses}}
@@ -14,6 +13,9 @@
                     <p class="card-text">{{Description}}</p>
                     <h3>Price</h3>
                     <p class="card-text">${{price}}</p>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="button">Book Now</button>
                 </div>
             </div>
 		{{/each}}

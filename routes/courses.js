@@ -79,4 +79,27 @@ router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     .catch(err => console.log(err));
 });
 
+router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) {
+    try {
+        let courses = await Courses.findByPk(req.params.id);
+        if (!courses) {
+            flashMessage(res, 'error', 'Courses not found');
+            res.redirect('/courses/listCourses');
+            return;
+        }
+        if (req.user.id != courses.id) {
+            flashMessage(res, 'error', 'Unauthorised access');
+            res.redirect('/courses/listCourses');
+            return;
+        }
+
+        let result = await Courses.destroy({ where: { id: courses.id } });
+        console.log(result + ' courses deleted');
+        res.redirect('/courses/listCourses');
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
 module.exports = router;

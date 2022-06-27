@@ -65,7 +65,7 @@ router.post('/register', async function(req, res) {
             var uuid = crypto.randomUUID();
             console.log(uuid)
             // Change between user and admin to create the type of user. Make sure always small letter.
-            let user = await User.create({ name, uuid, email, password: hash, role: "admin" });
+            let user = await User.create({ name, uuid, email, password: hash, role: "user" });
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/account/login');
         }
