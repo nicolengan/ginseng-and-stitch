@@ -3,18 +3,70 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const ensureAuthenticated = require("../helpers/auth");
 const Booking = require('../models/Booking');
+const Classes = require('../models/Classes');
 
 // BOOKING SESSION
+//booking id, course id, class id, instructor id, user id, date created
+
 //book will be listBooking
 router.get('/listBooking', ensureAuthenticated, (req, res) => {
-    Booking.findAll({
+    Classes.findAll({
             where: { userId: req.user.id },
             raw: true
         })
-        .then((booking) => {
-            res.render('booking/listBooking', { booking });
+        .then((classes) => {
+            res.render('booking/listBooking', { classes });
         })
         .catch(err => console.log(err));
+});
+
+
+router.get('/checkout', ensureAuthenticated, (req, res) => {
+    Classes.findAll({
+            where: { userId: req.user.id },
+            raw: true
+        })
+        .then((classes) => {
+            res.render('booking/checkout', { classes });
+        })
+        .catch(err => console.log(err));
+});
+
+router.get('/confirm', ensureAuthenticated, (req, res) => {
+    Classes.findAll({
+            where: { userId: req.user.id },
+            raw: true
+        })
+        .then((classes) => {
+            res.render('booking/confirm', { classes });
+        })
+        .catch(err => console.log(err));
+});
+
+router.get('/payment', (req, res) => {
+    Classes.findAll({
+        where: { userId: req.user.id },
+        raw: true
+    })
+    .then((classes) => {
+        res.render('booking/payment', { classes });
+    })
+    .catch(err => console.log(err));
+});
+
+router.get('/successful', (req, res) => {
+    Classes.findAll({
+        where: { userId: req.user.id },
+        raw: true
+    })
+    .then((classes) => {
+        res.render('booking/successful', { classes });
+    })
+    .catch(err => console.log(err));
+});
+
+router.get('/search', (req, res) => {
+    res.render('booking/search');
 });
 
 router.get('/addBooking', ensureAuthenticated, (req, res) => {
@@ -22,19 +74,13 @@ router.get('/addBooking', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/addBooking', ensureAuthenticated, (req, res) => {
-    let name = req.body.name.toString();
     let course_id = req.body.course_id;
     let class_id = req.body.class_id;
-    let difficulty = req.body.difficulty.toString();
-    let price = req.body.price;
-    // let date = req.body.date;
-    let time = req.body.time;
     let instructor_id = req.body.instructor_id;
-    let instructor_name = req.body.instructor_name;
     let userId = req.user.id;
 
     Booking.create(
-        { name, course_id, class_id, difficulty, price, time, instructor_id, instructor_name, userId}
+        { course_id, class_id, instructor_id, userId}
     )
         .then((booking) => {
             console.log(booking.toJSON());
@@ -42,25 +88,5 @@ router.post('/addBooking', ensureAuthenticated, (req, res) => {
         })
         .catch(err => console.log(err))
 });
-
-router.get('/checkout', (req, res) => {
-    res.render('booking/checkout');
-});
-
-router.get('/confirm', (req, res) => {
-    res.render('booking/confirm');
-});
-
-router.get('/payment', (req, res) => {
-    res.render('booking/payment');
-});
-
-router.get('/successful', (req, res) => {
-    res.render('booking/successful');
-});
-
-// router.get('/search', (req, res) => {
-//     res.render('booking/search');
-// });
 
 module.exports = router;

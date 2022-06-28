@@ -12,16 +12,20 @@ const setUpDB = (drop) => {
            //User and Classes Linkage
            User.hasMany(Classes);
            Classes.belongsTo(User);
-           
-        //    //Courses and Classes Linkage
+
+           // Booking linkage to User
+           User.hasMany(Booking); 
+           Booking.belongsTo(User);
+
+        //    Courses and Classes Linkage
         //    Courses.hasMany(Classes);
         //    Classes.belongsTo(Courses);
         
-           //Booking linkage to Classes and User
-           User.hasMany(Booking); 
+        //    Booking linkage to Classes and User
         //    Classes.hasMany(Booking);
+        //    Courses.hasMany(Booking);
         //    Booking.belongsTo(Classes);
-           Booking.belongsTo(User);
+        //    Booking.hasMany(Courses);
 
            mySQLDB.sync({ 
                 force: drop 

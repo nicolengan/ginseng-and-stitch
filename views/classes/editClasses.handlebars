@@ -6,7 +6,7 @@
 </style>
 
 <h4><u>Editing Class</u></h4>
-<h5 class="word">Current Class: <br> {{classes.course_name}}</h5>
+<h6 class="word">Current Class: <br> {{classes.course_name}}</h6>
 <div class="container">
 	<form action="/classes/editClasses/{{classes.id}}" method="post">
 		<div class="form-group">
@@ -23,11 +23,20 @@
 						</select>
 					</div>
 				</div>
+				<br>
 				
-          		{{!-- <div class="form-row md-form">
+          		<div class="form-row md-form">
 					<label for="instructor_id">Instructor ID</label>
-					<input type="text" class="form-control" name="instructor_id" value={{classes.instructor_id}}>
-				</div> --}}
+					<div class="col-75">
+						<select id="instructor_id" name="instructor_id" required>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						</select>
+					</div>
+				</div>
+				<br>
 
 				<div class="form-row md-form">
 					<label for="instructor_name">Instructor Name</label>
@@ -38,6 +47,7 @@
 						</select>
 					</div>
 				</div>
+				<br>
 				
 				<div class="form-row md-form">
 					<label for="course_name">Name</label>
@@ -50,6 +60,7 @@
 						</select>
 					</div>
 				</div>
+				<br>
 				
 				<div class="form-row md-form">
 					<label for="course_difficulty">Difficulty</label>
@@ -61,12 +72,13 @@
 						</select>
 					</div>
 				</div>
+				<br>
 
 				<div class="form-row md-form">
 					<label for="course_price">Course Price</label>
 					<input type="text" class="form-control" name="course_price" value={{classes.course_price}}>
 				</div> 
-
+				<br>
 
 				<div class="form-row md-form">
 					<label for="time">Time</label>
@@ -80,31 +92,26 @@
 						</select>
 					</div>
 				</div>
+				<br>
 
-				<div class="form-row md-form">
-					<label for="date">Date</label>
-					<br>
-					<input id="datepicker" width="200" name="dateClasses" value="{{formatDate classes.dateClasses 'dd/mm/yyyy'}}" readonly />
-            	</div>
-
-				{{!-- <div class="row">
-				<div class="col-25">
-					<label for="date">Date</label>
+				<div class="row">
+					<div class="col-25">
+						<label for="date">Date</label>
+					</div>
+					<div class="col-75">
+						<select id="date" name="date" required>
+						<option value="235">23/5/2022</option>
+						<option value="295">29/5/2022</option>
+						<option value="166">16/6/2022</option>
+						<option value="307">30/7/2022</option>
+						<option value="266">26/6/2022</option>
+						<option value="276">27/6/2022</option>
+						<option value="265">26/5/2022</option>
+						<option value="165">16/5/2022</option>
+						</select>
+					</div>
 				</div>
-				<div class="col-75">
-					<select id="date" name="date" required>
-					<option value="235">23/5/2022</option>
-					<option value="295">29/5/2022</option>
-					<option value="166">16/6/2022</option>
-					<option value="307">30/7/2022</option>
-					<option value="266">26/6/2022</option>
-					<option value="276">27/6/2022</option>
-					<option value="265">26/5/2022</option>
-					<option value="165">16/5/2022</option>
-					</select>
-				</div>
-				</div>
-				<br> --}}
+				<br>
 
 				<div class="form-row md-form">
 					<label for="class_no">Class</label>
@@ -115,6 +122,7 @@
 						</select>
 					</div>
 				</div>
+				<br>
 
       			<div class="form-row md-form">
 					<label for="pax">Pax</label>
@@ -122,15 +130,10 @@
 						<input type="number" id="pax" name="pax" min="1" max="5">
 					</div>
 				</div>
+				<br>
 			</div>
 		</div>
 		<br>
 		<button id="btnSubmit" type="submit" class="btn btn-primary">Update</button>
 	</form>
-	</div>
-
-<script>
-	$('#datepicker').datepicker({
-		format: 'dd/mm/yyyy'
-	});
-</script>
+</div>
