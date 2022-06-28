@@ -1,51 +1,31 @@
 <link rel="stylesheet" href="public/css/user/confirmation.css">
-<p>Home > Classes > Book Now > Confirmation</p>
-<style type="type/css">
-    div.container {
-		width: 80%;
-		margin: auto;
-		margin-top: 30px;
-	}
-</style>
+<p>Home > Workshop > Book Now > Confirmation</p>
 
-<div class="container">
-	{{#if classes}}
-	<div class="card card-body">
-		{{#each classes}}
-       <p>User {{userId}}, Do confirm your booking.</p>
-		<div class="card border-dark mb-2 w-100 mx-auto"
-            <h5 class="card-starter">
-			<div class="card-body">
-				<div class="row">					
-					<div class="col">
-						<p class="details">Details:</p>
-						<p class="text-primary">Time: {{time}}</p>
-                        <p class="text-primary">Date: {{date}}</p>
-                        <p class="text-primary">Instructor: {{instructor_name}}</p>
-                        <p class="text-primary">Instructor ID: {{instructor_id}}</p>
-					</div>
+<h2>User {{userId}}, Do confirm your booking.</h2>
+<hr>
 
-					<div class="col">
-						<p class="class">Class:</p>
-                        <p class="text-primary">Course: {{course_name}}</p>
-                        <p class="text-primary">Course ID: {{course_id}}</p>
-                        <p class="text-primary">Difficulty: {{course_difficulty}}</p>
-					</div>
+<p>Details:</p>
+<p>Time {{time}}</p>
+<p>Date {{dates}}</p>
+<p>Instructor {{instructor_name}}</p>
+<p>Instructor ID {{instructor_ID}}</p>
 
-					<div class="col">
-						<p class="information">Information</p>
-						<p class="text-primary">Price: {{course_price}}</p>
-                        <p class="text-primary">Pax: {{pax}}</p>
-					</div>
-                    <br>
-                    <div class="submit">
-                    <button class="btn btn-primary waves-effect" type="submit"><a href="/booking/payment">Pay Now</a></button>
-                    </div>
-				</div>
-			</div>
-		{{/each}}
-	</div>
-	{{else}}
-	<h3>Nothing to be confirmed</h3>
-	{{/if}}
-</div>
+<p>Class:</p>
+<p>Course</p>
+<p>{{name}}</p>
+<p>Course ID</p>
+<p>{{course_id}}</p>
+<p>Difficulty</p>
+<p>{{difficulty}}</p>
+
+<p>Information:</p>
+<p>Price:</p>
+<p>{{price}}</p>
+
+<p>Date:</p>
+<p>16/05/2022</p>
+
+<p>Time:</p>
+<p>{{time}}</p>
+
+<button type="button" class="btn btn-light"><a href="/payment">Pay Now</a></button>
