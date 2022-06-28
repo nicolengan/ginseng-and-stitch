@@ -10,6 +10,8 @@ const Handlebars = require('handlebars');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
+const stripe = require('stripe')('sk_test_Ou1w6LVt3zmVipDVJsvMeQsc');
+
 require('dotenv').config();
 /*
  * Creates an Express server - Express is a web application framework for creating web applications
@@ -97,14 +99,14 @@ app.use(function(req, res, next) {
     res.locals.user = req.user || null;
     next();
 });
-
+const ensureAuthenticated = require('./helpers/auth');
 const isAdmin = require('./helpers/admin');
-
 // mainRoute is declared to point to routes/main.js
 
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/account');
 const adminRoute = require('./routes/admin');
+const paymentRoute = require('./routes/payment');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/*', (req, res, next) =>{
     req.app.locals.layout = 'main'; // set your layout here
@@ -114,7 +116,8 @@ app.use('/*', (req, res, next) =>{
 app.use('/', mainRoute);
 app.use('/account', userRoute);
 app.use('/admin', isAdmin, adminRoute);
-// redirects error to page
+app.use('/payment', ensureAuthenticated, paymentRoute);
+// redirects error to page 
 app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).send('Something broke!')
