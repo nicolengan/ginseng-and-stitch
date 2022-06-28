@@ -1,0 +1,160 @@
+<style>
+
+label {
+  display: inline-block;
+}
+
+.container {
+	width: 40%;
+	margin: auto;
+}
+
+.col-75 {
+  margin-top: 2px;
+}
+
+.submit {
+	width: 20%; 
+	margin: auto;
+	text-align: center;
+}
+</style>
+
+<!--admin create classes -->
+<h4><u>Booking</u></h4>
+
+	<div class="container">
+		<form method="POST" action="">
+            
+            <!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+				<div class="row">
+					<div class="col-25">
+						<label for="name">Name</label>
+					</div>
+					<div class="col-75">
+						<select id="name" name="name" required>
+                        <option value="Advanced Sewing">Advanced Sewing</option>
+						{{!-- <option value="Make your own Jacket">Make your own Jacket</option>
+						<option value="Introduction to Sewing">Introduction to Sewing</option>
+						<option value="Pattern Drafting">Pattern Drafting</option> --}}
+						</select>
+					</div>
+				</div>
+				<br>
+
+			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+				<div class="row">
+					<div class="col-25">
+						<label for="course_id">Course ID</label>
+					</div>
+					<div class="col-75">
+						<select id="course_id" name="course_id" required>
+						<option value="1">1</option>
+						{{!-- <option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option> --}}
+						</select>
+					</div>
+				</div>
+				<br>
+
+				<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+				<div class="row">
+					<div class="col-25">
+						<label for="class_id">Class ID</label>
+					</div>
+					<div class="col-75">
+						<select id="class_id" name="Class ID" required>
+						<option value="1">1</option>
+						{{!-- <option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option> --}}
+						</select>
+					</div>
+				</div>
+				<br>
+
+                <!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+				<div class="row">
+					<div class="col-25">
+						<label for="difficulty">Difficulty</label>
+					</div>
+					<div class="col-75">
+						<select id="difficulty" name="difficulty" required>
+						{{!-- <option value="Beginner">Beginner</option> --}}
+						<option value="Advanced">Advanced</option>
+						{{!-- <option value="Master">Master</option> --}}
+						</select>
+					</div>
+				</div>
+				<br>
+
+				<div class="row">
+					<div class="col-25">
+						<label for="price">Course Price</label>
+					</div>
+					<div class="col-75">
+						<select id="price" name="price" required>
+                            <option value="240">240</option>
+						<br>
+					</div>
+				</div>
+				<br>
+
+				<div class="row">
+					<div class="col-25">
+						<label for="date">Date</label>
+						<p>16/05/2022</p>
+					</div>
+				</div>
+				<br>
+
+				<div class="row">
+					<div class="col-25">
+						<label for="time">Timing</label>
+					</div>
+					<div class="col-75">
+						<select id="time" name="time" required>
+						<option value="0930">0930AM</option>
+						{{!-- <option value="1130">1130AM</option>
+						<option value="1230">1230PM</option>
+						<option value="1400">1400PM</option>
+						<option value="1500">1500PM</option> --}}
+						</select>
+					</div>
+				</div>
+				<br>
+
+				<div class="row">
+					<div class="col-25">
+						<label for="instructor_id">Instructor ID</label>
+					</div>
+					<div class="col-75">
+						<select id="instructor_id" name="instructor_id" required>
+						<option value="1">1</option>
+						{{!-- <option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option> --}}
+						</select>
+					</div>
+				</div>
+				<br>
+
+				<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM INSTRUCTOR -->
+				<div class="row">
+					<div class="col-25">
+						<label for="instructor_name">Instructor Name</label>
+					</div>
+					<div class="col-75">
+						<select id="instructor_name" name="instructor_name" required>
+						<option value="Mr Mic Drop">Mr Mic Drop</option>
+						{{!-- <option value="Mr Ben Dover">Mr Ben Dover</option> --}}
+						</select>
+					</div>
+				</div>
+				<br>
+				<div class="submit">
+				<button class="btn btn-primary waves-effect" type="submit">+ Create</button>
+				</div>
+		</form>
+	</div>

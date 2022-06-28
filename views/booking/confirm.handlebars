@@ -1,18 +1,31 @@
 <link rel="stylesheet" href="public/css/user/confirmation.css">
 <p>Home > Workshop > Book Now > Confirmation</p>
 
-<h2>CONFIRM YOUR BOOKING</h2>
+<h2>User {{userId}}, Do confirm your booking.</h2>
 <hr>
 
 <p>Details:</p>
-<p>Time: 0930AM</p>
-<p>Date: 16/5/2022</p>
-<p>Instructor: Mr Ben Dover</p>
-
-<p>Pax:</p>
-<p>1 Adult</p>
+<p>Time {{time}}</p>
+<p>Date {{dates}}</p>
+<p>Instructor {{instructor_name}}</p>
+<p>Instructor ID {{instructor_ID}}</p>
 
 <p>Class:</p>
-<p>Advanced Sewing</p>
+<p>Course</p>
+<p>{{name}}</p>
+<p>Course ID</p>
+<p>{{course_id}}</p>
+<p>Difficulty</p>
+<p>{{difficulty}}</p>
+
+<p>Information:</p>
+<p>Price:</p>
+<p>{{price}}</p>
+
+<p>Date:</p>
+<p>16/05/2022</p>
+
+<p>Time:</p>
+<p>{{time}}</p>
 
 <button type="button" class="btn btn-light"><a href="/payment">Pay Now</a></button>

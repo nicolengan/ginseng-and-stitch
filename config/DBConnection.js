@@ -1,7 +1,7 @@
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Classes = require('../models/Classes');
-const Bookings = require('../models/Booking');
+const Booking = require('../models/Booking');
 const Courses = require('../models/courses');
 
 const setUpDB = (drop) => {
@@ -18,10 +18,10 @@ const setUpDB = (drop) => {
         //    Classes.belongsTo(Courses);
         
            //Booking linkage to Classes and User
-           User.hasMany(Bookings); 
-           Classes.hasMany(Bookings);
-           Bookings.belongsTo(Classes);
-           Bookings.belongsTo(User);
+           User.hasMany(Booking); 
+        //    Classes.hasMany(Booking);
+        //    Booking.belongsTo(Classes);
+           Booking.belongsTo(User);
 
            mySQLDB.sync({ 
                 force: drop 

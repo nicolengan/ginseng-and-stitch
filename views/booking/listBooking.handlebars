@@ -1,0 +1,57 @@
+<p>Home > Classes > Book Now</p>
+<div class="container">
+  {{#if Booking}}
+  <div class="card">
+    {{#each Booking}}
+        <p>Hi user {{userId}}</p>
+        <p>Now you will be proceeding to book the classes available.</p>
+        <h3 class="text-primary">Workshops Available:</h3>
+        <p>This will be class ID {{class_id}}</p>
+        <p> Booking id of {{id}}</p>
+        <div class="card-related">
+            <form method="POST" action="">
+                <div class="card-details">
+                    <h5 class="card-starter">
+                    <!--According to difficulty="Advanced"-->
+                    <div class="card" style="width: 18rem;">
+                        <div class="card" style="width: 18rem;">
+                        <img src="img/introduction_img.jpg" class="card-img-top1" alt="int act" width="290" height="367">
+                        <p class="difficulty">Difficulty</p>
+                        <p class="text-info">{{difficulty}}</p>
+                        <p class="name">Name</p>
+                        <p class="text-info">{{name}}</p>
+                         <p class="card-text">In this class, we will start to teach you more advance techniques that the industry uses and the necessary skills for you to start sewing your very own clothes.</p>
+                        <p class="price">Price</p>
+                        <p class="text-info">{{price}}</p>
+                    </h5>
+                   
+
+                    <div class"description">
+                    <p>Timing and Instructors Available on
+                    <br>
+                    <p class="text-info">16/5/2022</p>
+                    </p>
+                    <div class="col-sm-12 col-md-12 col-lg-2">
+                        <p class="instructor_id">Instructor ID</p>
+                        <p class="text-info">{{instructor_id}}</p>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-2">
+                        <p class="instructor_name">Instructor Name</p>
+                        <p class="text-info">{{instructor_name}}</p>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-2">
+                        <p class="time">Time</p>
+                        <p class="text-info">{{time}}</p>
+                    </div>
+                    <br>
+                    <div class="submit">
+                    <button class="btn btn-primary waves-effect" type="submit"><a href="/confirm">Confirm Now</a></button>
+                    </div>
+            </form>
+        </div>
+        {{/each}}
+        </div>
+        {{else}}
+        <h3>Unable to book now</h3>
+        {{/if}}
+</div>
