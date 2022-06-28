@@ -9,7 +9,12 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 const Handlebars = require('handlebars');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const ORMSession = require("connect-session-sequelize")(session.Store);
 const path = require('path');
+const helpers = require('./helpers/handlebars');
+const { initialize_database, ORM } = require('./config/DBConnection');
+const flash = require('connect-flash');
+const flashMessenger = require('flash-messenger');
 require('dotenv').config();
 /*
  * Creates an Express server - Express is a web application framework for creating web applications
@@ -54,39 +59,23 @@ app.use(session({
 }));
 
 // sql create connection
-const MySQLStore = require('express-mysql-session');
-var options = {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PWD,
-    database: process.env.DB_NAME,
-    clearExpired: true,
-    // The maximum age of a valid session; milliseconds: 
-    expiration: 3600000, // 1 hour = 60x60x1000 milliseconds
-    // How frequently expired sessions will be cleared; milliseconds: 
-    checkExpirationInterval: 1800000 // 30 min
-};
 
+const SessionStore = new ORMSession({
+	db:                      ORM,
+	expiration:              3600000,
+	checkExpirationInterval: 1800000
+});
 app.use(session({
-    key: 'vidjot_session',
-    secret: 'tojdiv',
-    store: new MySQLStore(options),
+    key: 'fdsp_session',
+    secret: 'fdsp',
+    store: SessionStore,
     resave: false,
     saveUninitialized: false,
 }));
 
 
 // Bring in database connection 
-const DBConnection = require('./config/DBConnection');
-
-// Connects to MySQL database 
-DBConnection.setUpDB(false); // To set up database with new tables (true)
-
-const flash = require('connect-flash');
 app.use(flash());
-
-const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 
 // Passport Config 
@@ -99,20 +88,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Place to define global variables
-app.use(function(req, res, next) {
-    res.locals.messages = req.flash('message');
-    res.locals.errors = req.flash('error');
-    res.locals.user = req.user || null;
-    next();
-});
-
-const isAdmin = require('./helpers/admin');
 
 // mainRoute is declared to point to routes/main.js
 
 const mainRoute = require('./routes/main');
-const userRoute = require('./routes/account');
-const adminRoute = require('./routes/admin');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/*', (req, res, next) =>{
     req.app.locals.layout = 'main'; // set your layout here
@@ -120,21 +99,18 @@ app.use('/*', (req, res, next) =>{
 });
 
 app.use('/', mainRoute);
-app.use('/account', userRoute);
-app.use('/admin', isAdmin, adminRoute);
-// redirects error to page
-app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).send('Something broke!')
-});
-app.use((req, res, next) => {
-    res.status(404).send("Sorry can't find that!")
-});
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 const port = 5000;
 
 // Starts the server and listen to port
-app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
+initialize_database(false)
+.then(() => {
+	//	Infinite loop
+	app.listen(port, () => {
+		console.log(`Server started on port ${port}`);
+	});
+})
+.catch((error) => {
+	console.error("Failed to start server as database cannot be initialized");
 });

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const {User} = require('../models/User');
 
 router.all('/*', (req, res, next) => {
     req.app.locals.layout = 'admin'; // set your layout here

@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
 const ensureAuthenticated = require('../helpers/auth');
-const isAdmin = require('../helpers/admin');
 
 router.get('/', ensureAuthenticated, (req, res) => {
     User.findAll({
@@ -93,9 +92,5 @@ router.get('/logout', (req, res, next) => {
         res.redirect('/');
         console.log("User logged out successfully");
     });
-});
-
-router.get('/test', isAdmin, (req, res) => {
-    res.redirect('/');
 });
 module.exports = router;
