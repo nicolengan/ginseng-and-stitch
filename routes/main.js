@@ -17,8 +17,8 @@ router.get('/products', (req, res) => {
     res.render('products');
 });
 
-router.get('/workshops', (req, res) => {
-    res.render('workshops');
+router.get('/classes', (req, res) => {
+    res.render('classes');
 });
 
 router.get('/contactUs', (req, res) => {

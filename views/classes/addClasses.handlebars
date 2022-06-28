@@ -35,6 +35,8 @@ label {
 
 	<div class="container">
 		<form method="POST" action="">
+
+			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
 				<div class="row">
 					<div class="col-25">
 						<label for="course_id">Course ID</label>
@@ -50,22 +52,38 @@ label {
 				</div>
 				<br>
 
-				<div class="row">
+				{{!-- <div class="row">
 					<div class="col-25">
 						<label for="instructor_id">Instructor ID</label>
 					</div>
 					<div class="col-75">
-						<input type="text" id="instructor_id" name="instructor_id" value=""><br>
+						<input type="text" id="instructor_id" name="instructor_id" value="">
+						<br>
+					</div>
+				</div>
+				<br> --}}
+
+				<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM INSTRUCTOR -->
+				<div class="row">
+					<div class="col-25">
+						<label for="instructor_name">Instructor Name</label>
+					</div>
+					<div class="col-75">
+						<select id="instructor_name" name="instructor_name" required>
+						<option value="Mr Mic Drop">Mr Mic Drop</option>
+						<option value="Mr Ben Dover">Mr Ben Dover</option>
+						</select>
 					</div>
 				</div>
 				<br>
 
+				<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
 				<div class="row">
 					<div class="col-25">
-						<label for="name">Name</label>
+						<label for="course_name">Name</label>
 					</div>
 					<div class="col-75">
-						<select id="name" name="name" required>
+						<select id="course_name" name="course_name" required>
 						<option value="Make your own Jacket">Make your own Jacket</option>
 						<option value="Introduction to Sewing">Introduction to Sewing</option>
 						<option value="Pattern Drafting">Pattern Drafting</option>
@@ -74,16 +92,28 @@ label {
 				</div>
 				<br>
 
+				<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
 				<div class="row">
 					<div class="col-25">
-						<label for="difficulty">Difficulty</label>
+						<label for="course_difficulty">Difficulty</label>
 					</div>
 					<div class="col-75">
-						<select id="difficulty" name="difficulty" required>
+						<select id="course_difficulty" name="course_difficulty" required>
 						<option value="Beginner">Beginner</option>
 						<option value="Advanced">Advanced</option>
 						<option value="Master">Master</option>
 						</select>
+					</div>
+				</div>
+				<br>
+
+				<div class="row">
+					<div class="col-25">
+						<label for="course_price">Course Price</label>
+					</div>
+					<div class="col-75">
+						<input type="text" id="course_price" name="course_price" value="">
+						<br>
 					</div>
 				</div>
 				<br>

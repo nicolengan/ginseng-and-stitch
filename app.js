@@ -111,11 +111,11 @@ const adminRoute = require('./routes/admin');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 
 app.use('/', mainRoute);
-app.use('/classes', classesRoute);
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/account', userRoute);
 app.use('/admin', isAdmin, adminRoute);
+app.use('/classes', isAdmin, classesRoute);
 
 // redirects error to page
 app.use((err, req, res, next) => {
