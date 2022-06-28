@@ -26,6 +26,7 @@ router.get('/courses', (req, res) => {
 });
 
 router.use("/classes", classes)
+
 router.get('/classes', (req, res) => {
     res.render('classes');
 });
