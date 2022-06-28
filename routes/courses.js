@@ -4,6 +4,7 @@ const Courses = require('../models/courses');
 const ensureAuthenticated = require('../helpers/auth');
 const User = require('../models/User');
 const isAdmin = require('../helpers/admin');
+const {clampnumber} = require('../helpers/validate');
 
 
 router.get('/', (req, res) => {
@@ -38,10 +39,11 @@ router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
     let title = req.body.title;
     let Description = req.body.description.slice(0, 1999);
     let uuid = req.body.uuid;
-    let price = req.body.price;
+    let price = clampnumber (req.body.price, -2147483647, 2147483647);
+    let difficulty = req.body.difficulty;
 
     Courses.create(
-        { title, uuid , Description, price }
+        { title, uuid , Description, price, difficulty  }
         )
         .then((courses) => {
             console.log(courses.toJSON());
@@ -52,12 +54,19 @@ router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
 
 router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     Courses.findOne({
-        where: { uuid: req.params.id },
+        where: { id: req.params.id },
         raw: true
     })
     .then((course) =>{
-        res.render("courses/editCourses",  {course});
+        console.log(course)
+        if (course == null){
+            res.redirect("/courses/listCourses");
+        }
+        else{
+            res.render("courses/editCourses",  {course});
+        }
     })
+
     .catch(err => console.log(err));
 });
 
@@ -65,11 +74,12 @@ router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
 
 router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     let title = req.body.title;
-    let description = req.body.description.slice(0, 1999);
-    let price = req.body.price;
+    let Description = req.body.description.slice(0, 1999);
+    let price = clampnumber (req.body.price, -2147483647, 2147483647);
+    let difficulty = req.body.difficulty;
     
     Courses.update(
-        { title, description, price },
+        { title, Description, price, difficulty },
         { where: { id: req.params.id } }
     )
     .then((result) => {
@@ -87,11 +97,11 @@ router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) 
             res.redirect('/courses/listCourses');
             return;
         }
-        if (req.user.id != courses.id) {
-            flashMessage(res, 'error', 'Unauthorised access');
-            res.redirect('/courses/listCourses');
-            return;
-        }
+        // if (req.user.id != courses.id) {
+        //     flashMessage(res, 'error', 'Unauthorised access');
+        //     res.redirect('/courses/listCourses');
+        //     return;
+        // }
 
         let result = await Courses.destroy({ where: { id: courses.id } });
         console.log(result + ' courses deleted');

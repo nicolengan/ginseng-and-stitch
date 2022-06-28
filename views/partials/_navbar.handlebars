@@ -42,28 +42,28 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <a class="navbar-brand position-absolute top-50 start-50 translate-middle" id="logo" href="/">Ginseng & Stitch</a>
       <ul class="navbar-nav me-2 d-flex flex-row position-absolute top-0 end-0">
-				{{#if isAdmin}}
-				<li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Courses
-          </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="/courses/listCourses" >List of Courses</a>
-						<a class="dropdown-item" href="/courses/addCourses" >Add Courses</a>
-					</div>
+				{{#if user}}
+        {{#ifEqual user.role 'admin' }}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Courses
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="/courses/listCourses" >List of Courses</a>
+              <a class="dropdown-item" href="/courses/addCourses" >Add Courses</a>
+            </div>
+          </li>
+        {{/ifEqual}}
+        <li class="nav-item p-1">
+          <a href="/account/logout" class="nav-link">Logout</a>
         </li>
-        {{/if}}
-        {{#if user}}
-				<li class="nav-item p-1">
-					<a href="/account/logout" class="nav-link">Logout</a>
-				</li>
-				{{else}}
-				<li class="nav-item p-1">
-					<a href="/account/login" class="nav-link">Login</a>
-				</li>
-				<li class="nav-item p-1">
-					<a href="/account/register" class="nav-link">Register</a>
-				</li>
+        {{else}}
+        <li class="nav-item p-1">
+          <a href="/account/login" class="nav-link">Login</a>
+        </li>
+        <li class="nav-item p-1">
+          <a href="/account/register" class="nav-link">Register</a>
+        </li>
 				{{/if}}
 			</ul>
     </div>
