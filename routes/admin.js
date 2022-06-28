@@ -7,6 +7,12 @@ router.all('/*', (req, res, next) => {
     next(); // pass control to the next handler
 });
 
+router.get('/admin', (req, res)=>{
+    res.render('admin')
+}
+
+)
+
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await User.count(),

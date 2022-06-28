@@ -95,7 +95,4 @@ router.get('/logout', (req, res, next) => {
     });
 });
 
-router.get('/test', isAdmin, (req, res) => {
-    res.redirect('/');
-});
 module.exports = router;
