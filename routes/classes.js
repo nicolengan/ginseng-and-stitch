@@ -23,19 +23,18 @@ router.get('/addClasses', ensureAuthenticated, (req, res) => {
 
 router.post('/addClasses', ensureAuthenticated, (req, res) => {
     let course_id = req.body.course_id;
-    let instructor_id = req.body.instructor_id;
     let instructor_name = req.body.instructor_name;
     let course_name = req.body.course_name.toString();
     let course_difficulty = req.body.course_difficulty.toString();
     let course_price = req.body.course_price;
     let time = req.body.time;
-    let date = req.body.date;
+    let dateClasses = moment(req.body.dateClasses, 'dd/mm/yyyy');
     let class_no = req.body.class_no;
     let pax = req.body.pax;
     let userId = req.user.id;
 
     Classes.create(
-        { course_id, instructor_id, instructor_name, course_name, course_difficulty, course_price, time, date, class_no, pax, userId }
+        { course_id, instructor_name, course_name, course_difficulty, course_price, time, dateClasses, class_no, pax, userId }
     )
         .then((classes) => {
             console.log(classes.toJSON());
@@ -43,6 +42,11 @@ router.post('/addClasses', ensureAuthenticated, (req, res) => {
         })
         .catch(err => console.log(err))
 });
+
+ 
+// router.get('/editClasses', ensureAuthenticated, (req, res) => {
+//     res.render('classes/editClasses');
+// });
 
 router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
     Classes.findByPk(req.params.id)
@@ -65,18 +69,17 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
 
 router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
     let course_id = req.body.course_id;
-    let instructor_id = req.body.instructor_id;
     let instructor_name = req.body.instructor_name;
     let course_name = req.body.course_name;
     let course_difficulty = req.body.course_difficulty;
     let course_price = req.body.course_price;
     let time = req.body.time;
-    let date = req.body.date;
+    let dateClasses = moment(req.body.dateClasses, 'dd/mm/yyyy');
     let class_no = req.body.class_no;
     let pax = req.body.pax;
 
     Classes.update(
-        { course_id, instructor_id, instructor_name, course_name, course_difficulty, course_price, time, date, class_no, pax},
+        { course_id, instructor_name, course_name, course_difficulty, course_price, time, dateClasses, class_no, pax},
         { where: { id: req.params.id } }
     )
         .then((result) => {
@@ -95,7 +98,7 @@ router.get('/deleteClasses/:id', ensureAuthenticated, async function (req, res) 
             return;
         }
         if (req.user.id != classes.userId) {
-            flashMessage(res, 'error', 'Unauthorized access');
+            flashMessage(res, 'error', 'Unauthorised access');
             res.redirect('/classes/listClasses');
             return;
         }

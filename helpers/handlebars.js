@@ -26,4 +26,4 @@ const ifEqual = function (a , b, options)
     return options.inverse(this);
 ;}
 
-module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck, ifEqual};
+module.exports = { formatDate, replaceCommas, ifEqual};

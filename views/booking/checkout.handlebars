@@ -1,22 +1,4 @@
-<div class="container">
-	{{#if classes}}
-	<div class="card card-body">
-        <h4 class="text-black">Confirm Page</h4>
-        {{#each classes}}
-        <div class="card border-black mb-2 w-100 mx-auto">
-                <h5> Thank you User {{userId}}! </h5>
-                <h5> Your Class #{{id}} has been confirmed successfully.</h5>
-                <h5>Please go back to the Main Page.</h5>
-                <br>
-                <div class="submit">
-                <button class="btn btn-primary waves-effect" type="submit"><a href="/booking/successful">Back to Main Page</a></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{/each}}
-    </div>
-    {{else}}
-    <h3>Please go back and confirm your classes.</h3>
-    {{/if}}
-</div>
+p> Thank you ! </p>
+<p> Your {{class_id}} has been confirmed successfully.</p>
+<p>Please go back to the Main Page.</p>
+<button type="button" class="btn btn-light"><a href="/successful">Back to Main Page</a></button>
