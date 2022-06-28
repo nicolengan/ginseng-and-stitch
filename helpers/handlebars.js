@@ -20,4 +20,10 @@ const selectCheck = function (value, selectValue) {
     return (value == selectValue) ? 'checked' : '';
 };
 
-module.exports = { formatDate, replaceCommas, checkValue, selectCheck };
+const ifEqual = function (a , b, options)
+{
+    if (a == b) { return options.fn(this); }
+    return options.inverse(this);
+;}
+
+module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck, ifEqual};
