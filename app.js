@@ -119,10 +119,13 @@ app.use('/classes', isAdmin, classesRoute);
 
 // redirects error to page
 app.use((err, req, res, next) => {
-        console.error(err.stack)
-        res.status(500).send('Something broke!')
-    })
-    // Any URL with the pattern ‘/*’ is directed to routes/main.js
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+});
+app.use((req, res, next) => {
+    res.status(404).send("Sorry can't find that!")
+});
+// Any URL with the pattern ‘/*’ is directed to routes/main.js
 const port = 5000;
 
 // Starts the server and listen to port
