@@ -10,15 +10,34 @@
 			</div>
 			<div class="form-group mb-4">
 				<label class="font-italic" for="description">Description</label>
-				<textarea class="form-control" id="Description" name="Description" rows="7"
+				<textarea class="form-control" id="description" name="description" rows="7"
 					maxlength="2000">{{course.Description}}</textarea>
 			</div>
             <div class="form group mb-4">
                 <label class="font-italic" for="price">Price</label>
                 <input class="form-control" id="price" name="price" value="{{course.price}}"/>
             </div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+				<label class="font-italic">Difficulty</label>
+				<br>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="basic" value="basic" name="difficulty"
+						{{radioCheck course.difficulty "basic" }}>
+					<label class="form-check-label" for="basic">Basic</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="intermediate" value="intermediate" name="difficulty"
+						{{radioCheck course.difficulty "intermediate" }}>
+					<label class="form-check-label" for="intermediate">Intermediate</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="advanced" value="advanced" name="difficulty"
+						{{radioCheck course.difficulty "advanced" }}>
+					<label class="form-check-label" for="advanced">Advanced</label>
+				</div>
+			</div>
 			<br>
-			<button id="btnSubmit" type="submit" class="btn btn-primary">Save</button>
+			<button id="btnSubmit" type="submit" class="btn btn-primary">Save Changes</button>
         </form>
     </div>
 </div>

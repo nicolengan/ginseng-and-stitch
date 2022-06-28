@@ -74,10 +74,26 @@ router.post('/register', async function(req, res) {
     }
 });
 
+router.get('/loginsuccess',(req,res,next)=>{
+    User.findOne({
+        where: { id: req.user.id },
+        raw: true
+    })
+        .then((user) => {
+            if (user.role == 'admin')
+            {
+                res.redirect('/admin/list')
+            }
+            else
+                res.redirect('/account');
+        })
+        .catch(err => console.log(err));
+});
+
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         // Success redirect URL
-        successRedirect: '/account',
+        successRedirect: '/account/loginsuccess',
         // Failure redirect URL 
         failureRedirect: '/account/login',
         /* Setting the failureFlash option to true instructs Passport to flash 
