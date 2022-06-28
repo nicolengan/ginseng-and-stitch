@@ -45,15 +45,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Enables session to be stored using browser's Cookie ID
 app.use(cookieParser());
 
-// To store session information. By default it is stored as a cookie on browser
-app.use(session({
-    key: 'fullstack_session',
-    secret: 'tojdiv',
-    resave: false,
-    saveUninitialized: false,
-}));
-
-// sql create connection
 const MySQLStore = require('express-mysql-session');
 var options = {
     host: process.env.DB_HOST,
@@ -68,8 +59,9 @@ var options = {
     checkExpirationInterval: 1800000 // 30 min
 };
 
+// To store session information. By default it is stored as a cookie on browser
 app.use(session({
-    key: 'vidjot_session',
+    key: 'fullstack_session',
     secret: 'tojdiv',
     store: new MySQLStore(options),
     resave: false,
