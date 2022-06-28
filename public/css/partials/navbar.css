@@ -98,14 +98,6 @@ a.nav-item {
     text-decoration: none;
 }
 
-#navbarNav a.nav-item {
-    font-size: 12px;
-}
-
-#navbarNav a {
-    font-size: 20px;
-}
-
 #navbarNav ul {
     position: relative;
     display: table;
