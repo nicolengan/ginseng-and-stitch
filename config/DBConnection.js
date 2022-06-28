@@ -2,6 +2,7 @@ const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Classes = require('../models/Classes');
 const Bookings = require('../models/Booking');
+const Courses = require('../models/Courses');
 
 const setUpDB = (drop) => {
     mySQLDB.authenticate()

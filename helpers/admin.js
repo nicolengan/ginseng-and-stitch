@@ -9,10 +9,9 @@ async function isAdmin(req, res, next) {
     })
     console.log(admin)
     if (admin) {
-        res.redirect('/bye')
+        next();
     } else {
         res.redirect('/search')
     }
 }
-module.exports =
-    isAdmin;
+module.exports = isAdmin;

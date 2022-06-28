@@ -31,6 +31,7 @@
         <div class="d-flex flex-column">
           <a href="/about" class="display-5">ABOUT</a>
           <a href="/products" class="display-5">DIY KITS</a>
+          <a href="/courses" class="display-5">COURSES</a>
           <a href="/account" class="display-5">ACCOUNT</a>
           <a href="/contactUs" class="display-5">CONTACT US</a>
           <a href="/classes" class="display-5">CLASSES</a>
@@ -41,8 +42,19 @@
     {{!-- navbar --}}
     <div class="collapse navbar-collapse" id="navbarNav">
       <a class="navbar-brand position-absolute top-50 start-50 translate-middle" id="logo" href="/">Ginseng & Stitch</a>
-			<ul class="navbar-nav me-2 d-flex flex-row position-absolute top-0 end-0">
-				{{#if user}}
+      <ul class="navbar-nav me-2 d-flex flex-row position-absolute top-0 end-0">
+				{{#if isAdmin}}
+				<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Courses
+          </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="/courses/listCourses" >List of Courses</a>
+						<a class="dropdown-item" href="/courses/addCourses" >Add Courses</a>
+					</div>
+        </li>
+        {{/if}}
+        {{#if user}}
 				<li class="nav-item p-1">
 					<a href="/account/logout" class="nav-link">Logout</a>
 				</li>
@@ -59,19 +71,3 @@
   </div>
 </nav>
 
-{{!-- menu dropdown --}}
-{{!-- <div class="collapse" id="collapseExample">
-  <hr class="line">
-  <div class="card card-body menu-options">
-    <a href="">ABOUT</a>
-  </div>
-  <div class="card card-body menu-options">
-    <a href="">DIY KITS</a>
-  </div>
-  <div class="card card-body menu-options">
-    <a href="">ACCOUNT</a>
-  </div>
-  <div class="card card-body menu-options">
-    <a href="">CONTACT US</a>
-  </div>
-</div> --}}

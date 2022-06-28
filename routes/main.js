@@ -3,6 +3,8 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const Classes = require('../models/Classes');
 const ensureAuthenticated = require("../helpers/auth");
+const courses = require("./courses");
+const User = require('../models/User');
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
@@ -17,6 +19,13 @@ router.get('/products', (req, res) => {
     res.render('products');
 });
 
+router.use('/courses', courses)
+
+router.get('/courses', (req, res) => {
+    res.render('courses');
+});
+
+router.use("/classes", classes)
 router.get('/classes', (req, res) => {
     res.render('classes');
 });
