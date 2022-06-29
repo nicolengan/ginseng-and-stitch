@@ -1,13 +1,18 @@
 const express = require('express');
 const router = express.Router();
-router.get('/listProducts', (req, res) => {
-    res.render('products/listProducts');
-});
-
 const moment = require('moment');
 const Product = require('../models/Product');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
+
+router.all('/*', (req, res, next) => {
+    req.app.locals.layout = 'admin'; // set your layout here
+    next(); // pass control to the next handler
+});
+
+router.get('/listProducts', (req, res) => {
+    res.render('products/products');
+});
 
 router.get('/', ensureAuthenticated, (req, res) => {
     Product.findAll({

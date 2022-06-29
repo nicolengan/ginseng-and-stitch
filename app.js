@@ -119,7 +119,7 @@ app.use('/account', userRoute);
 app.use('/admin', isAdmin, adminRoute);
 app.use('/payment', ensureAuthenticated, paymentRoute);
 // redirects error to page 
-app.use('/products', prodRoute);
+app.use('/products',isAdmin, prodRoute);
 // redirects error to page
 app.use((err, req, res, next) => {
     console.error(err.stack)

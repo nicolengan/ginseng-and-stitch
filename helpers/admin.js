@@ -13,6 +13,6 @@ const isAdmin = (req, res, next) => {
         }
     }
     flashMessage(res, 'error', 'Cannot access admin page');
-    res.redirect('/n');
+    res.redirect('/');
 }
 module.exports = isAdmin;
