@@ -8,8 +8,6 @@ const moment = require('moment');
 const Classes = db.define('classes',
     {
         course_id: { type: Sequelize.INTEGER },
-        instructor_id: { type: Sequelize.INTEGER },
-        instructor_name: { type: Sequelize.STRING(2000) },
         course_name: { type: Sequelize.STRING(2000) },
         course_difficulty: { type: Sequelize.STRING(2000) },
         course_price: { type: Sequelize.INTEGER},

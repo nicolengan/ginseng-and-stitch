@@ -4,13 +4,25 @@ const flashMessage = require('../helpers/messenger');
 const ensureAuthenticated = require("../helpers/auth");
 const Booking = require('../models/Booking');
 const Classes = require('../models/Classes');
+const Bookings = require('../models/Booking');
 
 // BOOKING SESSION
-//booking id, course id, class id, instructor id, user id, date created
+//booking id, course id, class id, user id, date created
 
 //book will be listBooking
 router.get('/listBooking', ensureAuthenticated, (req, res) => {
     Classes.findAll({
+            where: { userId: req.user.id },
+            raw: true
+        })
+        .then((classes) => {
+            res.render('booking/listBooking', { classes });
+        })
+        .catch(err => console.log(err));
+});
+
+router.get('/listBooking', ensureAuthenticated, (req, res) => {
+    Booking.findAll({
             where: { userId: req.user.id },
             raw: true
         })
@@ -76,11 +88,10 @@ router.get('/addBooking', ensureAuthenticated, (req, res) => {
 router.post('/addBooking', ensureAuthenticated, (req, res) => {
     let course_id = req.body.course_id;
     let class_id = req.body.class_id;
-    let instructor_id = req.body.instructor_id;
     let userId = req.user.id;
 
     Booking.create(
-        { course_id, class_id, instructor_id, userId}
+        { course_id, class_id, userId}
     )
         .then((booking) => {
             console.log(booking.toJSON());

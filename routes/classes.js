@@ -23,8 +23,6 @@ router.get('/addClasses', ensureAuthenticated, (req, res) => {
 
 router.post('/addClasses', ensureAuthenticated, (req, res) => {
     let course_id = req.body.course_id;
-    let instructor_id = req.body.instructor_id;
-    let instructor_name = req.body.instructor_name;
     let course_name = req.body.course_name.toString();
     let course_difficulty = req.body.course_difficulty.toString();
     let course_price = req.body.course_price;
@@ -35,7 +33,7 @@ router.post('/addClasses', ensureAuthenticated, (req, res) => {
     let userId = req.user.id;
 
     Classes.create(
-        { course_id, instructor_id, instructor_name, course_name, course_difficulty, course_price, time, date, class_no, pax, userId }
+        { course_id, course_name, course_difficulty, course_price, time, date, class_no, pax, userId }
     )
         .then((classes) => {
             console.log(classes.toJSON());
@@ -65,8 +63,6 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
 
 router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
     let course_id = req.body.course_id;
-    let instructor_id = req.body.instructor_id;
-    let instructor_name = req.body.instructor_name;
     let course_name = req.body.course_name;
     let course_difficulty = req.body.course_difficulty;
     let course_price = req.body.course_price;
@@ -76,7 +72,7 @@ router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
     let pax = req.body.pax;
 
     Classes.update(
-        { course_id, instructor_id, instructor_name, course_name, course_difficulty, course_price, time, date, class_no, pax},
+        { course_id, course_name, course_difficulty, course_price, time, date, class_no, pax},
         { where: { id: req.params.id } }
     )
         .then((result) => {
