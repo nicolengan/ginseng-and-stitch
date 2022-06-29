@@ -133,6 +133,7 @@ app.use('/booking', bookingRoute);
 
 // redirects error to page
 app.use('/payment', ensureAuthenticated, paymentRoute);
+
 // redirects error to page 
 app.use((err, req, res, next) => {
     console.error(err.stack)
