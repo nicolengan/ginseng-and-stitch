@@ -12,7 +12,7 @@ const isAdmin = (req, res, next) => {
             res.redirect('/account/login');
         }
     }
-    flashMessage(res, 'error', 'Cannot access admin page, please login and try again');
-    res.redirect('/account/login');
+    flashMessage(res, 'error', 'Cannot access admin page');
+    res.redirect('/n');
 }
 module.exports = isAdmin;
