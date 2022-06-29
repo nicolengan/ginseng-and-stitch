@@ -3,6 +3,7 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const Classes = require('../models/Classes');
 const ensureAuthenticated = require("../helpers/auth");
+const classes = require("./classes");
 const courses = require("./courses");
 const User = require('../models/User');
 
@@ -23,6 +24,12 @@ router.use('/courses', courses)
 
 router.get('/courses', (req, res) => {
     res.render('courses');
+});
+
+router.use('/classes', classes)
+
+router.get('/classes', (req, res) => {
+    res.render('classes');
 });
 
 router.get('/contactUs', (req, res) => {

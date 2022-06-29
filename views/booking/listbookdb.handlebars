@@ -1,0 +1,44 @@
+<p>Home > Classes > Book Now</p>
+<style type="type/css">
+    .search-button{
+      width: 25%; 
+      height: 25%; 
+    }
+    div.container {
+		width: 80%;
+		margin: auto;
+		margin-top: 30px;
+	}
+</style>
+
+<div class="container">
+	{{#if booking}}
+	<div class="card card-body">
+		<h3 class="text-black">Classes</h3>
+		{{#each booking}}
+		<div class="card border-black mb-2 w-100 mx-auto">
+			<div class="card-body">
+				<div class="row">	
+                    <div class="col">
+						<p class="course_id">Booking ID</p>
+						<p class="text-primary">{{id}}</p>
+					</div>
+                    <br>				
+					<div class="col">
+						<p class="course_id">Course ID</p>
+						<p class="text-primary">{{course_id}}</p>
+					</div>
+                    <br>
+                    <div class="col">
+						<p class="class_id">Class ID</p>
+						<p class="text-primary">{{class_id}}</p>
+					</div>
+                    <br>
+				</div>
+			</div>
+		{{/each}}
+	</div>
+	{{else}}
+	<h3>No Booking Available</h3>
+	{{/if}}
+</div>

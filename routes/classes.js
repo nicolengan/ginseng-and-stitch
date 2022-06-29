@@ -5,6 +5,18 @@ const Classes = require('../models/Classes');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 
+router.get('/', (req, res) => {
+    Classes.findAll({
+        where: { userId: req.user.id },
+        raw: true
+    })
+        .then((classes) => {
+            // pass object to listVideos.handlebar
+            res.render('classes', { classes});
+        })
+        .catch(err => console.log(err));
+});
+
 router.get('/listClasses', ensureAuthenticated, (req, res) => {
     Classes.findAll({
         where: { userId: req.user.id },

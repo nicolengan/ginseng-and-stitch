@@ -81,11 +81,11 @@ router.get('/search', (req, res) => {
     res.render('booking/search');
 });
 
-router.get('/addBooking', ensureAuthenticated, (req, res) => {
-    res.render('booking/addBooking');
+router.get('/addbookdb', ensureAuthenticated, (req, res) => {
+    res.render('booking/addbookdb');
 });
 
-router.post('/addBooking', ensureAuthenticated, (req, res) => {
+router.post('/addbookdb', ensureAuthenticated, (req, res) => {
     let course_id = req.body.course_id;
     let class_id = req.body.class_id;
     let userId = req.user.id;
@@ -95,9 +95,19 @@ router.post('/addBooking', ensureAuthenticated, (req, res) => {
     )
         .then((booking) => {
             console.log(booking.toJSON());
-            res.redirect('/booking/listBooking');
+            res.redirect('/booking/listbookdb');
         })
         .catch(err => console.log(err))
 });
 
+router.get('/listbookdb', (req, res) => {
+    Booking.findAll({
+        where: { userId: req.user.id },
+        raw: true
+    })
+    .then((booking) => {
+        res.render('booking/listbookdb', { booking });
+    })
+    .catch(err => console.log(err));
+});
 module.exports = router;
