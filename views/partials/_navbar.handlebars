@@ -1,49 +1,48 @@
-<link rel="stylesheet" href="/css/partials/navbar.css">
 
-{{!--
+ <link rel="stylesheet" href="/css/partials/navbar.css">
+
+
 <script>
   function hamburger() {
     var element = document.getElementById("hamburger");
     element.classList.toggle("open");
   }
-</script> --}}
+</script> 
+    <div class="position-absoluteoverflow-hidden offcanvas offcanvas-top mt-0" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+      id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+      <div class="offcanvas-header">
+              <button type="button" class="btn-close text-reset mt-4 ms-4 position-absolute top-0 start-0" data-bs-dismiss="offcanvas"
+        aria-label="Close"></button>
+        <a class="offcanvas-title" href="/" id="offcanvasScrollingLabel">Ginseng & Stitch</a>
+      </div>
 
+      <div class="offcanvas-body overflow-hidden pt-0 mt-0">
+        <div class="d-flex flex-column">
+          <a href="/about" class="lead">ABOUT</a>
+          <a href="/products" class="lead">DIY KITS</a>
+          <a href="/courses" class="lead">COURSES</a>
+          <a href="/account" class="lead">ACCOUNT</a>
+          <a href="/contactUs" class="lead">CONTACT US</a>
+        </div>
+      </div>
+    </div>
 <nav class="navbar navbar-expand-lg sticky-top navbar-light ">
   <div class="container-fluid">
 
     {{!-- hamburger --}}
     <div id="hamburger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-      aria-controls="offcanvasScrolling" onclick="hamburger()">
+      aria-controls="offcanvasScrolling">
       <span></span>
       <span></span>
       <span></span>
       <span></span>
     </div>
-    <div class="offcanvas offcanvas-top mt-0" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-      id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-      <button type="button" class="btn-close text-reset mt-4 ms-4" data-bs-dismiss="offcanvas"
-        aria-label="Close"></button>
-      <div class="offcanvas-header">
-        <a class="offcanvas-title h4 display-5" href="/"id="offcanvasScrollingLabel">Ginseng & Stitch</a>
-      </div>
-
-      <div class="offcanvas-body">
-        <div class="d-flex flex-column">
-          <a href="/about" class="display-5">ABOUT</a>
-          <a href="/products" class="display-5">DIY KITS</a>
-          <a href="/courses" class="display-5">COURSES</a>
-          <a href="/account" class="display-5">ACCOUNT</a>
-          <a href="/contactUs" class="display-5">CONTACT US</a>
-        </div>
-      </div>
-    </div>
-
     {{!-- navbar --}}
     <div class="collapse navbar-collapse" id="navbarNav">
       <a class="navbar-brand position-absolute top-50 start-50 translate-middle" id="logo" href="/">Ginseng & Stitch</a>
       <ul class="navbar-nav me-2 d-flex flex-row position-absolute top-0 end-0">
-				{{#if user}}
-        {{#ifEqual user.role 'admin' }}
+        {{#if user}}
+                {{#ifEqual user.role 'admin' }}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Courses
@@ -55,6 +54,9 @@
           </li>
         {{/ifEqual}}
         <li class="nav-item p-1">
+          <a href="/account" class="nav-link">Account</a>
+        </li>
+        <li class="nav-item p-1">
           <a href="/account/logout" class="nav-link">Logout</a>
         </li>
         {{else}}
@@ -64,9 +66,25 @@
         <li class="nav-item p-1">
           <a href="/account/register" class="nav-link">Register</a>
         </li>
-				{{/if}}
-			</ul>
+        {{/if}}
+      </ul>
     </div>
   </div>
 </nav>
 
+{{!-- menu dropdown --}}
+{{!-- <div class="collapse" id="collapseExample">
+  <hr class="line">
+  <div class="card card-body menu-options">
+    <a href="">ABOUT</a>
+  </div>
+  <div class="card card-body menu-options">
+    <a href="">DIY KITS</a>
+  </div>
+  <div class="card card-body menu-options">
+    <a href="">ACCOUNT</a>
+  </div>
+  <div class="card card-body menu-options">
+    <a href="">CONTACT US</a>
+  </div>
+</div> --}}

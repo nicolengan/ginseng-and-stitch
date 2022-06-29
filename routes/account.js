@@ -82,7 +82,7 @@ router.get('/loginsuccess',(req,res,next)=>{
         .then((user) => {
             if (user.role == 'admin')
             {
-                res.redirect('/admin/list')
+                res.redirect('/account')
             }
             else
                 res.redirect('/account');
