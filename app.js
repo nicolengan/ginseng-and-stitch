@@ -107,6 +107,7 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/account');
 const adminRoute = require('./routes/admin');
 const paymentRoute = require('./routes/payment');
+const prodRoute = require('./routes/product');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/*', (req, res, next) =>{
     req.app.locals.layout = 'main'; // set your layout here
@@ -118,6 +119,8 @@ app.use('/account', userRoute);
 app.use('/admin', isAdmin, adminRoute);
 app.use('/payment', ensureAuthenticated, paymentRoute);
 // redirects error to page 
+app.use('/products', prodRoute);
+// redirects error to page
 app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).send('Something broke!')
