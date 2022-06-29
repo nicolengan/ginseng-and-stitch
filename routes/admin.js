@@ -7,6 +7,7 @@ router.all('/*', (req, res, next) => {
     next(); // pass control to the next handler
 });
 
+
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await User.count(),

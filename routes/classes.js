@@ -51,7 +51,7 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
                 return;
             }
             if (req.user.id != classes.userId) {
-                flashMessage(res, 'error', 'Unauthorised access');
+                flashMessage(res, 'error', 'Unauthorized access');
                 res.redirect('/classes/listClasses');
                 return;
             }

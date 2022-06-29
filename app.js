@@ -5,6 +5,7 @@
 const express = require('express');
 // const mysql = require('mysql');
 const { engine } = require('express-handlebars');
+const { radioCheck, ifEqual  } = require('./helpers/handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const Handlebars = require('handlebars');
 const cookieParser = require('cookie-parser');
@@ -32,7 +33,11 @@ const helpers = require('./helpers/handlebars');
 app.engine('handlebars', engine({
     helpers: helpers,
     handlebars: allowInsecurePrototypeAccess(Handlebars),
-    defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
+    defaultLayout: 'main', // Specify default template views/layout/main.handlebar 
+    helpers: {
+        radioCheck ,
+        ifEqual
+    }
 }));
 app.set('view engine', 'handlebars');
 
