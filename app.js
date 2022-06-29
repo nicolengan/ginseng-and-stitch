@@ -113,6 +113,7 @@ const isAdmin = require('./helpers/admin');
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/account');
 const adminRoute = require('./routes/admin');
+const prodRoute = require('./routes/product');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/*', (req, res, next) =>{
     req.app.locals.layout = 'main'; // set your layout here
@@ -122,6 +123,7 @@ app.use('/*', (req, res, next) =>{
 app.use('/', mainRoute);
 app.use('/account', userRoute);
 app.use('/admin', isAdmin, adminRoute);
+app.use('/products', prodRoute);
 // redirects error to page
 app.use((err, req, res, next) => {
     console.error(err.stack)
