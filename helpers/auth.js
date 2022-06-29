@@ -1,3 +1,4 @@
+const express = require('express');
 const flashMessage = require('../helpers/messenger');
 
 const ensureAuthenticated = (req, res, next) => {
@@ -8,5 +9,4 @@ const ensureAuthenticated = (req, res, next) => {
     res.redirect('/account/login');
 };
 
-module.exports =
-    ensureAuthenticated;
+module.exports = ensureAuthenticated;
