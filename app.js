@@ -5,12 +5,16 @@
 const express = require('express');
 // const mysql = require('mysql');
 const { engine } = require('express-handlebars');
+const { radioCheck, ifEqual  } = require('./helpers/handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const Handlebars = require('handlebars');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
+const stripe = require('stripe')('sk_test_Ou1w6LVt3zmVipDVJsvMeQsc');
+
 require('dotenv').config();
+
 /*
  * Creates an Express server - Express is a web application framework for creating web applications
  * in Node JS.
@@ -27,9 +31,15 @@ const app = express();
  * 3. 'defaultLayout' specifies the main.handlebars file under views/layouts as the main template
  *
  * */
+const helpers = require('./helpers/handlebars');
 app.engine('handlebars', engine({
+    helpers: helpers,
     handlebars: allowInsecurePrototypeAccess(Handlebars),
-    defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
+    defaultLayout: 'main', // Specify default template views/layout/main.handlebar 
+    helpers: {
+        radioCheck ,
+        ifEqual
+    }
 }));
 app.set('view engine', 'handlebars');
 
@@ -45,15 +55,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Enables session to be stored using browser's Cookie ID
 app.use(cookieParser());
 
-// To store session information. By default it is stored as a cookie on browser
-app.use(session({
-    key: 'fullstack_session',
-    secret: 'tojdiv',
-    resave: false,
-    saveUninitialized: false,
-}));
-
-// sql create connection
 const MySQLStore = require('express-mysql-session');
 var options = {
     host: process.env.DB_HOST,
@@ -68,23 +69,27 @@ var options = {
     checkExpirationInterval: 1800000 // 30 min
 };
 
+// To store session information. By default it is stored as a cookie on browser
 app.use(session({
-    key: 'vidjot_session',
+    key: 'fullstack_session',
     secret: 'tojdiv',
     store: new MySQLStore(options),
     resave: false,
     saveUninitialized: false,
 }));
 
-const flash = require('connect-flash');
-app.use(flash());
-const flashMessenger = require('flash-messenger');
-app.use(flashMessenger.middleware);
+
 // Bring in database connection 
 const DBConnection = require('./config/DBConnection');
 
 // Connects to MySQL database 
 DBConnection.setUpDB(false); // To set up database with new tables (true)
+
+//Messaging library
+const flash = require('connect-flash');
+app.use(flash());
+const flashMessenger = require('flash-messenger');
+app.use(flashMessenger.middleware);
 
 // Passport Config 
 const passport = require('passport');
@@ -97,18 +102,50 @@ app.use(passport.session());
 
 // Place to define global variables
 app.use(function(req, res, next) {
-    // res.locals.messages = req.flash('message');
-    // res.locals.errors = req.flash('error');
-    // res.locals.user = req.user || null;
+    res.locals.messages = req.flash('message');
+    res.locals.errors = req.flash('error');
+    res.locals.user = req.user || null;
     next();
 });
-
+const ensureAuthenticated = require('./helpers/auth');
+const isAdmin = require('./helpers/admin');
 // mainRoute is declared to point to routes/main.js
+
 const mainRoute = require('./routes/main');
-const userRoute = require('./routes/user');
+const classesRoute = require('./routes/classes');
+const bookingRoute = require('./routes/booking');
+const userRoute = require('./routes/account');
+const adminRoute = require('./routes/admin');
+const paymentRoute = require('./routes/payment');
+const prodRoute = require('./routes/product');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
+app.use('/*', (req, res, next) =>{
+    req.app.locals.layout = 'main'; // set your layout here
+    next(); // pass control to the next handler
+});
+
 app.use('/', mainRoute);
-app.use('/user', userRoute);
+
+// Any URL with the pattern ‘/*’ is directed to routes/main.js
+app.use('/account', userRoute);
+app.use('/admin', isAdmin, adminRoute);
+app.use('/classes', isAdmin, classesRoute);
+app.use('/booking', bookingRoute);
+
+// redirects error to page
+app.use('/payment', ensureAuthenticated, paymentRoute);
+
+// redirects error to page 
+app.use('/products',isAdmin, prodRoute);
+// redirects error to page
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+});
+app.use((req, res, next) => {
+    res.status(404).send("Sorry can't find that!")
+});
+
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 const port = 5000;
 

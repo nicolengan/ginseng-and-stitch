@@ -1,0 +1,78 @@
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+        <span data-feather="calendar"></span>
+        This week
+      </button>
+    </div>
+  </div>
+<div class="container">
+	<form align="left" method="get" action="/products/addProducts">
+		<button type="submit" class="btn btn-primary mt-5 mb-2">Add Product</button>
+	</form>
+	{{#if products}}
+		<h3 class="text-primary">Products</h3>
+		<div class="container">
+			<div class="row">
+			{{#each products}}
+			<div class="col-sm-6">
+			<div class="card border-primary mb-2 ">
+				<div class="card-header col-12">
+					<h5 class="card-title">{{prod_name}}</h5>
+				</div>
+				<img src="../img/home_img.jpg" class="card-img-top" alt="...">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<p class="font-italic">Quantity</p>
+							<p class="text-info">
+								{{quantity}}
+							</p>
+						</div>
+						<div class="col">
+							<p class="font-italic">Difficulty</p>
+							<p class="text-info">{{difficulty}}</p>
+						</div>
+						<div class="col">
+							<p class="font-italic">Product Description</p>
+							<p class="text-info">{{prod_desc}}</p>
+						</div>
+						<div class="col">
+							<p>
+								<a href="products/editProduct/{{id}}" class="card-link mb-2">
+									<i class="fas fa-pencil-alt"></i>
+									Edit
+								</a>
+							</p>
+							<p>
+								<a href="/products/deleteProduct/{{id}}" class="card-link" data-toggle="confirmation"
+									data-title="Confirm delete?">
+									<i class="far fa-trash-alt"></i>
+									Delete
+								</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div></div>
+			{{/each}}
+			</div>
+		</div>
+
+</div>
+{{else}}
+<h3>No products yet</h3>
+{{/if}}
+
+<script>
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+	});
+</script>
+</main>

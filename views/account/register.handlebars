@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="/css/user/account.css">
+<div class="position-relative user-img p-5">
+
+<div class="card w-25 p-3 position-relative bottom-50 start-0 rounded" id="register">
+	<div class="card-title">
+		<h2>Register</h2>
+	</div>
+	{{!-- ADD VALIDATION!!!!!!! --}}
+	<form class="needs-validation" method="post" action="" novalidate>
+		<div class="mb-3">
+			<div class="row">
+				<div class="col">
+					<div class="form-floating">
+						<input type="text" class="form-control" id="floatingFirstName" placeholder="First Name" name="name"
+							value="{{name}}" required>
+						<label for="floatingFirstName">First Name</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mb-3">
+			<div class="form-floating">
+				<input type="email" class="form-control" id="floatingEmail" placeholder="Email"
+					aria-describedby="emailHelp" name="email" value="{{email}}">
+				<label for="floatingEmail">Email</label>
+			</div>
+			<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+		</div>
+
+		<div class="mb-3">
+			<div class="form-floating">
+				<input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+				<label for="floatingPassword">Password</label>
+			</div>
+		</div>
+		<div class="mb-3">
+			<div class="form-floating">
+				<input type="password" class="form-control" id="floatingConfirmPassword" name="password2" placeholder="Confirm Password">
+				<label for="floatingConfirmPassword">Confirm Password</label>
+			</div>
+		</div>
+
+		{{!-- <div class="mb-3 form-check">
+			<input type="checkbox" class="form-check-input" id="exampleCheck1">
+			<label class="form-check-label" for="exampleCheck1">Check me out</label>
+		</div> --}}
+		<button type="submit" class="mt-1 btn btn-primary">Submit</button>
+
+	</form>
+
+</div></div>

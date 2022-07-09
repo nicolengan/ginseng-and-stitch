@@ -1,0 +1,146 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Account</li>
+  </ol>
+</nav>
+<div class="card mt-2 w-75">
+
+  {{#if users}}
+  {{#each users}}
+  <h5 class="card-header">Account
+  </h5>
+  <div class="card-body">
+    <p class="card-title h5">Welcome {{name}}
+        <button class="btn btn-outline-primary position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-name={{name}}
+      data-bs-email={{email}}>Edit
+      <a class="bi bi-pencil-square">
+      </a>
+    </button>
+    </p>
+
+    <p class="card-text h5">Email: {{email}}</p>
+    <a class="card-text btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePassword">Change password</a>
+
+   <!-- modal for user edit-->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Placeholder</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form action="/account/editUser/{{id}}" method="post">
+              <div class="mb-3">
+                <label for="name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control name" name="name" value="name" size="25">
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="col-form-label">Email:</label>
+                <input type="email" class="form-control email" name="email" value="email">
+              </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+<!-- modal for password change -->
+    <div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="changePassword" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="changePasswordLabel">Update Password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form action="/account/changePassword/{{id}}" method="post">
+              <div class="mb-3">
+                <label for="oldPassword" class="col-form-label">Old password: </label>
+                <input type="password" class="form-control" name="oldPassword" size="20">
+              </div>
+
+           <div class="mb-3">
+                <label for="newPassword" class="col-form-label">New password: </label>
+                <input type="password" class="form-control" name="newPassword" size="20">
+              </div>
+          </div>
+           <div class="mb-3">
+                <label for="newPassword2" class="col-form-label">Confirm new password: </label>
+                <input type="password" class="form-control" name="newPassword2" size="20">
+              </div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
+          </div>
+
+          <div class="modal-footer">
+          </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  {{/each}}
+  {{/if}}
+</div>
+
+<!-- show courses-->
+<div class="row w-75 mx-auto my-5">
+  <div class="col-sm-6">
+    <div class="card">
+      <img src="../img/home_img.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Course 1</h5>
+        <p class="card-text">Class 1</p>
+        <a href="#" class="btn btn-primary">Edit booking details</a>
+        <a href="#" class="btn btn-danger">Delete booking</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <img src="../img/home_img.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Course 2</h5>
+        <p class="card-text">Class 2</p>
+        <a href="#" class="btn btn-primary">Edit booking details</a>
+        <a href="#" class="btn btn-danger">Delete booking</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var exampleModal = document.getElementById('editModal')
+  exampleModal.addEventListener('show.bs.modal', function (event) {
+
+    // Button that triggered the modal
+    var button = event.relatedTarget
+
+    // Extract info from data-bs-* attributes
+    var name = button.getAttribute('data-bs-name')
+    var email = button.getAttribute('data-bs-email')
+
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+
+    // Update the modal's content.
+    var modalTitle = exampleModal.querySelector('.modal-title')
+    var modalBodyName = exampleModal.querySelector('.modal-body input.name')
+    var modalBodyEmail = exampleModal.querySelector('.modal-body input.email')
+
+    modalTitle.textContent = 'Update account for ' + name
+    modalBodyName.value = name
+    modalBodyEmail.value = email
+  })
+</script>
