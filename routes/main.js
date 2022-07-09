@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
+const Classes = require('../models/Classes');
+const ensureAuthenticated = require("../helpers/auth");
+const classes = require("./classes");
 const courses = require("./courses");
-const admin = require("../helpers/admin");
-const isAdmin = require("../helpers/admin");
 const User = require('../models/User');
 
 router.get('/', (req, res) => {
@@ -18,14 +19,14 @@ router.get('/about', (req, res) => {
 
 router.use('/courses', courses)
 
-router.use('/admin', isAdmin, admin);
-
 router.get('/courses', (req, res) => {
     res.render('courses');
 });
 
-router.get('/workshops', (req, res) => {
-    res.render('workshops');
+router.use('/classes', classes)
+
+router.get('/classes', (req, res) => {
+    res.render('classes');
 });
 
 router.get('/contactUs', (req, res) => {

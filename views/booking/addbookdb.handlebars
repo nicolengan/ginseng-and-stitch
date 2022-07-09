@@ -1,0 +1,63 @@
+<style>
+label {
+  display: inline-block;
+}
+
+.container {
+	width: 40%;
+	margin: auto;
+}
+
+.col-75 {
+  margin-top: 2px;
+}
+
+.submit {
+	width: 20%; 
+	margin: auto;
+	text-align: center;
+}
+</style>
+
+<h4><u>New Booking Creation</u></h4>
+<!--booking id, course id, class id,  user id, date created-->
+
+	<div class="container">
+		<form method="POST" action="">
+
+			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+				<div class="row">
+					<div class="col-25">
+						<label for="course_id">Course ID</label>
+					</div>
+					<div class="col-75">
+						<select id="course_id" name="course_id" required>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						</select>
+					</div>
+				</div>
+				<br>
+
+            <!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+				<div class="row">
+					<div class="col-25">
+						<label for="class_id">Class ID</label>
+					</div>
+					<div class="col-75">
+						<select id="class_id" name="class_id" required>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						</select>
+					</div>
+				</div>
+				<br>
+				<div class="submit">
+				<button class="btn btn-primary waves-effect" type="submit">+ Create</button>
+				</div>
+		</form>
+	</div>

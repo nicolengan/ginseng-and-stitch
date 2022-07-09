@@ -14,6 +14,7 @@ const path = require('path');
 const stripe = require('stripe')('sk_test_Ou1w6LVt3zmVipDVJsvMeQsc');
 
 require('dotenv').config();
+
 /*
  * Creates an Express server - Express is a web application framework for creating web applications
  * in Node JS.
@@ -30,7 +31,9 @@ const app = express();
  * 3. 'defaultLayout' specifies the main.handlebars file under views/layouts as the main template
  *
  * */
+const helpers = require('./helpers/handlebars');
 app.engine('handlebars', engine({
+    helpers: helpers,
     handlebars: allowInsecurePrototypeAccess(Handlebars),
     defaultLayout: 'main', // Specify default template views/layout/main.handlebar 
     helpers: {
@@ -82,9 +85,9 @@ const DBConnection = require('./config/DBConnection');
 // Connects to MySQL database 
 DBConnection.setUpDB(false); // To set up database with new tables (true)
 
+//Messaging library
 const flash = require('connect-flash');
 app.use(flash());
-
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 
@@ -109,6 +112,8 @@ const isAdmin = require('./helpers/admin');
 // mainRoute is declared to point to routes/main.js
 
 const mainRoute = require('./routes/main');
+const classesRoute = require('./routes/classes');
+const bookingRoute = require('./routes/booking');
 const userRoute = require('./routes/account');
 const adminRoute = require('./routes/admin');
 const paymentRoute = require('./routes/payment');
@@ -120,9 +125,16 @@ app.use('/*', (req, res, next) =>{
 });
 
 app.use('/', mainRoute);
+
+// Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/account', userRoute);
 app.use('/admin', isAdmin, adminRoute);
+app.use('/classes', isAdmin, classesRoute);
+app.use('/booking', bookingRoute);
+
+// redirects error to page
 app.use('/payment', ensureAuthenticated, paymentRoute);
+
 // redirects error to page 
 app.use('/products',isAdmin, prodRoute);
 // redirects error to page
