@@ -1,0 +1,46 @@
+<div class="container">
+	{{#if classes}}
+	<h2 class="text-dark">Classes Available</h2>
+		{{#each classes}}
+            <div class="card border-dark mb-2">
+                <div class="card-body">
+					<div class="row">
+						<div class="col">
+							<p class="text-primary">Name</p>
+							<p class="text-dark">{{course_name}}</p>
+						</div>
+
+						<div class="col">
+							<p class="text-primary">Difficulty</p>
+							<p class="text-dark">{{course_difficulty}}</p>
+						</div>
+						
+						<div class="col">
+							<p class="text-primary">Price</p>
+							<p class="text-dark">{{course_price}}</p>
+						</div>
+
+						<div class="col">
+							<p class="text-primary">Time</p>
+							<p class="text-dark">{{time}}</p>
+						</div>
+
+						<div class="col">
+							<p class="text-primary">Date</p>
+							<p class="text-dark">{{date}}</p>
+						</div>
+													
+						<div class="col">
+							<p class="text-primary">Class</p>
+							<p class="text-dark">{{class_no}}</p>
+						</div>
+					</div>
+			</div>
+		</div>
+		{{/each}}
+		<br>
+	</div>
+	{{else}}
+	<h3>No Classes</h3>
+	{{/if}}
+</div>

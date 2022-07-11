@@ -17,7 +17,8 @@
       <button id="search-button" type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
     </div>
   </div> --}}
-{{!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Dashboard</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
@@ -30,66 +31,69 @@
         This week
       </button>
     </div>
-  </div> --}}
+</div>
 <div class="container">
+	<form align="left" method="get" action="/classes/addClasses">
+		<button type="submit" class="btn btn-primary mt-5 mb-2">Add Classes</button>
+	</form>
 	{{#if classes}}
 	<div class="card card-body">
-		<h3 class="text-primary">Classes</h3>
+		<h3 class="text-dark">Classes</h3>
 		{{#each classes}}
-		<div class="card border-black mb-2 w-100 mx-auto">
+		<div class="card border-black mb-2">
 			<div class="card-body">
 				<div class="row">
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="course_id">Class ID</p>
-						<p class="text-primary">{{id}}</p>
+					<div class="col">
+						<p class="text-primary">Class ID</p>
+						<p class="text-dark">{{id}}</p>
 					</div>
 
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="course_id">Course ID</p>
-						<p class="text-primary">{{course_id}}</p>
+					<div class="col">
+						<p class="text-primary">Course ID</p>
+						<p class="text-dark">{{course_id}}</p>
 					</div>
 
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="user_id">User ID</p>
-						<p class="text-primary">{{userId}}</p>
+					<div class="col">
+						<p class="text-primary">User ID</p>
+						<p class="text-dark">{{userId}}</p>
 					</div>
 
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="course_name">Name</p>
-						<p class="text-primary">{{course_name}}</p>
+					<div class="col">
+						<p class="text-primary">Name</p>
+						<p class="text-dark">{{course_name}}</p>
 					</div>
 
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="course_difficulty">Difficulty</p>
-						<p class="text-primary">{{course_difficulty}}</p>
+					<div class="col">
+						<p class="text-primary">Difficulty</p>
+						<p class="text-dark">{{course_difficulty}}</p>
 					</div>
 					
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="course_price">Course Price</p>
-						<p class="text-primary">{{course_price}}</p>
+					<div class="col">
+						<p class="text-primary">Course Price</p>
+						<p class="text-dark">{{course_price}}</p>
 					</div>
 
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="time">Time</p>
-						<p class="text-primary">{{time}}</p>
+					<div class="col">
+						<p class="text-primary">Time</p>
+						<p class="text-dark">{{time}}</p>
 					</div>
 
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="date">Date</p>
-						<p class="text-primary">{{date}}</p>
+					<div class="col">
+						<p class="text-primary">Date</p>
+						<p class="text-dark">{{date}}</p>
 					</div>
 												
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="class_no">Class</p>
-						<p class="text-primary">{{class_no}}</p>
+					<div class="col">
+						<p class="text-primary">Class</p>
+						<p class="text-dark">{{class_no}}</p>
 					</div>
 						
-					<div class="col-sm-12 col-md-12 col-lg-2">
-						<p class="pax">Pax</p>
-						<p class="text-primary">{{pax}}</p>
+					<div class="col">
+						<p class="text-primary">Pax</p>
+						<p class="text-dark">{{pax}}</p>
 					</div>
 
-					<div class="col-sm-12 col-md-12 col-lg-2">
+					<div class="col">
 						<p>
 							<a href="/classes/editClasses/{{id}}" class="card-link mb-2">
 								<i class="fas fa-pencil-alt"></i>
@@ -104,7 +108,7 @@
 							</a>
 						</p>
 					</div>
-				</div>
+				</div></div>
 			</div>
 		{{/each}}
 	</div>
@@ -113,4 +117,4 @@
 	{{/if}}
 </div>
 </div>
-{{!-- </main> --}}
+</main>

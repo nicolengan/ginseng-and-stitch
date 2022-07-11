@@ -5,6 +5,11 @@ const Classes = require('../models/Classes');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 
+router.all('/*', (req, res, next) => {
+    req.app.locals.layout = 'admin'; // set your layout here
+    next(); // pass control to the next handler
+});
+
 router.get('/', (req, res) => {
     Classes.findAll({
         where: { userId: req.user.id },
@@ -12,7 +17,7 @@ router.get('/', (req, res) => {
     })
         .then((classes) => {
             // pass object to listVideos.handlebar
-            res.render('classes', { classes});
+            res.render('/classes', { classes});
         })
         .catch(err => console.log(err));
 });
@@ -59,7 +64,7 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
         .then((classes) => {
             if (!classes) {
                 flashMessage(res, 'error', 'Classes not found');
-                res.redirect('/classes/listClasses');
+                res.redirect('/classes/classes');
                 return;
             }
             if (req.user.id != classes.userId) {
@@ -104,13 +109,13 @@ router.get('/deleteClasses/:id', ensureAuthenticated, async function (req, res) 
         }
         if (req.user.id != classes.userId) {
             flashMessage(res, 'error', 'Unauthorized access');
-            res.redirect('/classes/listClasses');
+            res.redirect('/classes/classes');
             return;
         }
 
         let result = await Classes.destroy({ where: { id: classes.id } });
         console.log(result + ' classes deleted');
-        res.redirect('/classes/listClasses');
+        res.redirect('/classes/classes');
     }
     catch (err) {
         console.log(err);

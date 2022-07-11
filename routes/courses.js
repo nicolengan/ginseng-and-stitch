@@ -7,6 +7,11 @@ const isAdmin = require('../helpers/admin');
 const {clampnumber} = require('../helpers/validate');
 
 
+router.all('/*', (req, res, next) => {
+    req.app.locals.layout = 'admin'; // set your layout here
+    next(); // pass control to the next handler
+});
+
 router.get('/', (req, res) => {
     Courses.findAll({
         // where: { userId: req.user.id },
@@ -41,9 +46,11 @@ router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
     let uuid = req.body.uuid;
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
     let difficulty = req.body.difficulty;
+    // let userId = req.user.id;
 
     Courses.create(
-        { title, uuid , Description, price, difficulty  }
+        { title, uuid , Description, price, difficulty }
+        // { title, uuid , Description, price, difficulty, userId }
         )
         .then((courses) => {
             console.log(courses.toJSON());

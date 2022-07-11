@@ -3,7 +3,6 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const Classes = require('../models/Classes');
 const ensureAuthenticated = require("../helpers/auth");
-const classes = require("./classes");
 const courses = require("./courses");
 const User = require('../models/User');
 
@@ -23,10 +22,16 @@ router.get('/courses', (req, res) => {
     res.render('courses');
 });
 
-router.use('/classes', classes)
-
-router.get('/classes', (req, res) => {
-    res.render('classes');
+// WITHOUT ADMIN -> CLASSES
+router.get('/class', (req, res) => {
+    Classes.findAll({
+        where: { userId: req.user.id },
+        raw: true
+    })
+        .then((classes) => {
+            res.render('class', { classes });
+        })
+        .catch(err => console.log(err));
 });
 
 router.get('/contactUs', (req, res) => {
