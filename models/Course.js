@@ -1,29 +1,30 @@
-
 const db = require('../config/DBConfig');
 const sequelize = require('sequelize');
 
-class User extends sequelize.Model {}
+class Course extends sequelize.Model {}
 
-User.init({
+Course.init({
   // Model attributes are defined here
-  name: {
+  title: {
     type: sequelize.STRING,
     allowNull: false
   },
-  email: {
+  description: {
     type: sequelize.STRING
   },
-  role: {
-    type: sequelize.CHAR
+  price: {
+    type: sequelize.DECIMAL,
+    allowNull: false
   },
-  password: {
-    type: sequelize.STRING
+  level: {
+    type: sequelize.STRING,
+    allowNull: false
   }
   
 }, {
   // Other model options go here
   sequelize: db, // We need to pass the connection instance
-  modelName: 'User' // We need to choose the model name
+  modelName: 'Course' // We need to choose the model name
 });
 
-module.exports = User;
+module.exports = Course;

@@ -1,17 +1,14 @@
-const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
-const moment = require('moment');
+const sequelize = require('sequelize');
 
-// moment.suppressDeprecationWarnings = true;
+class Booking extends sequelize.Model {}
 
-//booking id, course id, class id, user id, date created
+Booking.init({
+  // Model attributes are defined here
+}, {
+  // Other model options go here
+  sequelize: db, // We need to pass the connection instance
+  modelName: 'Booking' // We need to choose the model name
+});
 
-// Create booking table in MySQL Database
-const Bookings = db.define('booking',
-    {
-        course_id: { type: Sequelize.INTEGER },
-        class_id: { type: Sequelize.INTEGER},
-    }
-);
-
-module.exports = Bookings;
+module.exports = Booking;
