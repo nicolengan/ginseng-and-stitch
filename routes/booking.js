@@ -3,7 +3,7 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const ensureAuthenticated = require("../helpers/auth");
 const Booking = require('../models/Booking');
-const Classes = require('../models/Classes');
+const Classes = require('../models/Class');
 const Bookings = require('../models/Booking');
 
 // BOOKING SESSION

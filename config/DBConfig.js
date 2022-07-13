@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const {Sequelize} = require('sequelize');
 
 require('dotenv').config();
 
@@ -16,4 +16,5 @@ const sequelize = new Sequelize(
         timezone: '+08:00'
     }
 );
+
 module.exports = sequelize;
