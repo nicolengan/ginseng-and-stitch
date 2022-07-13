@@ -8,7 +8,9 @@ User.init({
   // Model attributes are defined here
   name: {
     type: sequelize.STRING,
+    unique: 'name',
     allowNull: false
+    
   },
   email: {
     type: sequelize.STRING

@@ -6,19 +6,24 @@ class Product extends sequelize.Model {}
 Product.init({
   // Model attributes are defined here
   prod_name: {
-    type: sequelize.STRING
+    type: sequelize.STRING,
+    unique: 'prod_name',
+    allowNull: false
   },
   prod_desc: {
     type: sequelize.STRING
   },
   difficulty: {
-    type: sequelize.STRING
+    type: sequelize.STRING,
+    allowNull: false
   },
   stock: {
-    type: sequelize.INTEGER
+    type: sequelize.INTEGER,
+    allowNull: false
   },
   price: {
-    type: sequelize.DECIMAL
+    type: sequelize.DECIMAL,
+    allowNull: false
   }
   
 }, {
