@@ -84,9 +84,8 @@ router.post('/addUser', async (req, res) => {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
-            var uuid = crypto.randomUUID();
-            console.log(uuid)
-            let user = await User.create({ name, uuid, email, password: hash, role});
+
+            let user = await User.create({ name, email, password: hash, role:'a'});
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/admin/list');
         }

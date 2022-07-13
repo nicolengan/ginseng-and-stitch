@@ -1,5 +1,4 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
+
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
