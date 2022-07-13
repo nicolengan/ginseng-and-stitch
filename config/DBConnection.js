@@ -5,6 +5,8 @@ const User = require('../models/User');
 const Booking = require('../models/Booking');
 const Class = require('../models/Class');
 const Course = require('../models/Course');
+const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 
 const setUpDB = (drop) => {
 
@@ -15,15 +17,14 @@ const setUpDB = (drop) => {
             mySQLDB.sync({ alter: true, force: drop });
             console.log("The table for the was just (re)created!");
 
-            // Cart.belongsTo(User);
-            // Cart.hasMany(Product);
-            // Cart.hasOne(Booking);
+            Cart.belongsTo(User);
+            Product.hasMany(Cart);
+            Booking.hasOne(Cart);
 
-            Course.hasMany(Class);
             Class.belongsTo(Course);
 
             User.hasMany(Booking);
-            Booking.belongsTo(Class);
+            Class.hasMany(Booking)
 
         })
         .catch(err => console.log(err));

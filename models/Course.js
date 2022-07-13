@@ -7,6 +7,7 @@ Course.init({
   // Model attributes are defined here
   title: {
     type: sequelize.STRING,
+    unique: 'title',
     allowNull: false
   },
   description: {

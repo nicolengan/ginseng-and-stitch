@@ -1,27 +1,24 @@
 const db = require('../config/DBConfig');
 const sequelize = require('sequelize');
 
-class Class extends sequelize.Model {}
+class Cart extends sequelize.Model {}
 
-Class.init({
+Cart.init({
   // Model attributes are defined here
-  date: {
-    type: sequelize.DATEONLY,
-    allowNull: false,
-    unique: 'date'
-  },
-  pax: {
-    type: sequelize.INTEGER
-  },
-  max_pax: {
+  quantity: {
     type: sequelize.INTEGER,
+    allowNull: false
+  },
+  total: {
+    type: sequelize.DECIMAL,
+    defaultValue: 0.0,
     allowNull: false
   }
   
 }, {
   // Other model options go here
   sequelize: db, // We need to pass the connection instance
-  modelName: 'Class' // We need to choose the model name
+  modelName: 'Cart' // We need to choose the model name
 });
 
-module.exports = Class;
+module.exports = Cart;
