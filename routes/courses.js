@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Courses = require('../models/courses');
+const Courses = require('../models/Course');
 const ensureAuthenticated = require('../helpers/auth');
 const User = require('../models/User');
 const isAdmin = require('../helpers/admin');

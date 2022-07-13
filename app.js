@@ -56,6 +56,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
 const MySQLStore = require('express-mysql-session');
+
 var options = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -83,7 +84,7 @@ app.use(session({
 const DBConnection = require('./config/DBConnection');
 
 // Connects to MySQL database 
-DBConnection.setUpDB(false); // To set up database with new tables (true)
+DBConnection.setUpDB(); // To set up database with new tables (true)
 
 //Messaging library
 const flash = require('connect-flash');

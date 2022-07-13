@@ -1,35 +1,31 @@
 const db = require('../config/DBConfig');
 const sequelize = require('sequelize');
 
-class Product extends sequelize.Model {}
+class Course extends sequelize.Model {}
 
-Product.init({
+Course.init({
   // Model attributes are defined here
-  prod_name: {
+  title: {
     type: sequelize.STRING,
-    unique: 'prod_name',
+    unique: 'title',
     allowNull: false
   },
-  prod_desc: {
+  description: {
     type: sequelize.STRING
-  },
-  difficulty: {
-    type: sequelize.STRING,
-    allowNull: false
-  },
-  stock: {
-    type: sequelize.INTEGER,
-    allowNull: false
   },
   price: {
     type: sequelize.DECIMAL,
+    allowNull: false
+  },
+  level: {
+    type: sequelize.STRING,
     allowNull: false
   }
   
 }, {
   // Other model options go here
   sequelize: db, // We need to pass the connection instance
-  modelName: 'Product' // We need to choose the model name
+  modelName: 'Course' // We need to choose the model name
 });
 
-module.exports = Product;
+module.exports = Course;

@@ -1,38 +1,33 @@
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
-const Product = require('../models/Product');
-const Courses = require('../models/Courses');
-const Classes = require('../models/Classes');
 const Booking = require('../models/Booking');
+const Class = require('../models/Class');
+const Course = require('../models/Course');
+const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 
 const setUpDB = (drop) => {
+
     mySQLDB.authenticate()
         .then(() => {
             console.log('Database connected');
-            
-        //User and Classes Linkage
-        User.hasMany(Classes);
-        Classes.belongsTo(User);
 
-        // Booking linkage to User
-        User.hasMany(Booking); 
-        Booking.belongsTo(User);
+            mySQLDB.sync({ alter: true, force: drop });
+            console.log("The table for the was just (re)created!");
 
-        //    Courses and Classes Linkage
-        //    Courses.hasMany(Classes);
-        //    Classes.belongsTo(Courses);
+            Cart.belongsTo(User);
+            Product.hasMany(Cart);
+            Booking.hasOne(Cart);
 
-        //    Booking linkage to Classes and User
-        //    Classes.hasMany(Booking);
-        //    Courses.hasMany(Booking);
-        //    Booking.belongsTo(Classes);
-        //    Booking.hasMany(Courses);
+            Class.belongsTo(Course);
 
-           mySQLDB.sync({ 
-                force: drop 
-            }); 
-        }) 
-        .catch(err => console.log(err)); 
-}; 
-    
+            User.hasMany(Booking);
+            Class.hasMany(Booking)
+
+        })
+        .catch(err => console.log(err));
+};
+
 module.exports = { setUpDB };

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router(); 
 const moment = require('moment');
-const Classes = require('../models/Classes');
+const Classes = require('../models/Class');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 
