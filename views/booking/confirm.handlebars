@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="public/css/user/confirmation.css">
+<p>Home > Classes > Book Now > Confirmation</p>
+<style type="type/css">
+    div.container {
+		width: 80%;
+		margin: auto;
+		margin-top: 30px;
+	}
+</style>
+
+<div class="container">
+	{{#if classes}}
+	<div class="card card-body">
+		{{#each classes}}
+       <p>User {{userId}}, Do confirm your booking.</p>
+		<div class="card border-dark mb-2 w-100 mx-auto"
+            <h5 class="card-starter">
+			<div class="card-body">
+				<div class="row">					
+					<div class="col">
+						<p class="details">Details:</p>
+						<p class="text-primary">Time: {{time}}</p>
+                        <p class="text-primary">Date: {{date}}</p>
+					</div>
+
+					<div class="col">
+						<p class="class">Class:</p>
+                        <p class="text-primary">Course: {{course_name}}</p>
+                        <p class="text-primary">Course ID: {{course_id}}</p>
+                        <p class="text-primary">Difficulty: {{course_difficulty}}</p>
+					</div>
+
+					<div class="col">
+						<p class="information">Information</p>
+						<p class="text-primary">Price: {{course_price}}</p>
+                        <p class="text-primary">Pax: {{pax}}</p>
+					</div>
+                    <br>
+                    <div class="submit">
+                    <button class="btn btn-primary waves-effect" type="submit"><a href="/booking/payment">Pay Now</a></button>
+                    </div>
+				</div>
+			</div>
+		{{/each}}
+	</div>
+	{{else}}
+	<h3>Nothing to be confirmed</h3>
+	{{/if}}
+</div>

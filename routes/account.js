@@ -10,7 +10,7 @@ const isAdmin = require('../helpers/admin');
 
 router.get('/', ensureAuthenticated, (req, res) => {
     User.findAll({
-            where: { uuid: req.user.uuid },
+            where: { id: req.user.id },
             raw: true
         })
         .then((users) => {
@@ -62,10 +62,8 @@ router.post('/register', async function(req, res) {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
-            var uuid = crypto.randomUUID();
-            console.log(uuid)
-            var role = "user"
-            let user = await User.create({ name, uuid, email, password: hash, role});
+
+            let user = await User.create({ name, email, password: hash});
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/account/login');
         }
@@ -74,34 +72,17 @@ router.post('/register', async function(req, res) {
     }
 });
 
-router.get('/loginsuccess',(req,res,next)=>{
-    User.findOne({
-        where: { id: req.user.id },
-        raw: true
-    })
-        .then((user) => {
-            if (user.role == 'admin')
-            {
-                res.redirect('/account')
-            }
-            else
-                res.redirect('/account');
-        })
-        .catch(err => console.log(err));
-});
-
-router.post('/login', (req, res, next) => {
+router.post( '/login',
     passport.authenticate('local', {
-        // Success redirect URL
-        successRedirect: '/account/loginsuccess',
-        // Failure redirect URL 
-        failureRedirect: '/account/login',
-        /* Setting the failureFlash option to true instructs Passport to flash 
-        an error message using the message given by the strategy's verify callback.
-        When a failure occur passport passes the message object as error */
-        failureFlash: true
-    })(req, res, next);
-});
+      failureRedirect: '/account/login'
+    }), (req, res) => {
+      if (req.user.role === 'a') {
+        res.redirect('/admin');
+      }
+      if (req.user.role === 'u') {
+        res.redirect('/account');
+      }
+    });
 
 router.get('/logout', (req, res, next) => {
     req.logout(function(err) {
@@ -111,4 +92,59 @@ router.get('/logout', (req, res, next) => {
     });
 });
 
+router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
+    console.log(JSON.stringify(req.body));
+    let name = req.body.name;
+    let email = req.body.email;
+    console.log(name);
+    console.log(email);
+    User.update({ name, email}, { where: { id: req.params.id } })
+        .then((result) => {
+            console.log(result[0] + ' account updated');
+            res.redirect('/account');
+        })
+        .catch(err => console.log(err));
+});
+
+router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
+    console.log("L")
+    let { oldPassword, newPassword, newPassword2 } = req.body;
+    let isValid = true;
+    if (newPassword.length < 6) {
+        flashMessage(res, 'error', 'Password must be at least 6 characters');
+        isValid = false;
+    }
+    if (newPassword != newPassword2) {
+        flashMessage(res, 'error', 'Passwords do not match');
+        isValid = false;
+    }
+    if (!isValid) {
+        res.redirect('/account');
+        return;
+    }
+    try {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(newPassword, salt);
+        // If all is well, checks if user is already registered
+        let check = await User.findOne({ where: { password: hash } });
+        if (check) {
+            // If user is found, that means email has already been registered
+            flashMessage(res, 'error', ' current password is wrong');
+            res.redirect('/account')
+        } else {
+            // Create new user record 
+            // Use hashed password
+            User.update({ password: hash }, { where: { id: req.params.id } })
+            .then((result) => {
+                console.log(result[0] + ' account updated');
+                flashMessage(res, 'success', ' Password changed successfully!');
+                res.redirect('/account');
+            })
+            .catch(err => console.log(err));
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+});
 module.exports = router;

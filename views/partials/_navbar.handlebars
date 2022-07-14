@@ -7,7 +7,7 @@
     var element = document.getElementById("hamburger");
     element.classList.toggle("open");
   }
-</script> 
+</script>
     <div class="position-absoluteoverflow-hidden offcanvas offcanvas-top mt-0" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
       id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
       <div class="offcanvas-header">
@@ -21,6 +21,7 @@
           <a href="/about" class="lead">ABOUT</a>
           <a href="/products" class="lead">DIY KITS</a>
           <a href="/courses" class="lead">COURSES</a>
+          <a href="/classes" class="lead">CLASSES</a>
           <a href="/account" class="lead">ACCOUNT</a>
           <a href="/contactUs" class="lead">CONTACT US</a>
         </div>
@@ -42,17 +43,6 @@
       <a class="navbar-brand position-absolute top-50 start-50 translate-middle" id="logo" href="/">Ginseng & Stitch</a>
       <ul class="navbar-nav me-2 d-flex flex-row position-absolute top-0 end-0">
         {{#if user}}
-                {{#ifEqual user.role 'admin' }}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Courses
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="/courses/listCourses" >List of Courses</a>
-              <a class="dropdown-item" href="/courses/addCourses" >Add Courses</a>
-            </div>
-          </li>
-        {{/ifEqual}}
         <li class="nav-item p-1">
           <a href="/account" class="nav-link">Account</a>
         </li>

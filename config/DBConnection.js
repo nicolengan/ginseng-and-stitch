@@ -1,19 +1,39 @@
+
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
-const Courses = require('../models/Courses');
+const Booking = require('../models/Booking');
+const Class = require('../models/Class');
+const Course = require('../models/Course');
+const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 
-// If drop is true, all existing tables are dropped and recreated 
 const setUpDB = (drop) => {
+
     mySQLDB.authenticate()
         .then(() => {
             console.log('Database connected');
-            /* 
-            Defines the relationship where a user has many videos. 
-            The primary key from user will be a foreign key in video. 
-            */
-            mySQLDB.sync({
-                force: drop
-            });
+
+            mySQLDB.sync({ alter: true, force: drop });
+            console.log("The table for the was just (re)created!");
+
+            Cart.belongsTo(User);
+            User.hasOne(Cart);
+
+            Cart.belongsTo(Product);
+            Product.hasMany(Cart);
+
+            Booking.belongsTo(Cart);
+            Cart.hasOne(Booking);
+
+            Class.belongsTo(Course);
+            Course.hasMany(Class);
+
+            User.hasMany(Booking);
+            Booking.belongsTo(User);
+
+            Class.hasMany(Booking);
+            Booking.belongsTo(Class);
+
         })
         .catch(err => console.log(err));
 };
