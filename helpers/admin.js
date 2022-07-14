@@ -5,7 +5,7 @@ const flashMessage = require('../helpers/messenger');
 const isAdmin = (req, res, next) => {
     // Check if the requesting user is marked as admin in database
     if (req.isAuthenticated()) {
-        if (req.user.role == "admin") {
+        if (req.user.role == 'a') {
             return next();
         }
         else if (req.user.role == null) {

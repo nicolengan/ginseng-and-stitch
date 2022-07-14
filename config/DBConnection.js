@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0d535deb3f4e6439b12b23fa84575d341729c333
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Booking = require('../models/Booking');

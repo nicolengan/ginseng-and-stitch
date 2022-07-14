@@ -79,7 +79,6 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-
 // Bring in database connection 
 const DBConnection = require('./config/DBConnection');
 

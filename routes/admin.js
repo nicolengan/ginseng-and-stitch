@@ -50,7 +50,7 @@ router.get('/deleteUser/:id', async (req, res) => {
 });
 
 router.post('/addUser', async (req, res) => {
-    let { name, email, password, password2, role } = req.body;
+    let { name, email, password, password2, role} = req.body;
 
     let isValid = true;
     if (password.length < 6) {
@@ -62,11 +62,10 @@ router.post('/addUser', async (req, res) => {
         isValid = false;
     }
     if (!isValid) {
-        res.render('admin/list', {
+        res.render('/admin/list', {
             name,
             email
         });
-        return;
     }
 
     try {
@@ -75,7 +74,7 @@ router.post('/addUser', async (req, res) => {
         if (user) {
             // If user is found, that means email has already been registered
             flashMessage(res, 'error', email + ' already registered');
-            res.render('account/register', {
+            res.render('/admin/addUser', {
                 name,
                 email
             });
@@ -84,9 +83,7 @@ router.post('/addUser', async (req, res) => {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
-            var uuid = crypto.randomUUID();
-            console.log(uuid)
-            let user = await User.create({ name, uuid, email, password: hash, role});
+            let user = await User.create({ name, email, password: hash, role});
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/admin/list');
         }
