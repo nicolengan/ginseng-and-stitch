@@ -10,7 +10,7 @@ const isAdmin = require('../helpers/admin');
 
 router.get('/', ensureAuthenticated, (req, res) => {
     User.findAll({
-            where: { uuid: req.user.uuid },
+            where: { id: req.user.id },
             raw: true
         })
         .then((users) => {
@@ -62,10 +62,8 @@ router.post('/register', async function(req, res) {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
-            var uuid = crypto.randomUUID();
-            console.log(uuid)
-            var role = "admin"
-            let user = await User.create({ name, uuid, email, password: hash, role});
+
+            let user = await User.create({ name, email, password: hash});
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/account/login');
         }
@@ -78,10 +76,10 @@ router.post( '/login',
     passport.authenticate('local', {
       failureRedirect: '/account/login'
     }), (req, res) => {
-      if (req.user.role === 'admin') {
+      if (req.user.role === 'a') {
         res.redirect('/admin');
       }
-      if (req.user.role === 'user') {
+      if (req.user.role === 'u') {
         res.redirect('/account');
       }
     });
