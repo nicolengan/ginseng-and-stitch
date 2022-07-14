@@ -42,10 +42,9 @@ router.post('/addClasses', ensureAuthenticated, (req, res) => {
     let date = req.body.date;
     let class_no = req.body.class_no;
     let pax = req.body.pax;
-    let userId = req.user.id;
 
     Classes.create(
-        { course_id, course_name, course_difficulty, course_price, time, date, class_no, pax, userId }
+        { course_id, course_name, course_difficulty, course_price, time, date, class_no, pax}
     )
         .then((classes) => {
             console.log(classes.toJSON());

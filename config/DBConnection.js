@@ -1,5 +1,4 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
+
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
@@ -18,13 +17,22 @@ const setUpDB = (drop) => {
             console.log("The table for the was just (re)created!");
 
             Cart.belongsTo(User);
+            User.hasOne(Cart);
+
+            Cart.belongsTo(Product);
             Product.hasMany(Cart);
-            Booking.hasOne(Cart);
+
+            Booking.belongsTo(Cart);
+            Cart.hasOne(Booking);
 
             Class.belongsTo(Course);
+            Course.hasMany(Class);
 
             User.hasMany(Booking);
-            Class.hasMany(Booking)
+            Booking.belongsTo(User);
+
+            Class.hasMany(Booking);
+            Booking.belongsTo(Class);
 
         })
         .catch(err => console.log(err));
