@@ -18,13 +18,22 @@ const setUpDB = (drop) => {
             console.log("The table for the was just (re)created!");
 
             Cart.belongsTo(User);
+            User.hasOne(Cart);
+
+            Cart.belongsTo(Product);
             Product.hasMany(Cart);
-            Booking.hasOne(Cart);
+
+            Booking.belongsTo(Cart);
+            Cart.hasOne(Booking);
 
             Class.belongsTo(Course);
+            Course.hasMany(Class);
 
             User.hasMany(Booking);
-            Class.hasMany(Booking)
+            Booking.belongsTo(User);
+
+            Class.hasMany(Booking);
+            Booking.belongsTo(Class);
 
         })
         .catch(err => console.log(err));
