@@ -19,9 +19,9 @@ Class.init({
   }
   
 }, {
-  // Other model options go here
-  sequelize: db, // We need to pass the connection instance
-  modelName: 'Class' // We need to choose the model name
+   // Other model options go here
+   sequelize: db, // We need to pass the connection instance
+   modelName: 'Class' // We need to choose the model name
 });
 
 module.exports = Class;

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 0d535deb3f4e6439b12b23fa84575d341729c333
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
@@ -17,26 +13,37 @@ const setUpDB = (drop) => {
             console.log('Database connected');
 
             mySQLDB.sync({ alter: true, force: drop });
-            console.log("The table for the was just (re)created!");
+            console.log("The table for the Database was just (re)created!");
 
+            //user_id in cart
             Cart.belongsTo(User);
             User.hasOne(Cart);
 
+            //product_id in cart
             Cart.belongsTo(Product);
             Product.hasMany(Cart);
 
+            //booking_id in cart
+            Cart.hasMany(Booking);
             Booking.belongsTo(Cart);
-            Cart.hasOne(Booking);
-
+            
+            //Course_id in class
             Class.belongsTo(Course);
             Course.hasMany(Class);
 
+            //User_id in Booking
             User.hasMany(Booking);
             Booking.belongsTo(User);
 
+            //Class_id in Booking
             Class.hasMany(Booking);
             Booking.belongsTo(Class);
 
+            //Cart_id in Booking
+            Booking.belongsTo(Cart);
+            Cart.hasOne(Booking);
+            
+            //Course_id in Booking
             Course.hasMany(Booking);
             Booking.belongsTo(Course);
 

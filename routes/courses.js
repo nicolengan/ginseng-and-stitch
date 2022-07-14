@@ -42,15 +42,12 @@ router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
 
 router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
     let title = req.body.title;
-    let Description = req.body.description.slice(0, 1999);
-    let uuid = req.body.uuid;
+    let description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
-    let difficulty = req.body.difficulty;
-    // let userId = req.user.id;
+    let level = req.body.level;
 
     Courses.create(
-        { title, uuid , Description, price, difficulty }
-        // { title, uuid , Description, price, difficulty, userId }
+        { title, description, price, level }
         )
         .then((courses) => {
             console.log(courses.toJSON());
@@ -81,12 +78,12 @@ router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
 
 router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     let title = req.body.title;
-    let Description = req.body.description.slice(0, 1999);
+    let description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
-    let difficulty = req.body.difficulty;
+    let level = req.body.level;
     
     Courses.update(
-        { title, Description, price, difficulty },
+        { title, description, price, level},
         { where: { id: req.params.id } }
     )
     .then((result) => {
