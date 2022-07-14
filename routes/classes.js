@@ -12,19 +12,19 @@ router.all('/*', (req, res, next) => {
 
 router.get('/', (req, res) => {
     Classes.findAll({
-        where: { userId: req.user.id },
+        // where: { userId: req.user.id },
         raw: true
     })
         .then((classes) => {
             // pass object to listVideos.handlebar
-            res.render('/classes', { classes});
+            res.render('classes', { classes});
         })
         .catch(err => console.log(err));
 });
 
 router.get('/listClasses', ensureAuthenticated, (req, res) => {
     Classes.findAll({
-        where: { userId: req.user.id },
+        // where: { userId: req.user.id },
         // order: [['dateClasses', 'ASC']],
         raw: true
     })
@@ -39,18 +39,13 @@ router.get('/addClasses', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/addClasses', ensureAuthenticated, (req, res) => {
-    let course_id = req.body.course_id;
-    let course_name = req.body.course_name.toString();
-    let course_difficulty = req.body.course_difficulty.toString();
-    let course_price = req.body.course_price;
-    let time = req.body.time;
+    // let time = req.body.time;
     let date = req.body.date;
     let class_no = req.body.class_no;
     let pax = req.body.pax;
-    let userId = req.user.id;
 
     Classes.create(
-        { course_id, course_name, course_difficulty, course_price, time, date, class_no, pax, userId }
+        { date, class_no, pax }
     )
         .then((classes) => {
             console.log(classes.toJSON());
@@ -64,14 +59,14 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
         .then((classes) => {
             if (!classes) {
                 flashMessage(res, 'error', 'Classes not found');
-                res.redirect('/classes/classes');
-                return;
-            }
-            if (req.user.id != classes.userId) {
-                flashMessage(res, 'error', 'Unauthorized access');
                 res.redirect('/classes/listClasses');
                 return;
             }
+            // if (req.user.id != classes.userId) {
+            //     flashMessage(res, 'error', 'Unauthorized access');
+            //     res.redirect('/classes/listClasses');
+            //     return;
+            // }
 
             res.render('classes/editClasses', { classes });
         })
@@ -79,17 +74,13 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
-    let course_id = req.body.course_id;
-    let course_name = req.body.course_name;
-    let course_difficulty = req.body.course_difficulty;
-    let course_price = req.body.course_price;
-    let time = req.body.time;
+    // let time = req.body.time;
     let date = req.body.date;
     let class_no = req.body.class_no;
     let pax = req.body.pax;
 
     Classes.update(
-        { course_id, course_name, course_difficulty, course_price, time, date, class_no, pax},
+        { date, class_no, pax },
         { where: { id: req.params.id } }
     )
         .then((result) => {
@@ -107,15 +98,14 @@ router.get('/deleteClasses/:id', ensureAuthenticated, async function (req, res) 
             res.redirect('/classes/listClasses');
             return;
         }
-        if (req.user.id != classes.userId) {
-            flashMessage(res, 'error', 'Unauthorized access');
-            res.redirect('/classes/classes');
-            return;
-        }
-
+        // if (req.user.id != classes.userId) {
+        //     flashMessage(res, 'error', 'Unauthorized access');
+        //     res.redirect('/classes/listClasses');
+        //     return;
+        // }
         let result = await Classes.destroy({ where: { id: classes.id } });
         console.log(result + ' classes deleted');
-        res.redirect('/classes/classes');
+        res.redirect('/classes/listClasses');
     }
     catch (err) {
         console.log(err);

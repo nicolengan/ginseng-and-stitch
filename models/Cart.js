@@ -9,7 +9,7 @@ Cart.init({
     type: sequelize.INTEGER,
     allowNull: false
   },
-  total: {
+  price: {
     type: sequelize.DECIMAL,
     defaultValue: 0.0,
     allowNull: false

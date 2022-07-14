@@ -41,8 +41,43 @@ label {
 
 	<div class="container">
 		<form method="POST" action="">
+			<div class="row">
+					<div class="col-25">
+						<label for="date">Date</label>
+					</div>
+					<div class="col-75">
+						<input type="date" class="form-control" name="date" value={{Class.date}}>
+					</div>
+				</div>
+				<br>
+				
+				<div class="row">
+					<div class="col-25">
+						<label for="pax">Pax</label>
+					</div>
+					<div class="col-75">
+						<input type="number" id="pax" name="pax" min="0" max="5">
+					</div>
+				</div>
+				<br>
 
-			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+				<div class="row">
+					<div class="col-25">
+						<label for="max_pax">Max Pax</label>
+					</div>
+					<div class="col-75">
+						<input type="number" id="max_pax" name="max_pax" max="5">
+					</div>
+				</div>
+				<br>
+				<div class="submit">
+				<button class="btn btn-primary waves-effect" type="submit">+ Create</button>
+				</div>
+		</form>
+	</div>
+</main>
+
+			{{!-- <!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
 				<div class="row">
 					<div class="col-25">
 						<label for="course_id">Course ID</label>
@@ -56,15 +91,15 @@ label {
 						</select>
 					</div>
 				</div>
-				<br>
+				<br> --}}
 
-				<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+				{{!-- <!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
 				<div class="row">
 					<div class="col-25">
-						<label for="course_name">Name</label>
+						<label for="title">Title</label>
 					</div>
 					<div class="col-75">
-						<select id="course_name" name="course_name" required>
+						<select id="title" name="title" required>
 						<option value="Advanced Sewing">Advanced Sewing</option>
 						<option value="Make your own Jacket">Make your own Jacket</option>
 						<option value="Introduction to Sewing">Introduction to Sewing</option>
@@ -77,10 +112,10 @@ label {
 				<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
 				<div class="row">
 					<div class="col-25">
-						<label for="course_difficulty">Difficulty</label>
+						<label for="level">Level</label>
 					</div>
 					<div class="col-75">
-						<select id="course_difficulty" name="course_difficulty" required>
+						<select id="level" name="level" required>
 						<option value="Beginner">Beginner</option>
 						<option value="Advanced">Advanced</option>
 						<option value="Intermediate">Intermediate</option>
@@ -92,10 +127,10 @@ label {
 				<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
 				<div class="row">
 					<div class="col-25">
-						<label for="course_price">Course Price</label>
+						<label for="price">Price</label>
 					</div>
 					<div class="col-75">
-						<input type="text" id="course_price" name="course_price" value="">
+						<input type="text" id="price" name="price" value="">
 						<br>
 					</div>
 				</div>
@@ -109,43 +144,4 @@ label {
 						<input type="time" class="form-control" name="time" value={{classes.time}}>
 					</div>
 				</div>
-				<br>
-
-				<div class="row">
-					<div class="col-25">
-						<label for="date">Date</label>
-					</div>
-					<div class="col-75">
-						<input type="date" class="form-control" name="date" value={{classes.date}}>
-					</div>
-				</div>
-				<br>
-				
-				<div class="row">
-					<div class="col-25">
-						<label for="class_no">Class</label>
-					</div>
-					<div class="col-75">
-						<select id="class_no" name="class_no" required>
-						<option value="1">Class 1</option>
-						<option value="2">Class 2</option>
-						</select>
-					</div>
-				</div>
-				<br>
-
-				<div class="row">
-					<div class="col-25">
-						<label for="pax">Pax</label>
-					</div>
-					<div class="col-75">
-						<input type="number" id="pax" name="pax" min="1" max="5">
-					</div>
-					</div>
-				<br>
-				<div class="submit">
-				<button class="btn btn-primary waves-effect" type="submit">+ Create</button>
-				</div>
-		</form>
-	</div>
-</main>
+				<br> --}}

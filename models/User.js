@@ -1,4 +1,3 @@
-
 const db = require('../config/DBConfig');
 const sequelize = require('sequelize');
 
@@ -16,7 +15,8 @@ User.init({
     type: sequelize.STRING
   },
   role: {
-    type: sequelize.CHAR
+    type: sequelize.CHAR,
+    defaultValue: 'u',
   },
   password: {
     type: sequelize.STRING
