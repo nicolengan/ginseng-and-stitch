@@ -13,7 +13,11 @@ router.all('/*', (req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-    res.render('admin/dashboard');
+    res.render('admin/dashboard',
+    {
+        whichPartial: function() {
+            return;
+       }});
 });
 router.get('/api/list', async (req, res) => {
     return res.json({
@@ -23,7 +27,11 @@ router.get('/api/list', async (req, res) => {
 });
 
 router.get('/list', (req, res) => {
-    res.render('admin/user');
+    res.render('admin/user', {
+        whichPartial: function() {
+            return "_adminUser";
+       }
+});
 });
 
 // router.get('/editUser/:id', (req, res) => {

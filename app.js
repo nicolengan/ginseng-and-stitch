@@ -39,7 +39,7 @@ app.engine('handlebars', engine({
     helpers: {
         radioCheck ,
         ifEqual
-    }
+    },
 }));
 app.set('view engine', 'handlebars');
 
