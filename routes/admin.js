@@ -7,8 +7,11 @@ const passport = require('passport');
 const crypto = require('crypto');
 const flashMessage = require('../helpers/messenger');
 
+router.use('/classes', require("./account"));
+router.use('/products', require("./account"));
+
 router.all('/*', (req, res, next) => {
-    req.app.locals.layout = 'admin'; // set your layout here
+    req.app.locals.layout = 'admin', // set your layout here
     next(); // pass control to the next handler
 });
 
@@ -16,9 +19,10 @@ router.get('/', (req, res) => {
     res.render('admin/dashboard',
     {
         whichPartial: function() {
-            return;
+            return "";
        }});
 });
+
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await User.count(),
@@ -49,6 +53,7 @@ router.get('/list', (req, res) => {
 // });
 
 router.get('/deleteUser/:id', async (req, res) => {
+    
     await User.destroy({ where: { id: req.params.id } })
         .then((result) => {
             console.log(result[0] + ' deleted');
@@ -84,8 +89,10 @@ router.post('/addUser', async (req, res) => {
             flashMessage(res, 'error', email + ' already registered');
             res.render('/admin/addUser', {
                 name,
-                email
-            });
+                email,
+                whichPartial: function() {
+                    return;
+               }});
         } else {
             // Create new user record 
             var salt = bcrypt.genSaltSync(10);

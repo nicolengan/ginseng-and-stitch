@@ -7,6 +7,12 @@ const classes = require("./classes");
 const courses = require("./courses");
 const User = require('../models/User');
 
+router.use('/account', require("./account"));
+router.use('/booking', require("./account"));
+
+// redirects error to page
+router.use('/payment', require("./payment"));
+
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
     // renders views/index.handlebars, passing title as an object

@@ -5,6 +5,13 @@ const Classes = require('../models/Class');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 
+router.use(function (req, res, next) {
+	res.locals.messages = req.flash('message');
+	res.locals.errors = req.flash('error');
+	res.locals.user = req.user || null;
+	next();
+});
+
 router.get('/', (req, res) => {
     Classes.findAll({
         where: { userId: req.user.id },
@@ -12,7 +19,7 @@ router.get('/', (req, res) => {
     })
         .then((classes) => {
             // pass object to listVideos.handlebar
-            res.render('classes', { classes});
+            res.render('/admin/classes', { classes});
         })
         .catch(err => console.log(err));
 });
@@ -24,13 +31,13 @@ router.get('/listClasses', ensureAuthenticated, (req, res) => {
         raw: true
     })
         .then((classes) => {
-            res.render('classes/listClasses', { classes });
+            res.render('/admin/classes/listClasses', { classes });
         })
         .catch(err => console.log(err));
 });
 
 router.get('/addClasses', ensureAuthenticated, (req, res) => {
-    res.render('classes/addClasses');
+    res.render('/admin/classes/addClasses');
 });
 
 router.post('/addClasses', ensureAuthenticated, (req, res) => {
@@ -48,7 +55,7 @@ router.post('/addClasses', ensureAuthenticated, (req, res) => {
     )
         .then((classes) => {
             console.log(classes.toJSON());
-            res.redirect('/classes/listClasses');
+            res.redirect('/admin/classes/listClasses');
         })
         .catch(err => console.log(err))
 });
@@ -58,12 +65,12 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
         .then((classes) => {
             if (!classes) {
                 flashMessage(res, 'error', 'Classes not found');
-                res.redirect('/classes/listClasses');
+                res.redirect('classes/listClasses');
                 return;
             }
             if (req.user.id != classes.userId) {
                 flashMessage(res, 'error', 'Unauthorized access');
-                res.redirect('/classes/listClasses');
+                res.redirect('classes/listClasses');
                 return;
             }
 
