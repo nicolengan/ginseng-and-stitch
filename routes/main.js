@@ -1,17 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
-const Classes = require('../models/Class');
 const ensureAuthenticated = require("../helpers/auth");
-const classes = require("./classes");
-const courses = require("./courses");
-const User = require('../models/User');
 
-router.use('/account', require("./account"));
-router.use('/booking', require("./account"));
+// routes
+const booking = require("./booking");
+const account = require("./account");
+const payment = require("./payment");
+
+router.use('/account', account);
+router.use('/booking', booking);
+router.use('/payment', payment);
 
 // redirects error to page
-router.use('/payment', require("./payment"));
+router.use(function(req, res, next) {
+    res.locals.messages = req.flash('message');
+    res.locals.errors = req.flash('error');
+    res.locals.user = req.user || null;
+    next();
+});
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
@@ -23,16 +30,8 @@ router.get('/about', (req, res) => {
     res.render('about');
 });
 
-router.use('/courses', courses)
-
 router.get('/courses', (req, res) => {
     res.render('courses');
-});
-
-router.use('/classes', classes)
-
-router.get('/classes', (req, res) => {
-    res.render('classes');
 });
 
 router.get('/contactUs', (req, res) => {

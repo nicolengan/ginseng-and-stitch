@@ -5,11 +5,6 @@ const Product = require('../models/Product');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 
-router.all('/*', (req, res, next) => {
-    req.app.locals.layout = 'admin'; // set your layout here
-    next(); // pass control to the next handler
-});
-
 router.get('/listProducts', (req, res) => {
     res.render('products/products');
 });

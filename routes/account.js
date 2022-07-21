@@ -74,21 +74,32 @@ router.post('/register', async function(req, res) {
 
 router.post( '/login',
     passport.authenticate('local', {
-      failureRedirect: '/account/login'
+      failureRedirect: '/account/login',
+      failureFlash: true,
     }), (req, res) => {
-      if (req.user.role === 'a') {
+        if (req.user.role === 'a') {
         res.redirect('/admin');
       }
-      if (req.user.role === 'u') {
+      else if (req.user.role === 'u') {
         res.redirect('/account');
       }
     });
+
+// router.post('/login', (request, response, next) => {
+//     passport.authenticate('local', {
+//         successRedirect: '/',
+//         failureRedirect: '/account/login',
+//         failureFlash: true
+//     })(request, response, next);
+// });
+
 
 router.get('/logout', (req, res, next) => {
     req.logout(function(err) {
         if (err) { return next(err); }
         res.redirect('/');
         console.log("User logged out successfully");
+        flashMessage(res, 'success',' logged out successfully');
     });
 });
 

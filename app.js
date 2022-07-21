@@ -88,6 +88,7 @@ DBConnection.setUpDB(); // To set up database with new tables (true)
 //Messaging library
 const flash = require('connect-flash');
 app.use(flash());
+
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 
