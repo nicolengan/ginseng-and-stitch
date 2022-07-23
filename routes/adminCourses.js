@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/addCourses' ,  ensureAuthenticated, isAdmin, (req, res) => {
-    res.render('courses/addCourses');
+    res.render('/admin/courses/addCourses');
 });
 
 router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
@@ -30,7 +30,7 @@ router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
     })
         .then((courses) => {
             // pass object to listVideos.handlebar
-            res.render('courses/listCourses', { courses});
+            res.render('admin/courses/listCourses', { courses});
         })
         .catch(err => console.log(err));
 });
@@ -47,7 +47,7 @@ router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
         )
         .then((courses) => {
             console.log(courses.toJSON());
-            res.redirect('/courses/listCourses');
+            res.redirect('/admin/courses/listCourses');
         })
         .catch(err => console.log(err))
 });
@@ -60,10 +60,10 @@ router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     .then((course) =>{
         console.log(course)
         if (course == null){
-            res.redirect("/courses/listCourses");
+            res.redirect("/admin/courses/listCourses");
         }
         else{
-            res.render("courses/editCourses",  {course});
+            res.render("admin/courses/editCourses",  {course});
         }
     })
 
@@ -84,7 +84,7 @@ router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     )
     .then((result) => {
         console.log(result[0] + ' course updated');
-        res.redirect('/courses/listCourses');
+        res.redirect('/admin/courses/listCourses');
     })
     .catch(err => console.log(err));
 });
@@ -94,7 +94,7 @@ router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) 
         let courses = await Courses.findByPk(req.params.id);
         if (!courses) {
             flashMessage(res, 'error', 'Courses not found');
-            res.redirect('/courses/listCourses');
+            res.redirect('/admin/courses/listCourses');
             return;
         }
         // if (req.user.id != courses.id) {
@@ -105,7 +105,7 @@ router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) 
 
         let result = await Courses.destroy({ where: { id: courses.id } });
         console.log(result + ' courses deleted');
-        res.redirect('/courses/listCourses');
+        res.redirect('/admin/courses/listCourses');
     }
     catch (err) {
         console.log(err);

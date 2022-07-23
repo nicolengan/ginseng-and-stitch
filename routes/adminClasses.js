@@ -5,39 +5,30 @@ const Classes = require('../models/Class');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 
-router.use(function (req, res, next) {
-	res.locals.messages = req.flash('message');
-	res.locals.errors = req.flash('error');
-	res.locals.user = req.user || null;
-	next();
-});
-
 router.get('/', (req, res) => {
     Classes.findAll({
-        where: { userId: req.user.id },
-        raw: true
     })
         .then((classes) => {
             // pass object to listVideos.handlebar
-            res.render('/admin/classes', { classes});
+            res.render('admin/classes/listClasses', { classes});
         })
         .catch(err => console.log(err));
 });
 
-router.get('/listClasses', ensureAuthenticated, (req, res) => {
-    Classes.findAll({
-        where: { userId: req.user.id },
-        // order: [['dateClasses', 'ASC']],
-        raw: true
-    })
-        .then((classes) => {
-            res.render('/admin/classes/listClasses', { classes });
-        })
-        .catch(err => console.log(err));
-});
+// router.get('/listClasses', ensureAuthenticated, (req, res) => {
+//     Classes.findAll({
+//         where: { userId: req.user.id },
+//         // order: [['dateClasses', 'ASC']],
+//         raw: true
+//     })
+//         .then((classes) => {
+//             res.render('admin/classes/listClasses', { classes });
+//         })
+//         .catch(err => console.log(err));
+// });
 
 router.get('/addClasses', ensureAuthenticated, (req, res) => {
-    res.render('/admin/classes/addClasses');
+    res.render('admin/classes/addClasses');
 });
 
 router.post('/addClasses', ensureAuthenticated, (req, res) => {

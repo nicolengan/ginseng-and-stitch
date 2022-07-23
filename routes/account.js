@@ -78,9 +78,11 @@ router.post( '/login',
       failureFlash: true,
     }), (req, res) => {
         if (req.user.role === 'a') {
+            console.log(req.user)
         res.redirect('/admin');
       }
       else if (req.user.role === 'u') {
+        console.log(req.user)
         res.redirect('/account');
       }
     });

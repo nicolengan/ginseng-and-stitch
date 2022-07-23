@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const ensureAuthenticated = require('../helpers/auth');
+const defaultPartial = require('../helpers/default')
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
@@ -10,21 +11,25 @@ const classes = require("./adminClasses");
 const courses = require("./adminCourses");
 const products = require("./adminProducts");
 
+router.all('/*', (req, res, next) => {
+    req.app.locals.layout = 'admin',
+    'whichPartial', function(context, options) { return "_admin" }
+    // set your layout here
+    next(); // pass control to the next handler
+});
+
 router.use('/classes', classes);
 router.use('/courses', courses);
 router.use('/products', products);
 
-router.all('/*', (req, res, next) => {
-    req.app.locals.layout = 'admin', // set your layout here
-    next(); // pass control to the next handler
-});
-
 router.get('/', (req, res) => {
-    res.render('admin/dashboard',
-    {
-        whichPartial: function() {
-            return "_admin";
-       }});
+    res.render('admin/dashboard'
+    // {
+    //     whichPartial: function() {
+    //         return "";
+    //    }
+    // }
+    );
 });
 
 router.get('/api/list', async (req, res) => {
@@ -35,11 +40,13 @@ router.get('/api/list', async (req, res) => {
 });
 
 router.get('/list', (req, res) => {
-    res.render('admin/user', {
-        whichPartial: function() {
-            return "_adminUser";
-       }
-});
+    res.render('admin/user'
+//     , {
+//         whichPartial: function() {
+//             return "_adminUser";
+//        }
+// }
+);
 });
 
 // router.get('/editUser/:id', (req, res) => {

@@ -12,13 +12,6 @@ router.use('/account', account);
 router.use('/booking', booking);
 router.use('/payment', payment);
 
-// redirects error to page
-router.use(function(req, res, next) {
-    res.locals.messages = req.flash('message');
-    res.locals.errors = req.flash('error');
-    res.locals.user = req.user || null;
-    next();
-});
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';

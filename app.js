@@ -92,6 +92,13 @@ app.use(flash());
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 
+app.use(function(req, res, next) {
+    res.locals.messages = req.flash('message');
+    res.locals.errors = req.flash('error');
+    res.locals.user = req.user || null;
+    next();
+});
+
 // Passport Config 
 const passport = require('passport');
 const passportConfig = require('./config/passportConfig');
@@ -108,7 +115,7 @@ const isAdmin = require('./helpers/admin');
 const mainRoute = require('./routes/main');
 // const classesRoute = require('./routes/classes');
 // const bookingRoute = require('./routes/booking');
-// const userRoute = require('./routes/account');
+const userRoute = require('./routes/account');
 const adminRoute = require('./routes/admin');
 // const paymentRoute = require('./routes/payment');
 // const prodRoute = require('./routes/product');
@@ -121,7 +128,7 @@ app.use('/*', (req, res, next) =>{
 app.use('/', mainRoute);
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
-// app.use('/account', userRoute);
+app.use('/account', userRoute);
 app.use('/admin', isAdmin, adminRoute);
 // app.use('/classes', isAdmin, classesRoute);
 // app.use('/booking', bookingRoute);
