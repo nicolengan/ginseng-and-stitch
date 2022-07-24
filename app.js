@@ -92,13 +92,6 @@ app.use(flash());
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 
-app.use(function(req, res, next) {
-    res.locals.messages = req.flash('message');
-    res.locals.errors = req.flash('error');
-    res.locals.user = req.user || null;
-    next();
-});
-
 // Passport Config 
 const passport = require('passport');
 const passportConfig = require('./config/passportConfig');
@@ -108,7 +101,12 @@ passportConfig.localStrategy(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-const ensureAuthenticated = require('./helpers/auth');
+app.use(function(req, res, next) {
+    res.locals.messages = req.flash('message');
+    res.locals.errors = req.flash('error');
+    res.locals.user = req.user || null;
+    next();
+});
 const isAdmin = require('./helpers/admin');
 // mainRoute is declared to point to routes/main.js
 

@@ -9,14 +9,15 @@ const ensureAuthenticated = require('../helpers/auth');
 const isAdmin = require('../helpers/admin');
 
 router.get('/', ensureAuthenticated, (req, res) => {
-    User.findAll({
-            where: { id: req.user.id },
-            raw: true
-        })
-        .then((users) => {
-            res.render('account/account', { users });
-        })
-        .catch(err => console.log(err));
+    // User.findAll({
+    //         where: { id: req.user.id },
+    //         raw: true
+    //     })
+    //     .then((users) => {
+    //         res.render('account/account', { users });
+    //     })
+    //     .catch(err => console.log(err));
+    res.render('account/account')
 });
 
 router.get('/login', (req, res) => {
@@ -78,7 +79,7 @@ router.post( '/login',
       failureFlash: true,
     }), (req, res) => {
         if (req.user.role === 'a') {
-            console.log(req.user)
+        console.log(req.user)
         res.redirect('/admin');
       }
       else if (req.user.role === 'u') {
@@ -86,15 +87,6 @@ router.post( '/login',
         res.redirect('/account');
       }
     });
-
-// router.post('/login', (request, response, next) => {
-//     passport.authenticate('local', {
-//         successRedirect: '/',
-//         failureRedirect: '/account/login',
-//         failureFlash: true
-//     })(request, response, next);
-// });
-
 
 router.get('/logout', (req, res, next) => {
     req.logout(function(err) {

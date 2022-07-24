@@ -14,28 +14,16 @@ router.get('/', (req, res) => {
     })
         .then((courses) => {
             // pass object to listVideos.handlebar
-            res.render('courses', { courses});
-        })
-        .catch(err => console.log(err));
-});
-
-router.get('/addCourses' ,  ensureAuthenticated, isAdmin, (req, res) => {
-    res.render('/admin/courses/addCourses');
-});
-
-router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
-    Courses.findAll({
-        // where: { userId: req.user.id },
-        raw: true
-    })
-        .then((courses) => {
-            // pass object to listVideos.handlebar
             res.render('admin/courses/listCourses', { courses});
         })
         .catch(err => console.log(err));
 });
 
-router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
+router.get('/addCourses' , (req, res) => {
+    res.render('admin/courses/addCourses');
+});
+
+router.post('/addCourses', (req, res) => {
     let title = req.body.title;
     let Description = req.body.description.slice(0, 1999);
     let uuid = req.body.uuid;
@@ -52,7 +40,7 @@ router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
         .catch(err => console.log(err))
 });
 
-router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
+router.get('/editCourses/:id', (req, res) => {
     Courses.findOne({
         where: { id: req.params.id },
         raw: true
@@ -72,7 +60,7 @@ router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
 
 
 
-router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
+router.post('/editCourses/:id', (req, res) => {
     let title = req.body.title;
     let Description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
@@ -89,7 +77,7 @@ router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) {
+router.get('/deleteCourses/:id',  async (req, res) => {
     try {
         let courses = await Courses.findByPk(req.params.id);
         if (!courses) {
