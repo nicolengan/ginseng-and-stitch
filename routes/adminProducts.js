@@ -5,15 +5,6 @@ const Product = require('../models/Product');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 
-router.all('/*', (req, res, next) => {
-    req.app.locals.layout = 'admin'; // set your layout here
-    next(); // pass control to the next handler
-});
-
-router.get('/listProducts', (req, res) => {
-    res.render('products/products');
-});
-
 router.get('/', ensureAuthenticated, (req, res) => {
     Product.findAll({
         order: [['updatedAt', 'DESC']],
@@ -21,13 +12,13 @@ router.get('/', ensureAuthenticated, (req, res) => {
     })
         .then((products) => {
             // pass object to listVideos.handlebar
-            res.render('products/products', { products });
+            res.render('admin/products/listProducts', { products });
         })
         .catch(err => console.log(err));
 });
 
 router.get('/addProducts', ensureAuthenticated, (req, res) => {
-    res.render('products/addProducts');
+    res.render('admin/products/addProducts');
 });
 
 router.post('/addProducts', ensureAuthenticated, (req, res) => {
@@ -53,7 +44,7 @@ router.get('/editProduct/:id', ensureAuthenticated, (req, res) => {
         .then((product) => {
             if (!product) {
                 flashMessage(res, 'error', 'Product not found');
-                res.redirect('/products');
+                res.redirect('/admin/products');
                 return;
             }
             // if (req.user.id != product.userId) {
@@ -61,7 +52,7 @@ router.get('/editProduct/:id', ensureAuthenticated, (req, res) => {
             //     res.redirect('/products');
             //     return;
             // }
-            res.render('products/editProduct', { product });
+            res.render('admin/products/editProduct', { product });
         })
         .catch(err => console.log(err));
 });

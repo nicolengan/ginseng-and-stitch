@@ -9,14 +9,15 @@ const ensureAuthenticated = require('../helpers/auth');
 const isAdmin = require('../helpers/admin');
 
 router.get('/', ensureAuthenticated, (req, res) => {
-    User.findAll({
-            where: { id: req.user.id },
-            raw: true
-        })
-        .then((users) => {
-            res.render('account/account', { users });
-        })
-        .catch(err => console.log(err));
+    // User.findAll({
+    //         where: { id: req.user.id },
+    //         raw: true
+    //     })
+    //     .then((users) => {
+    //         res.render('account/account', { users });
+    //     })
+    //     .catch(err => console.log(err));
+    res.render('account/account')
 });
 
 router.get('/login', (req, res) => {
@@ -74,12 +75,15 @@ router.post('/register', async function(req, res) {
 
 router.post( '/login',
     passport.authenticate('local', {
-      failureRedirect: '/account/login'
+      failureRedirect: '/account/login',
+      failureFlash: true,
     }), (req, res) => {
-      if (req.user.role === 'a') {
+        if (req.user.role === 'a') {
+        console.log(req.user)
         res.redirect('/admin');
       }
-      if (req.user.role === 'u') {
+      else if (req.user.role === 'u') {
+        console.log(req.user)
         res.redirect('/account');
       }
     });
@@ -89,6 +93,7 @@ router.get('/logout', (req, res, next) => {
         if (err) { return next(err); }
         res.redirect('/');
         console.log("User logged out successfully");
+        flashMessage(res, 'success',' logged out successfully');
     });
 });
 

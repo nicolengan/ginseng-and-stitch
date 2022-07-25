@@ -1,9 +1,28 @@
-<div class="container-fluid ">
+{{!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"> --}}
+  {{!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+        <span data-feather="calendar"></span>
+        This week
+      </button>
+    </div>
+  </div> --}}
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="h2 mt-3">Courses</div>
+<hr class="border border-secondary opacity-50">
+	<form align="left" method="get" action="/admin/courses/addCourses">
+		<button type="submit" class="btn btn-primary mt-2 mb-2">Add Courses</button>
+	</form>
 	{{#if courses}}
 		<h1 class="text-primary">Courses Listed</h1>
 		{{#each courses}}
 		<div class="row">
-  			<div class="col-sm-6">
+  			<div class="col-sm-6">	
 				<div class="card border-primary mb-2 w-50 mx-auto">
 				<div class="card-header">
                     <h1 class="card-title">{{title}}</h>
@@ -36,7 +55,7 @@
 	{{/each}}
 </div>
 {{else}}
-<h3>No Courses listed</h3>
+<h4>No Courses listed</h4>
 {{/if}}
 
 <script>
@@ -44,3 +63,4 @@
 		rootSelector: '[data-toggle=confirmation]',
 	});
 </script>
+{{!-- </main> --}}

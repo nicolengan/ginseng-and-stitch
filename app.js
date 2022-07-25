@@ -88,6 +88,7 @@ DBConnection.setUpDB(); // To set up database with new tables (true)
 //Messaging library
 const flash = require('connect-flash');
 app.use(flash());
+
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 
@@ -100,24 +101,17 @@ passportConfig.localStrategy(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Place to define global variables
 app.use(function(req, res, next) {
     res.locals.messages = req.flash('message');
     res.locals.errors = req.flash('error');
     res.locals.user = req.user || null;
     next();
 });
-const ensureAuthenticated = require('./helpers/auth');
 const isAdmin = require('./helpers/admin');
 // mainRoute is declared to point to routes/main.js
 
 const mainRoute = require('./routes/main');
-const classesRoute = require('./routes/classes');
-const bookingRoute = require('./routes/booking');
-const userRoute = require('./routes/account');
 const adminRoute = require('./routes/admin');
-const paymentRoute = require('./routes/payment');
-const prodRoute = require('./routes/product');
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/*', (req, res, next) =>{
     req.app.locals.layout = 'main'; // set your layout here
@@ -127,16 +121,15 @@ app.use('/*', (req, res, next) =>{
 app.use('/', mainRoute);
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
-app.use('/account', userRoute);
 app.use('/admin', isAdmin, adminRoute);
-app.use('/classes', isAdmin, classesRoute);
-app.use('/booking', bookingRoute);
+// app.use('/classes', isAdmin, classesRoute);
+// app.use('/booking', bookingRoute);
 
-// redirects error to page
-app.use('/payment', ensureAuthenticated, paymentRoute);
+// // redirects error to page
+// app.use('/payment', ensureAuthenticated, paymentRoute);
 
-// redirects error to page 
-app.use('/products',isAdmin, prodRoute);
+// // redirects error to page 
+// app.use('/products',isAdmin, prodRoute);
 // redirects error to page
 app.use((err, req, res, next) => {
     console.error(err.stack)
