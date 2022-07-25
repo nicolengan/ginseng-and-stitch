@@ -28,14 +28,14 @@ router.post('/addCourses', (req, res) => {
     let Description = req.body.description.slice(0, 1999);
     let uuid = req.body.uuid;
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
-    let difficulty = req.body.difficulty;
+    let level = req.body.level;
 
     Courses.create(
-        { title, uuid , Description, price, difficulty  }
+        { title, uuid , Description, price, level  }
         )
         .then((courses) => {
             console.log(courses.toJSON());
-            res.redirect('/admin/courses/listCourses');
+            res.redirect('/admin/courses');
         })
         .catch(err => console.log(err))
 });
@@ -48,7 +48,7 @@ router.get('/editCourses/:id', (req, res) => {
     .then((course) =>{
         console.log(course)
         if (course == null){
-            res.redirect("/admin/courses/listCourses");
+            res.redirect("/admin/courses");
         }
         else{
             res.render("admin/courses/editCourses",  {course});
@@ -72,7 +72,7 @@ router.post('/editCourses/:id', (req, res) => {
     )
     .then((result) => {
         console.log(result[0] + ' course updated');
-        res.redirect('/admin/courses/listCourses');
+        res.redirect('/admin/courses');
     })
     .catch(err => console.log(err));
 });
@@ -82,7 +82,7 @@ router.get('/deleteCourses/:id',  async (req, res) => {
         let courses = await Courses.findByPk(req.params.id);
         if (!courses) {
             flashMessage(res, 'error', 'Courses not found');
-            res.redirect('/admin/courses/listCourses');
+            res.redirect('/admin/courses');
             return;
         }
         // if (req.user.id != courses.id) {
@@ -93,7 +93,7 @@ router.get('/deleteCourses/:id',  async (req, res) => {
 
         let result = await Courses.destroy({ where: { id: courses.id } });
         console.log(result + ' courses deleted');
-        res.redirect('/admin/courses/listCourses');
+        res.redirect('/admin/courses');
     }
     catch (err) {
         console.log(err);

@@ -11,9 +11,13 @@ const Handlebars = require('handlebars');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
-const stripe = require('stripe')('sk_test_Ou1w6LVt3zmVipDVJsvMeQsc');
+
 
 require('dotenv').config();
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+
+const stripe = require('stripe')(stripeSecretKey)
 
 /*
  * Creates an Express server - Express is a web application framework for creating web applications
@@ -100,6 +104,7 @@ passportConfig.localStrategy(passport);
 // Initilize Passport middleware 
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 app.use(function(req, res, next) {
     res.locals.messages = req.flash('message');

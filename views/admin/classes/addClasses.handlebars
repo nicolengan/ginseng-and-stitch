@@ -47,16 +47,20 @@
 			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
 			<div class="row">
 				<div class="col-25">
-					<label for="course_id">Course ID</label>
+					<label for="CourseId">Course ID</label>
 				</div>
+				{{!-- {{#if classes}} --}}
 				<div class="col-75">
-					<select id="course_id" name="course_id" required>
-						<option value="1">1</option>
-						<option value="2">2</option>
+					<select id="CourseId" name="CourseId" required>
+						{{#each courses}}
+						<option value="{{id}}" name="CourseId">{{id}}</option>
+						{{/each}}
+						{{!-- <option value="2">2</option>
 						<option value="3">3</option>
-						<option value="4">4</option>
+						<option value="4">4</option> --}}
 					</select>
 				</div>
+				{{!-- {{/if}} --}}
 			</div>
 			<br>
 

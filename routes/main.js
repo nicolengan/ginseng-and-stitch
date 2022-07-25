@@ -6,11 +6,11 @@ const ensureAuthenticated = require("../helpers/auth");
 // routes
 const booking = require("./booking");
 const account = require("./account");
-const payment = require("./payment");
+// const payment = require("./payment");
 
 router.use('/account', account);
 router.use('/booking', booking);
-router.use('/payment', payment);
+// router.use('/payment', payment);
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
