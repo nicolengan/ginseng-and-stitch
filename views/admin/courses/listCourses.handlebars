@@ -1,39 +1,40 @@
 {{!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"> --}}
-  {{!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Dashboard</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group me-2">
-        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-      </div>
-      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-        <span data-feather="calendar"></span>
-        This week
-      </button>
-    </div>
-  </div> --}}
-<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-	<div class="h2 mt-3">Courses</div>
-<hr class="border border-secondary opacity-50">
-	<form align="left" method="get" action="/admin/courses/addCourses">
-		<button type="submit" class="btn btn-primary mt-2 mb-2">Add Courses</button>
-	</form>
-	{{#if courses}}
+	{{!-- <div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1 class="h2">Dashboard</h1>
+		<div class="btn-toolbar mb-2 mb-md-0">
+			<div class="btn-group me-2">
+				<button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+				<button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+			</div>
+			<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+				<span data-feather="calendar"></span>
+				This week
+			</button>
+		</div>
+	</div> --}}
+	{{!-- <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+		<div class="h2 mt-3">Courses</div>
+		<hr class="border border-secondary opacity-50">
+		<form align="left" method="get" action="/admin/courses/addCourses">
+			<button type="submit" class="btn btn-primary mt-2 mb-2">Add Courses</button>
+		</form>
+		{{#if courses}}
 		<h1 class="text-primary">Courses Listed</h1>
 		{{#each courses}}
 		<div class="row">
-  			<div class="col-sm-6">	
+			<div class="col-sm-6">
 				<div class="card border-primary mb-2 w-50 mx-auto">
-				<div class="card-header">
-                    <h1 class="card-title">{{title}}</h>
-                </div>
+					<div class="card-header">
+						<h1 class="card-title">{{title}}</h>
+					</div>
 					<div class="card-body">
 						<h5>Description of the Course</h5>
 						<p class="card-text">{{Description}}</p>
 						<h5>Price</h5>
 						<p class="card-text">${{price}}</p>
 						<h5>Difficulty</h5>
-                    	<p class="card-text">{{difficulty}}</p>
+						<p class="card-text">{{difficulty}}</p>
 					</div>
 					<div class="col-sm-6 col-md-6 col-lg-2">
 						<p>
@@ -43,7 +44,8 @@
 							</a>
 						</p>
 						<p>
-							<a href="/courses/deleteCourses/{{id}}" class="card-link" data-toggle="confirmation" data-title="Confirm delete?">
+							<a href="/courses/deleteCourses/{{id}}" class="card-link" data-toggle="confirmation"
+								data-title="Confirm delete?">
 								<i class="far fa-trash-alt"></i>
 								Delete
 							</a>
@@ -52,15 +54,43 @@
 				</div>
 			</div>
 		</div>
-	{{/each}}
-</div>
-{{else}}
-<h4>No Courses listed</h4>
-{{/if}}
+		{{/each}}
+	</div>
+	{{else}}
+	<h4>No Courses listed</h4>
+	{{/if}}
 
-<script>
-	$('[data-toggle=confirmation]').confirmation({
-		rootSelector: '[data-toggle=confirmation]',
-	});
-</script>
-{{!-- </main> --}}
+	<script>
+		$('[data-toggle=confirmation]').confirmation({
+			rootSelector: '[data-toggle=confirmation]',
+		});
+	</script> --}}
+	{{!--
+</main> --}}
+
+<script
+	src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/custom-view/bootstrap-table-custom-view.js"></script>
+
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="h2 mt-3">Courses</div>
+	<hr class="border border-secondary opacity-50">
+	<div id="toolbar">
+		<a id="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Courses</a>
+	</div>
+	<div class="table-responsive">
+		<table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
+			data-show-columns="true" data-toolbar="#toolbar" {{!-- data-show-custom-view="true"
+			data-custom-view="customViewFormatter" data-show-custom-view-button="true" --}} data-url="/admin/courses/api/list">
+
+			<thead>
+				<tr>
+					<th data-field="Course.title">id</th>
+					<th data-field="CourseId">name</th>
+					<th data-field="id">email</th>
+					<th data-field="role">role</th>
+					<th data-field="icons" data-formatter="generate_actions">actions</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>

@@ -10,6 +10,7 @@ const flashMessage = require('../helpers/messenger');
 const classes = require("./adminClasses");
 const courses = require("./adminCourses");
 const products = require("./adminProducts");
+const users = require("./adminUsers");
 
 router.all('/*', (req, res, next) => {
     req.app.locals.layout = 'admin',
@@ -21,6 +22,7 @@ router.all('/*', (req, res, next) => {
 router.use('/classes', classes);
 router.use('/courses', courses);
 router.use('/products', products);
+router.use('/users', users);
 
 router.get('/', (req, res) => {
     res.render('admin/dashboard'
@@ -32,89 +34,4 @@ router.get('/', (req, res) => {
     );
 });
 
-router.get('/api/list', async (req, res) => {
-    return res.json({
-        total: await User.count(),
-        rows: await User.findAll()
-    })
-});
-
-router.get('/list', (req, res) => {
-    res.render('admin/user'
-//     , {
-//         whichPartial: function() {
-//             return "_adminUser";
-//        }
-// }
-);
-});
-
-// router.get('/editUser/:id', (req, res) => {
-//     console.log(JSON.stringify(req.body));
-//     let name = req.body.name;
-//     let email = req.body.email;
-//     console.log(name);
-//     console.log(email);
-//     User.update({ name, email}, { where: { id: req.params.id } })
-//         .then((result) => {
-//             console.log(result[0] + ' account updated');
-//             res.redirect('/account');
-//         })
-//         .catch(err => console.log(err));
-// });
-
-router.get('/deleteUser/:id', async (req, res) => {
-    
-    await User.destroy({ where: { id: req.params.id } })
-        .then((result) => {
-            console.log(result[0] + ' deleted');
-            res.redirect('/admin/list');
-        })
-        .catch(err => console.log(err));
-});
-
-router.post('/addUser', async (req, res) => {
-    let { name, email, password, password2, role} = req.body;
-
-    let isValid = true;
-    if (password.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 characters');
-        isValid = false;
-    }
-    if (password != password2) {
-        flashMessage(res, 'error', 'Passwords do not match');
-        isValid = false;
-    }
-    if (!isValid) {
-        res.render('/admin/list', {
-            name,
-            email
-        });
-    }
-
-    try {
-        // If all is well, checks if user is already registered
-        let user = await User.findOne({ where: { email: email } });
-        if (user) {
-            // If user is found, that means email has already been registered
-            flashMessage(res, 'error', email + ' already registered');
-            res.render('/admin/addUser', {
-                name,
-                email,
-                whichPartial: function() {
-                    return;
-               }});
-        } else {
-            // Create new user record 
-            var salt = bcrypt.genSaltSync(10);
-            var hash = bcrypt.hashSync(password, salt);
-            // Use hashed password
-            let user = await User.create({ name, email, password: hash, role});
-            flashMessage(res, 'success', email + ' registered successfully');
-            res.redirect('/admin/list');
-        }
-    } catch (err) {
-        console.log(err);
-    }
-});
 module.exports = router;

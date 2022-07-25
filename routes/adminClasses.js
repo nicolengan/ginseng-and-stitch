@@ -24,11 +24,21 @@ router.get('/', async (req, res) => {
 //         .catch(err => console.log(err));
 // });
 
+router.get('/api/list', async (req, res) => {
+    return res.json({
+        total: await Classes.count(),
+        rows: await Classes.findAll({include: {model: Course}})
+    })
+});
+
 router.get('/addClasses', ensureAuthenticated, async (req, res) => {
     const classes = await Classes.findAll({include: {model: Course}});
     const courses = await Course.findAll();
+    console.log(res.json({
+        total: await Classes.count(),
+        rows: await Classes.findAll({include: {model: Course}})
+    }))
     console.log(classes)
-    console.log(courses)
     res.render('admin/classes/addClasses', { classes, courses });
 });
 

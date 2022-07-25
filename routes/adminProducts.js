@@ -17,12 +17,13 @@ router.get('/', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/api/list', async (req, res) => {
-    return res.json({
-        total: await Product.count(),
-        rows: await Product.findAll()
-    })
-});
+// router.get('/api/list', async (req, res) => {
+//     return res.json({
+//         total: await Product.count(),
+//         rows: await Product.findAll()
+//     })
+// });
+
 
 router.get('/addProducts', ensureAuthenticated, (req, res) => {
     res.render('admin/products/addProducts');

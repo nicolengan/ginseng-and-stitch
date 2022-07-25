@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Courses = require('../models/Course');
+const Classes = require('../models/Class');
 const ensureAuthenticated = require('../helpers/auth');
 const User = require('../models/User');
 const isAdmin = require('../helpers/admin');
@@ -19,19 +20,25 @@ router.get('/', (req, res) => {
         .catch(err => console.log(err));
 });
 
+// router.get('/api/list', async (req, res) => {
+//     return res.json({
+//         total: await Courses.count(),
+//         rows: await Courses.findAll()
+//     })
+// });
 router.get('/addCourses' , (req, res) => {
     res.render('admin/courses/addCourses');
 });
 
 router.post('/addCourses', (req, res) => {
     let title = req.body.title;
-    let Description = req.body.description.slice(0, 1999);
+    let description = req.body.description.slice(0, 1999);
     let uuid = req.body.uuid;
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
     let level = req.body.level;
 
     Courses.create(
-        { title, uuid , Description, price, level  }
+        { title, uuid , description, price, level  }
         )
         .then((courses) => {
             console.log(courses.toJSON());
