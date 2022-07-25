@@ -1,5 +1,5 @@
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+{{!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"> --}}
+  {{!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Dashboard</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
@@ -11,22 +11,22 @@
         This week
       </button>
     </div>
-  </div>
-  <div class="container-fluid ">
-		<form align="left" method="get" action="/courses/addCourses">
-		<button type="submit" class="btn btn-primary mt-5 mb-2">Add Courses</button>
+  </div> --}}
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="h2 mt-3">Courses</div>
+<hr class="border border-secondary opacity-50">
+	<form align="left" method="get" action="/admin/courses/addCourses">
+		<button type="submit" class="btn btn-primary mt-2 mb-2">Add Courses</button>
 	</form>
 	{{#if courses}}
 		<h1 class="text-primary">Courses Listed</h1>
-		<div class="container"></div>
-			<div class="row"></div>
-			{{#each courses}}
-			<div class="col-sm-6">
-				<div class="card border-primary mb-2 ">
-					<div class="card-header col-12">
-						<h5 class="card-title">{{title}}</h5>
-					</div>
-					<img src="../img/home_img.jpg" class="card-img-top" alt="...">
+		{{#each courses}}
+		<div class="row">
+  			<div class="col-sm-6">	
+				<div class="card border-primary mb-2 w-50 mx-auto">
+				<div class="card-header">
+                    <h1 class="card-title">{{title}}</h>
+                </div>
 					<div class="card-body">
 						<div class="row">
 							<div class="col">
@@ -67,7 +67,7 @@
 		</div>
 	</div>
 {{else}}
-<h3>No Courses listed</h3>
+<h4>No Courses listed</h4>
 {{/if}}
 </main>
 
@@ -76,3 +76,4 @@
 		rootSelector: '[data-toggle=confirmation]',
 	});
 </script>
+{{!-- </main> --}}

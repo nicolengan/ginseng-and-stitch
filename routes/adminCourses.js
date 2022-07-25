@@ -7,11 +7,6 @@ const isAdmin = require('../helpers/admin');
 const {clampnumber} = require('../helpers/validate');
 
 
-router.all('/*', (req, res, next) => {
-    req.app.locals.layout = 'admin'; // set your layout here
-    next(); // pass control to the next handler
-});
-
 router.get('/', (req, res) => {
     Courses.findAll({
         // where: { userId: req.user.id },
@@ -19,44 +14,33 @@ router.get('/', (req, res) => {
     })
         .then((courses) => {
             // pass object to listVideos.handlebar
-            res.render('courses', { courses});
+            res.render('admin/courses/listCourses', { courses});
         })
         .catch(err => console.log(err));
 });
 
-router.get('/addCourses' ,  ensureAuthenticated, isAdmin, (req, res) => {
-    res.render('courses/addCourses');
+router.get('/addCourses' , (req, res) => {
+    res.render('admin/courses/addCourses');
 });
 
-router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
-    Courses.findAll({
-        // where: { userId: req.user.id },
-        raw: true
-    })
-        .then((courses) => {
-            // pass object to listVideos.handlebar
-            res.render('courses/listCourses', { courses});
-        })
-        .catch(err => console.log(err));
-});
-
-router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
+router.post('/addCourses', (req, res) => {
     let title = req.body.title;
-    let description = req.body.description.slice(0, 1999);
+    let Description = req.body.description.slice(0, 1999);
+    let uuid = req.body.uuid;
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
-    let level = req.body.level;
+    let difficulty = req.body.difficulty;
 
     Courses.create(
-        { title, description, price, level }
+        { title, uuid , Description, price, difficulty  }
         )
         .then((courses) => {
             console.log(courses.toJSON());
-            res.redirect('/courses/listCourses');
+            res.redirect('/admin/courses/listCourses');
         })
         .catch(err => console.log(err))
 });
 
-router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
+router.get('/editCourses/:id', (req, res) => {
     Courses.findOne({
         where: { id: req.params.id },
         raw: true
@@ -64,10 +48,10 @@ router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     .then((course) =>{
         console.log(course)
         if (course == null){
-            res.redirect("/courses/listCourses");
+            res.redirect("/admin/courses/listCourses");
         }
         else{
-            res.render("courses/editCourses",  {course});
+            res.render("admin/courses/editCourses",  {course});
         }
     })
 
@@ -76,29 +60,29 @@ router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
 
 
 
-router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
+router.post('/editCourses/:id', (req, res) => {
     let title = req.body.title;
-    let description = req.body.description.slice(0, 1999);
+    let Description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
-    let level = req.body.level;
+    let difficulty = req.body.difficulty;
     
     Courses.update(
-        { title, description, price, level},
+        { title, Description, price, difficulty },
         { where: { id: req.params.id } }
     )
     .then((result) => {
         console.log(result[0] + ' course updated');
-        res.redirect('/courses/listCourses');
+        res.redirect('/admin/courses/listCourses');
     })
     .catch(err => console.log(err));
 });
 
-router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) {
+router.get('/deleteCourses/:id',  async (req, res) => {
     try {
         let courses = await Courses.findByPk(req.params.id);
         if (!courses) {
             flashMessage(res, 'error', 'Courses not found');
-            res.redirect('/courses/listCourses');
+            res.redirect('/admin/courses/listCourses');
             return;
         }
         // if (req.user.id != courses.id) {
@@ -109,7 +93,7 @@ router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) 
 
         let result = await Courses.destroy({ where: { id: courses.id } });
         console.log(result + ' courses deleted');
-        res.redirect('/courses/listCourses');
+        res.redirect('/admin/courses/listCourses');
     }
     catch (err) {
         console.log(err);

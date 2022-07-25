@@ -1,9 +1,9 @@
 const db = require('../config/DBConfig');
 const { sequelize, Model, DataTypes } = require('sequelize');
 
-class Classes extends Model {}
+class Class extends Model {}
 
-Classes.init({
+Class.init({
   // Model attributes are defined here
   date: {
     type: DataTypes.DATEONLY,
@@ -20,6 +20,6 @@ Classes.init({
 }, {
    // Other model options go here
    sequelize: db, // We need to pass the connection instance
-   modelName: 'Classes' // We need to choose the model name
+   modelName: 'Class' // We need to choose the model name
 });
-module.exports = Classes;
+module.exports = Class;

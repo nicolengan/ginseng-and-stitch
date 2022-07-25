@@ -3,7 +3,7 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const ensureAuthenticated = require("../helpers/auth");
 const Booking = require('../models/Booking');
-const Class = require('../models/Classes');
+const Class = require('../models/Class');
 const Bookings = require('../models/Booking');
 
 // BOOKING SESSION
@@ -12,8 +12,6 @@ const Bookings = require('../models/Booking');
 //book will be listBooking
 router.get('/listBooking', ensureAuthenticated, (req, res) => {
     Class.findAll({
-            where: { userId: req.user.id },
-            raw: true
         })
         .then((classes) => {
             res.render('booking/listBooking', { classes });
@@ -21,16 +19,14 @@ router.get('/listBooking', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/listBooking', ensureAuthenticated, (req, res) => {
-    Booking.findAll({
-            where: { userId: req.user.id },
-            raw: true
-        })
-        .then((classes) => {
-            res.render('booking/listBooking', { classes });
-        })
-        .catch(err => console.log(err));
-});
+// router.get('/listBooking', ensureAuthenticated, (req, res) => {
+//     Booking.findAll({
+//         })
+//         .then((classes) => {
+//             res.render('booking/listBooking', { classes });
+//         })
+//         .catch(err => console.log(err));
+// });
 
 
 router.get('/checkout', ensureAuthenticated, (req, res) => {

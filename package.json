@@ -22,6 +22,7 @@
     "flash-messenger": "^1.1.1",
     "handlebars": "^4.7.7",
     "jquery": "^3.6.0",
+    "jsdom": "^20.0.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
