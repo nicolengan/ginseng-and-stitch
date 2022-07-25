@@ -1,7 +1,7 @@
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
-const Class = require('../models/Class');
+const Classes = require('../models/Classes');
 const Course = require('../models/Course');
 const Product = require('../models/Product');
 const Cart = require('../models/Cart');
@@ -27,17 +27,17 @@ const setUpDB = (drop) => {
             Cart.hasMany(Booking);
             Booking.belongsTo(Cart);
             
-            //Course_id in class
-            Class.belongsTo(Course);
-            Course.hasMany(Class);
+            // Course_id in class
+            Classes.belongsTo(Course, {foreignKey: 'CourseId', targetKey: 'id', onDelete: 'CASCADE'});
+            Course.hasMany(Classes, {foreignKey: 'CourseId', onDelete: 'CASCADE'});
 
             //User_id in Booking
             User.hasMany(Booking);
             Booking.belongsTo(User);
 
             //Class_id in Booking
-            Class.hasMany(Booking);
-            Booking.belongsTo(Class);
+            Classes.hasMany(Booking);
+            Booking.belongsTo(Classes);
 
             //Cart_id in Booking
             Booking.belongsTo(Cart);

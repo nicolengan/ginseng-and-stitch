@@ -3,7 +3,7 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const ensureAuthenticated = require("../helpers/auth");
 const Booking = require('../models/Booking');
-const Classes = require('../models/Class');
+const Class = require('../models/Classes');
 const Bookings = require('../models/Booking');
 
 // BOOKING SESSION
@@ -11,7 +11,7 @@ const Bookings = require('../models/Booking');
 
 //book will be listBooking
 router.get('/listBooking', ensureAuthenticated, (req, res) => {
-    Classes.findAll({
+    Class.findAll({
             where: { userId: req.user.id },
             raw: true
         })
@@ -34,7 +34,7 @@ router.get('/listBooking', ensureAuthenticated, (req, res) => {
 
 
 router.get('/checkout', ensureAuthenticated, (req, res) => {
-    Classes.findAll({
+    Class.findAll({
             where: { userId: req.user.id },
             raw: true
         })
@@ -45,7 +45,7 @@ router.get('/checkout', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/confirm', ensureAuthenticated, (req, res) => {
-    Classes.findAll({
+    Class.findAll({
             where: { userId: req.user.id },
             raw: true
         })
@@ -56,7 +56,7 @@ router.get('/confirm', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/payment', (req, res) => {
-    Classes.findAll({
+    Class.findAll({
         where: { userId: req.user.id },
         raw: true
     })
@@ -67,7 +67,7 @@ router.get('/payment', (req, res) => {
 });
 
 router.get('/successful', (req, res) => {
-    Classes.findAll({
+    Class.findAll({
         where: { userId: req.user.id },
         raw: true
     })
