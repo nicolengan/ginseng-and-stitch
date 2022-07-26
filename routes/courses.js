@@ -7,6 +7,11 @@ const isAdmin = require('../helpers/admin');
 const {clampnumber} = require('../helpers/validate');
 
 
+router.all('/*', (req, res, next) => {
+    req.app.locals.layout = 'admin'; // set your layout here
+    next(); // pass control to the next handler
+});
+
 router.get('/', (req, res) => {
     Courses.findAll({
         // where: { userId: req.user.id },
@@ -37,13 +42,12 @@ router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
 
 router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
     let title = req.body.title;
-    let Description = req.body.description.slice(0, 1999);
-    let uuid = req.body.uuid;
+    let description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
-    let difficulty = req.body.difficulty;
+    let level = req.body.level;
 
     Courses.create(
-        { title, uuid , Description, price, difficulty  }
+        { title, description, price, level }
         )
         .then((courses) => {
             console.log(courses.toJSON());
@@ -74,12 +78,12 @@ router.get('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
 
 router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     let title = req.body.title;
-    let Description = req.body.description.slice(0, 1999);
+    let description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
-    let difficulty = req.body.difficulty;
+    let level = req.body.level;
     
     Courses.update(
-        { title, Description, price, difficulty },
+        { title, description, price, level},
         { where: { id: req.params.id } }
     )
     .then((result) => {

@@ -1,34 +1,55 @@
-<p>Home > Workshop > Book Now > Booking Completion</p>
+<p>Home > Courses > Book Now > Booking Completion</p>
 <div class="container">
-	{{#if classes}}
+	{{#if booking}}
 	<div class="card card-body">
-        {{#each classes}}
-        <div class="card border-black mb-2 w-100 mx-auto">
-                <p class="text-muted">Congratulations User {{userId}}!</p>
-                <h4>Your Class #{{id}} is booked successfully!</h4>
+        {{#each booking}}
+        <div class="card border-black mb-2 w-50 mx-auto">
+			<h5>Your Booking #{{id}} is booked successfully!</h5>
                 <div class="card-body">
-				    <div class="row">					
+				    <div class="row">		
                         <div class="col">
-                            <p class="details">Details:</p>
-                            <p class="text-primary">Time: {{time}}</p>
-                            <p class="text-primary">Date: {{date}}</p>
-                        </div>
-                        <br>
-                        <div class="col">
-                            <p class="information">Information</p>
-                            <p class="text-primary">Difficulty: {{course_difficulty}}</p>
-                            <p class="text-primary">Course: {{course_name}}</p>
-                            <p class="text-primary">Price: {{course_price}}</p>
-                            <p class="text-primary">Pax: {{pax}}</p>
-                        </div>
-                        <br>
-                    </div>
-                    <button type="button" class="btn btn-light">Receipt to Email</button>
-                    <button type="button" class="btn btn-light">Add to Calendar</button>
-			    </div>
+							<u class="details">Details:</u>
+							<br>
+							<i class="text-dark">Course ID:</i> 
+							<p class="text-primary"> {{CourseId}}</p>
+							
+							<i class="text-dark">Class ID:</i> 
+							<p class="text-primary"> {{ClassId}}</p>
+							
+							<i class="text-dark">Date:</i> 
+							<p class="text-primary">{{Class.date}}</p>
+						</div>
+
+						<div class="col">
+							<u class="information">Full Information:</u>
+							<br>
+							<i class="text-dark">Course Name:</i> 
+							<p class="text-primary">{{Course.title}}</p>
+							
+							<i class="text-dark">Course Description:</i> 
+							<p class="text-primary">{{Course.description}}</p>
+				
+							<i class="text-dark">Level:</i> 
+							<p class="text-primary">{{Course.level}}</p>
+							
+							<i class="text-dark">Price of the course:</i> 
+							<p class="text-primary">{{Course.price}}</p>
+							
+							<i class="text-dark">Number of Pax selected:</i> 
+							<p class="text-primary">{{Class.pax}}</p>
+						</div>	
+						<br>		
+					</div>
+						<div class="Receipt">
+							<button type="button" class="btn btn-dark">Receipt to Email</button>
+							{{!-- <button type="button" class="btn btn-dark">Add to Calendar</button> --}}
+						</div>
+				</div>
+		</div>
 		{{/each}}
-        </div>
+	</div>
+	{{else}}
+	<h3>No Classes has been Booked Successfully</h3>
+	{{/if}}
 </div>
-{{else}}
-<h3>No Classes has been Booked Successfully</h3>
-{{/if}}
+

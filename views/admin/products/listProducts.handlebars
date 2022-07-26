@@ -1,0 +1,79 @@
+{{!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+        <span data-feather="calendar"></span>
+        This week
+      </button>
+    </div>
+  </div> --}}
+  {{!-- <script
+    src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/custom-view/bootstrap-table-custom-view.js"></script> --}}
+  <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="h2 mt-3">Products</div>
+    <hr class="border border-secondary opacity-50">
+    <div id="toolbar">
+      <a id="button" class="btn btn-secondary" href="/admin/products/addProducts">Add Product</a>
+    </div>
+    <div class="table-responsive">
+      <table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
+        data-show-columns="true" data-toolbar="#toolbar" 
+        {{!-- data-show-custom-view="true"
+        data-custom-view="customViewFormatter" 
+        data-show-custom-view-button="true"  --}}
+        data-url="/admin/products/api/list">
+
+        <thead>
+          <tr>
+            <th data-field="id">id</th>
+            <th data-field="prod_name">name</th>
+            <th data-field="prod_desc">description</th>
+            <th data-field="difficulty">difficulty</th>
+            <th data-field="stock">stock</th>
+            <th data-field="price">price</th>
+            <th data-field="icons" data-formatter="generate_actions">actions</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+</main>
+{{!-- <template id="profileTemplate">
+  <div class="col-4 mt-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-lg-8 col-md-6">
+            <h3 class="mb-0 text-truncated">%NAME%</h3>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 text-center">
+              <img src="%IMAGE%" alt="" class="mx-auto rounded-circle img-fluid" style="height: 120px;">
+              <br>
+            </div>
+          <a class="btn btn-danger w-25" role="button">button</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template> --}}
+    <script>
+      var $table = $('#table')
+      function generate_actions(value, row, index) {
+        return `
+<div>
+  <a href="/admin/products/editProduct/${row.id}"><i class="fas fa-pencil-alt"></i></a>
+  <a href="/admin/products/deleteProduct/${row.id}"><i class="bi bi-trash"></i></a>
+</div>`
+          ;
+      }
+        function draw_picture(value, row, index) {
+  return `<img style="width: 100px; height: 64px" src="${value}">`;
+  }
+
+    </script>
+
+  </div>

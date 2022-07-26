@@ -1,0 +1,45 @@
+ <style>
+	.container{
+		width: 40%;
+		margin: auto;
+	}
+	.col-75 {
+	margin-top: 2px;
+	}
+	.submit {
+		width: 20%; 
+		margin: auto;
+		text-align: center;
+	}
+</style>
+	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+		<h3>Editing Booking: </h3>
+		<div class="card card-body">
+			<form action="" method="post">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-25">
+							<label for="CourseId">Course ID:</label>
+						</div>
+						<div class="col-75">
+							<input type="CourseId" name="CourseId" value={{bookings.CourseId}}>
+						</div>
+					</div>
+					<br>
+
+					<div class="form-group">
+						<div class="row">
+						<label for="ClassId">Class ID:</label>
+							<div class="col-75">
+								<input type="ClassId" name="ClassId" value={{bookings.ClassId}}>
+							</div>
+						</div>
+					</div>
+					<br>
+				</div>
+				<div class="update">
+					<button id="btnSubmit" type="submit" class="btn btn-primary">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>

@@ -1,0 +1,48 @@
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="card card-body">
+		<h3>Add Courses</h3>
+		<form action="" method="post">
+			<div class="form-group">
+				{{!-- Practical 5 Exercise 2: Add a title input text here named 'title'--}}
+				<label class="font-italic" for="title">Title</label>
+				<input class="form-control" id="title" name="title" />
+			</div>
+			<div class="form-group mb-4">
+				<label class="font-italic" for="description">Description</label>
+				<textarea class="form-control" id="description" name="description" rows="7" maxlength="2000"></textarea>
+			</div>
+            <div class="form-group mb-4">
+                <label class="font-italic" for="price">Price</label>
+                <input type="number" class="form-control" id="price" name="price" />
+            </div>
+				<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-italic">Level</label>
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Basic" value="Basic" name="level" checked>
+							<label class="form-check-label" for="Basic">Basic</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Intermediate" value="Intermediate" name="level">
+							<label class="form-check-label" for="Intermediate">Intermediate</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Advanced" value="Advanced" name="level">
+							<label class="form-check-label" for="Advanced">Advanced</label>
+						</div>
+					</div>
+				</div>
+				<button id="btnSubmit" type="submit" class="btn btn-primary">Publish</button>
+			</div>
+			<br>
+		</form>
+	</div>
+</div>
+</main>
+<script>
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		uiLibrary: 'bootstrap4',
+		value: moment().format('DD/MM/YYYY'),
+	});
+</script>

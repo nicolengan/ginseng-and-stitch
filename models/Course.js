@@ -15,11 +15,9 @@ Course.init({
   },
   price: {
     type: sequelize.DECIMAL,
-    allowNull: false
   },
   level: {
     type: sequelize.STRING,
-    allowNull: false
   }
   
 }, {

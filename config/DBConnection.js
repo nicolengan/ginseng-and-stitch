@@ -1,4 +1,3 @@
-
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
@@ -14,26 +13,42 @@ const setUpDB = (drop) => {
             console.log('Database connected');
 
             mySQLDB.sync({ alter: true, force: drop });
-            console.log("The table for the was just (re)created!");
+            console.log("The table for the Database was just (re)created!");
 
+            //user_id in cart
             Cart.belongsTo(User);
             User.hasOne(Cart);
 
+            //product_id in cart
             Cart.belongsTo(Product);
             Product.hasMany(Cart);
 
-            Booking.belongsTo(Cart);
-            Cart.hasOne(Booking);
+            // //booking_id in cart
+            // Cart.hasMany(Booking);
+            // Booking.belongsTo(Cart);
+            
+            // Course_id in class
 
-            Class.belongsTo(Course);
-            Course.hasMany(Class);
+            // creates CourseId  foreign key in Class
+            Class.belongsTo(Course, {foreignKey: 'CourseId', targetKey: 'id', onDelete: 'CASCADE'});
+            Course.hasMany(Class, { sourceKey: 'id', foreignKey: 'CourseId'});
+            
+            //Class_id in Booking
+            Booking.belongsTo(Class, {foreignKey: 'ClassId', targetKey: 'id', onDelete: 'CASCADE'});
+            Class.hasMany(Booking, {sourceKey: 'id', foreignKey: 'ClassId'});
+            
+            //Course_id in Booking
+            Booking.belongsTo(Course, {foreignKey: 'CourseId', targetKey: 'id', onDelete: 'CASCADE'});
+            Course.hasMany(Booking, {sourceKey: 'id', foreignKey: 'CourseId'});
 
-            User.hasMany(Booking);
-            Booking.belongsTo(User);
+            // User_id in Booking
+            // Booking.belongsTo(User, {foreignKey: 'UserId', targetKey: 'id', onDelete: 'CASCADE'});
+            // User.hasMany(Booking, {sourceKey: 'id', foreignKey: 'UserId'});
 
-            Class.hasMany(Booking);
-            Booking.belongsTo(Class);
-
+            // Cart_id in Booking
+            // Booking.belongsTo(Cart, {foreignKey: 'CartId', targetKey: 'id', onDelete: 'CASCADE'});
+            // Cart.hasOne(Booking, {sourceKey: 'id', foreignKey: 'CartId'});
+            
         })
         .catch(err => console.log(err));
 };

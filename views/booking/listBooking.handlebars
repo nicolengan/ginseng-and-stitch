@@ -1,78 +1,75 @@
-<p>Home > Classes > Book Now</p>
-<style type="type/css">
-    .search-button{
-      width: 25%; 
-      height: 25%; 
-    }
-    div.container {
-		width: 80%;
-		margin: auto;
-		margin-top: 30px;
-	}
-</style>
-
+<p>Home > Courses > Book Now > Booking In Progress</p>
 <div class="container">
-	{{#if classes}}
-	<div class="card card-body">
-		<h3 class="text-black">Classes</h3>
-		{{#each classes}}
-        <p>Hi User {{userId}}</p>
-        <p>Now you will be proceeding to book the classes available.</p>
-        <h3 class="text-black">Workshops Available:</h3>
-        <p>This will be class id #{{id}}</p>
-		<div class="card border-black mb-2 w-100 mx-auto">
+	{{#if booking}}
+		 <p>This are your current booking:</p>
+		{{#each booking}}
+		<!--booking id, course id, class id,  user id, date created-->
+		<div class="card border-black mb-2">
 			<div class="card-body">
-				<div class="row">					
+				<div class="row">			
+					<!-- automated-->
 					<div class="col">
-						<p class="course_name">Name</p>
-						<p class="text-primary">{{course_name}}</p>
+						<p class="text-primary">This is your current Booking ID</p>
+						<p class="text-dark">{{id}}</p>
 					</div>
-					<p class="info">Information of course:</p>
-                        <p>In this class, we will start to teach you more advance techniques that the industry uses and the necessary skills for you to start sewing your very own clothes.</p>
+					<br>
 
 					<div class="col">
-						<p class="course_difficulty">Difficulty</p>
-						<p class="text-primary">{{course_difficulty}}</p>
+						<p class="text-primary">This is the ID of the course you have picked:</p>
+						<p class="text-dark">{{CourseId}}</p>
 					</div>
-                    <br>
-					
-					<div class="col">
-						<p class="course_price">Course Price</p>
-						<p class="text-primary">{{course_price}}</p>
-					</div>
-                    <br>
+					<br>
 
 					<div class="col">
-						<p class="time">Time</p>
-						<p class="text-primary">{{time}}</p>
+						<p class="text-primary">This is the ID of the Class you have picked:</p>
+						<p class="text-dark">{{ClassId}}</p>
 					</div>
-                    <br>
+					<br>
 
 					<div class="col">
-						<p class="date">Date</p>
-                        <p class="text-primary">{{date}}</p>
+						<br>
+						<br>
+						<p>
+							<a href="/booking/deleteBooking/{{id}}" class="card-link" data-toggle="confirmation"
+								data-title="Confirm delete?">
+								<i class="far fa-trash-alt"></i>
+								Delete
+							</a>
+						</p>
+						<br>
 					</div>
-                    <br>
-												
-					<div class="col">
-						<p class="class_no">Class</p>
-						<p class="text-primary">{{class_no}}</p>
-					</div>
-                    <br>
-						
-					<div class="col">
-						<p class="pax">Pax</p>
-						<p class="text-primary">{{pax}}</p>
-					</div>
-                    <br>
-                    <div class="submit">
-                    <button class="btn btn-primary waves-effect" type="submit"><a href="/booking/confirm">Confirm Now</a></button>
-                    </div>
 				</div>
+					<div class="submit">
+					<button class="btn btn-primary" type="submit"><a href="/booking/confirm">Confirm Now</a></button>
+					</div>
 			</div>
+		</div>
 		{{/each}}
 	</div>
-	{{else}}
-	<h3>No Booking Available</h3>
-	{{/if}}
+{{else}}
+<h3>No Booking Available</h3>
+{{/if}}
 </div>
+
+						{{!-- <p>
+							<a href="/booking/editBooking/{{id}}" class="card-link mb-2">
+								<i class="fas fa-pencil-alt"></i>
+								Edit
+							</a>
+						</p> --}}
+					{{!-- <div class="col">
+						<p class="course_id">Course ID</p>
+						<p class="text-primary">{{course_id}}</p>
+					</div>
+                    <br>
+
+                    <div class="col">
+						<p class="class_id">Class ID</p>
+						<p class="text-primary">{{class_id}}</p>
+					</div>
+					<br> --}}
+					{{!-- <div class="col">
+						<p class="text-primary">Cart ID:</p>
+						<p class="text-dark">{{CartId}}</p>
+					</div>
+					<br> --}}
