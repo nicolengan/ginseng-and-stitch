@@ -1,32 +1,30 @@
 <style>
-label {
-  display: inline-block;
-}
-.input-group-append {
-  cursor: pointer;
-}
-.container {
-	width: 40%;
-	margin: auto;
-}
-.col-75 {
-  margin-top: 2px;
-}
-.submit {
-	width: 20%; 
-	margin: auto;
-	text-align: center;
-}
+	label {
+		display: inline-block;
+	}
+	.input-group-append {
+		cursor: pointer;
+	}
+	.container {
+		width: 40%;
+		margin: auto;
+	}
+	.col-75 {
+		margin-top: 2px;
+	}
+	.submit {
+		width: 20%;
+		margin: auto;
+		text-align: center;
+	}
 </style>
 
-<!--admin create classes -->
-<h4><u>New Class Creation</u></h4>
 	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-			<h4><u>New Class Creation</u></h4>
-		<form method="POST" action="">
-
-			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
-			<div class="row">
+		<div class="card card-body">
+			<h3>Add Classes</h3>
+			<form action="" method="post">
+			<div class="form-group">
+				<div class="row">
 				<div class="col-25">
 					<label for="CourseId">Course ID</label>
 				</div>
@@ -38,14 +36,13 @@ label {
 					</select>
 				</div>
 			</div>
-			{{!-- <br>
+			<br>
 
-	<div class="container">
-		<form>
+			</div>
 			<div class="form-group">
 				<div class="row">
 					<div class="col-25">
-						<label for="date">Date</label>
+						<label for="date">Start Date: </label>
 					</div>
 					<div class="col-75">
 						<input type="date" class="form-control" name="date" value={{Class.date}}>
@@ -71,32 +68,7 @@ label {
 					</div>
 					<div class="col-75">
 						<input type="number" class="form-control" id="max_pax" name="max_pax" max="5">
-					</div> --}}
-
-			<div class="row">
-			<label for="start">Start date:</label>
-
-			<input type="date" id="start" name="date"
-				value="2022-07-26"
-				min="2018-01-01" max="2022-12-31">
-						</div>
-
-			<div class="row">
-				<div class="col-25">
-					<label for="pax">Pax</label>
-				</div>
-
-				<div class="col-75">
-					<input type="number" id="pax" name="pax" min="1" max="5">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-25">
-					<label for="pax">Max Pax</label>
-				</div>
-
-				<div class="col-75">
-					<input type="number" id="max_pax" name="max_pax" min="1" max="5">
+					</div>
 				</div>
 			</div>
 			<br>
@@ -105,3 +77,4 @@ label {
 			</div>
 		</form>
 	</div>
+</div>

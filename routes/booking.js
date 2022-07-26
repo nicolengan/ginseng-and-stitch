@@ -3,26 +3,17 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const ensureAuthenticated = require("../helpers/auth");
 const Booking = require('../models/Booking');
-const Cart = require('../models/Cart');
 const Class = require('../models/Class');
 const Course = require('../models/Course');
-const User = require('../models/User');
 
-
-router.all('/*', (req, res, next) => {
-    req.app.locals.layout = 'admin'; // set your layout here
-    next(); // pass control to the next handler
-});
-
-router.get('/', (req, res) => {
-    Booking.findAll({
-        raw: true
+router.get('/api/list', async (req, res) => {
+    return res.json({
+        total: await Booking.count(),
+        rows: await Booking.findAll({include: [
+            {model: Class},
+            {model: Course}
+        ]})
     })
-        .then((classes) => {
-            // pass object to listVideos.handlebar
-            res.render('booking/listBooking', { booking });
-        })
-        .catch(err => console.log(err));
 });
 
 // BOOKING SESSION
@@ -32,66 +23,65 @@ router.get('/', (req, res) => {
 router.get('/listBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({ 
         include: [
-            {model:Cart, attributes:['id']},
-            {model:Class, attributes:['id']},
-            {model:Course, attributes:['id']},
-            {model:User, attributes:['id']}   
+            {model:Class},
+            {model:Course}
         ]
     });
     res.render('booking/listBooking', { booking });
 });
 
 
-router.get('/addBooking', ensureAuthenticated, (req, res) => {
-    res.render('booking/addBooking');
+router.get('/addBooking', ensureAuthenticated, async (req, res) => {
+    const booking = await Booking.findAll({
+        include: [
+            {model: Class, attributes:['id']},
+            {model: Course}
+        ]
+    });
+    const courses = await Course.findAll();
+    const classes = await Class.findAll();
+    res.render('booking/addBooking', { booking, courses, classes });
 });
 
-router.post('/addBooking', ensureAuthenticated, (req, res) => {
-    let course_id = req.body.course_id;
-    let class_id = req.body.class_id;
-    // Use Video.create({}) to insert a record into the booking table, using the current course's courseId which is retrieved from req.course.id.
-    let courseId = req.course.id;
-    // Use Video.create({}) to insert a record into the booking table, using the current user’s userId which is retrieved from req.user.id.
-    let userId = req.user.id;
+router.post('/addBooking', ensureAuthenticated, async (req, res) => {
+    let CourseId = req.body.CourseId;
+    let ClassId = req.body.ClassId;
 
     Booking.create(
-        { course_id, class_id, courseId, userId}
+        { CourseId, ClassId }
     )
-        .then((booking) => {
-            console.log(booking.toJSON());
+        .then((classes) => {
+            console.log(classes.toJSON());
             res.redirect('/booking/listBooking');
         })
         .catch(err => console.log(err))
 });
 
+// router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
+//     Booking.findByPk(req.params.id, {include: [
+//         {model: Class},
+//         {model: Course}  
+//     ]})
+//         .then((booking) => {
+//             res.render('booking/editBooking', { booking });
+//         })
+//         .catch(err => console.log(err));
+// });
 
-router.get('/editBooking/:id', ensureAuthenticated, (req, res) => {
-    Booking.findByPk(req.params.id)
-        .then((booking) => {
-            if (!booking) {
-                flashMessage(res, 'error', 'Booking not found');
-                res.redirect('/booking/listBooking');
-                return;
-            }
-            res.render('booking/editBooking', { booking });
-        })
-        .catch(err => console.log(err));
-});
+// router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
+//     let CourseId = req.body.CourseId;
+//     let ClassId = req.body.ClassId;
 
-router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
-    let course_id = req.body.course_id;
-    let class_id = req.body.class_id;
-
-    Booking.update(
-        { course_id, class_id },
-        { where: { id: req.params.id } }
-    )
-        .then((result) => {
-            console.log(result[0] + ' booking updated');
-            res.redirect('/booking/listBooking');
-        })
-        .catch(err => console.log(err));
-});
+//     Booking.update(
+//         { CourseId, ClassId},
+//         { where: { id: req.params.id} }
+//     )
+//         .then((result) => {
+//             console.log(result[0] + ' booking updated');
+//             res.redirect('/booking/listBooking');
+//         })
+//         .catch(err => console.log(err))
+// });
 
 router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) {
     try {
@@ -110,48 +100,51 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
     }
 });
 
-router.get('/checkout', ensureAuthenticated, (req, res) => {
-    Booking.findAll({
-            // where: { userId: req.user.id },
-            raw: true
-        })
-        .then((booking) => {
-            res.render('booking/checkout', { booking });
-        })
-        .catch(err => console.log(err));
+router.get('/checkout', async (req, res) => {
+    const booking = await Booking.findAll({ 
+        include: [
+            {model: Class},
+            {model: Course}
+        ]
+    });
+    const courses = await Course.findAll();
+    const classes = await Class.findAll();
+    res.render('booking/checkout', { booking, courses, classes });
 });
 
-router.get('/confirm', ensureAuthenticated, (req, res) => {
-    Booking.findAll({
-            // where: { userId: req.user.id },
-            raw: true
-        })
-        .then((booking) => {
-            res.render('booking/confirm', { booking });
-        })
-        .catch(err => console.log(err));
+router.get('/confirm', async (req, res) => {
+    const booking = await Booking.findAll({ 
+        include: [
+            {model: Class},
+            {model: Course} 
+        ]
+    });
+    const courses = await Course.findAll();
+    const classes = await Class.findAll();
+    res.render('booking/confirm', { booking, courses, classes });
 });
 
-router.get('/payment', (req, res) => {
-    Booking.findAll({
-        // where: { userId: req.user.id },
-        raw: true
-    })
-    .then((booking) => {
-        res.render('booking/payment', { booking });
-    })
-    .catch(err => console.log(err));
-});
+// router.get('/payment', (req, res) => {
+//     Booking.findAll({
+//         // where: { userId: req.user.id },
+//         raw: true
+//     })
+//     .then((booking) => {
+//         res.render('booking/payment', { booking });
+//     })
+//     .catch(err => console.log(err));
+// });
 
-router.get('/successful', (req, res) => {
-    Booking.findAll({
-        // where: { userId: req.user.id },
-        raw: true
-    })
-    .then((booking) => {
-        res.render('booking/successful', { booking });
-    })
-    .catch(err => console.log(err));
+router.get('/successful', async (req, res) => {
+    const booking = await Booking.findAll({ 
+        include: [
+            {model: Class},
+            {model: Course} 
+        ]
+    });
+    const courses = await Course.findAll();
+    const classes = await Class.findAll();
+    res.render('booking/successful', { booking, courses, classes});
 });
 
 module.exports = router;

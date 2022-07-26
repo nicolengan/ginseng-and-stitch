@@ -1,4 +1,4 @@
-<style>
+ <style>
 	.container{
 		width: 40%;
 		margin: auto;
@@ -12,44 +12,45 @@
 		text-align: center;
 	}
 </style>
-<h4><u>Editing Class</u></h4>
-<h6 class="word">Current Course: <br> {{Course.title}}</h6>
-<div class="container">
-	{{!-- <form action="/classes/editClasses/{{classes.id}}" method="post"> --}}
-	<form>
-		<div class="form-group">
-			<div class="col">
-				<div class="row">
-					<div class="col-25">
-						<label for="date">Date:</label>
-					</div>
-					<div class="col-75">
-						<input type="date" class="form-control" name="date" value={{Class.date}}>
-					</div>
-				</div>
-				<br>
-
+	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+		<h3>Editing Class: </h3>
+		<div class="card card-body">
+			<form action="" method="post">
 				<div class="form-group">
-					<label for="pax">Pax:</label>
-					<div class="col-75">
-						<input type="text" class="form-control" name="pax" value={{Class.pax}}>
+					<div class="row">
+						<div class="col-25">
+							<label for="date">Start Date:</label>
+						</div>
+						<div class="col-75">
+							<input type="date" class="form-control" name="date" value={{classes.date}}>
+						</div>
 					</div>
+					<br>
+
+					<div class="form-group">
+						<div class="row">
+						<label for="pax">Pax:</label>
+							<div class="col-75">
+								<input type="number" class="form-control" name="pax" min="1" max="5" value={{classes.pax}}>
+							</div>
+						</div>
+					</div>
+					<br>
+
+					<div class="form-group">
+						<div class="row">
+							<label for="max_pax">Max Pax:</label>
+							<div class="col-75">
+								<input type="number" class="form-control" name="max_pax" min="1" max="5" value={{classes.max_pax}}>
+							</div>
+						</div>
+					</div>
+					<br>
 				</div>
 				<br>
-
-      			<div class="form-group">
-					<label for="max_pax">Max Pax:</label>
-					<div class="col-75">
-						<input type="number" class="form-control" name="max_pax" value={{Class.max_pax}}>
-					</div>
+				<div class="update">
+					<button id="btnSubmit" type="submit" class="btn btn-primary">Update</button>
 				</div>
-				<br>
-
-			</div>
+			</form>
 		</div>
-		<br>
-		<div class="update">
-			<button id="btnSubmit" type="submit" class="btn btn-primary">Update</button>
-		</div>
-	</form>
-</div>
+	</div>

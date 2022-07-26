@@ -6,42 +6,65 @@
 		margin: auto;
 		margin-top: 30px;
 	}
+	.word {
+		font-weight: light;
+		text-decoration: underline;
+	}
 </style>
 
 <div class="container">
 	{{#if booking}}
 	<div class="card card-body">
 		{{#each booking}}
-       <p>User {{userId}}, Do confirm your booking ID of {{id}}.</p>
-		<div class="card border-dark mb-2 w-100 mx-auto"
-            <h5 class="card-starter"></h5>
+       <p>Do confirm your booking ID of {{id}}.</p>
+		<div class="card border-dark mb-2 w-50 mx-auto">
 			<div class="card-body">
 				<div class="row">					
 					<div class="col">
-						<p class="details">Details:</p>
-                        <p class="text-primary">Date: {{Class.date}}</p>
+						<u class="details">Details:</u>
+						<br>
+						<br>
+						<i class="text-dark">Date:</i> 
+                        <p class="text-primary">{{Class.date}}</p>
 					</div>
 
 					<div class="col">
-						<p class="class">Classes that will be booked:</p>
-						<p class="text-primary">Course ID: {{course_id}}</p>
-						<p class="text-primary">Class ID: {{class_id}}</p>
-                        <p class="text-primary">Course: {{Course.title}}</p>
-						<p class="text-primary">Course Description: {{Course.description}}</p>
-                        <p class="text-primary">Level: {{Course.level}}</p>
+						<u class="classes"> Class that will be booked:</u>
+						<br>
+						<br>
+						<i class="text-dark">ID of this class that will be booked:</i> 
+						<p class="text-primary">{{ClassId}}</p>
+
+						<i class="text-dark">Course ID:</i> 
+						<p class="text-primary"> {{CourseId}}</p>
+
+						<i class="text-dark">Course Name:</i> 
+                        <p class="text-primary">{{Course.title}}</p>
+
+						<i class="text-dark">Course Description:</i> 
+						<p class="text-primary">{{Course.description}}</p>
+
+						<i class="text-dark">Level:</i> 
+                        <p class="text-primary">{{Course.level}}</p>
 					</div>
 
 					<div class="col">
-						<p class="information">Information:</p>
-						<p class="text-primary">Price: {{Course.price}}</p>
-                        <p class="text-primary">Pax: {{Class.pax}}</p>
+						<u class="information">Information:</u>
+						<br>
+						<br>
+						<i class="text-dark">Price of the course:</i> 
+						<p class="text-primary">{{Course.price}}</p>
+
+						<i class="text-dark">Number of Pax selected:</i> 
+                        <p class="text-primary">{{Class.pax}}</p>
 					</div>
                     <br>
-                    <div class="submit">
-                    <button class="btn btn-primary waves-effect" type="submit"><a href="/booking/payment">Pay Now</a></button>
-                    </div>
 				</div>
+                    <div class="submit">
+                    <button class="btn btn-primary waves-effect" type="submit"><a href="/booking/successful">Confirm</a></button>
+                    </div>
 			</div>
+		</div>
 		{{/each}}
 	</div>
 	{{else}}
