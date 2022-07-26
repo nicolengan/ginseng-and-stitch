@@ -7,12 +7,12 @@ const flashMessage = require('../helpers/messenger');
 
 router.get('/', (req, res) => {
     res.render('admin/users/listUsers'
-//     , {
-//         whichPartial: function() {
-//             return "_adminUser";
-//        }
-// }
-);
+        //     , {
+        //         whichPartial: function() {
+        //             return "_adminUser";
+        //        }
+        // }
+    );
 });
 
 router.get('/api/list', async (req, res) => {
@@ -37,17 +37,32 @@ router.get('/api/list', async (req, res) => {
 // });
 
 router.get('/deleteUser/:id', async (req, res) => {
-    
-    await User.destroy({ where: { id: req.params.id } })
-        .then((result) => {
-            console.log(result[0] + ' deleted');
-            res.redirect('/admin/users');
-        })
-        .catch(err => console.log(err));
+    let user = await User.findOne({ where: { id: req.params.id } })
+    // if (user.role != 'a')
+    // {
+
+    // }
+    if (user.email == "admin@gmail.com") {
+        flashMessage(res, 'error', 'Unable to delete root admin account, please try again')
+        res.redirect('/admin/users')
+    }
+    else {
+        try {
+            await user.destroy()
+                .then((result) => {
+                    console.log(user + ' deleted');
+                    res.redirect('/admin/users');
+                })
+                .catch(err => console.log(err));
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
 });
 
 router.post('/addUser', async (req, res) => {
-    let { name, email, password, password2, role} = req.body;
+    let { name, email, password, password2, role } = req.body;
 
     let isValid = true;
     if (password.length < 6) {
@@ -59,10 +74,10 @@ router.post('/addUser', async (req, res) => {
         isValid = false;
     }
     if (!isValid) {
-        res.render('/admin/users', {
-            name,
-            email
-        });
+        res.redirect('/admin/users');
+        flashMessage(res, 'error', 'Not valid');
+        console.log("failed")
+        return;
     }
 
     try {
@@ -71,18 +86,14 @@ router.post('/addUser', async (req, res) => {
         if (user) {
             // If user is found, that means email has already been registered
             flashMessage(res, 'error', email + ' already registered');
-            res.render('/admin/users', {
-                name,
-                email,
-                whichPartial: function() {
-                    return;
-               }});
+
         } else {
             // Create new user record 
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
-            let user = await User.create({ name, email, password: hash, role});
+            let user = await User.create({ name, email, password: hash, role });
+            console.log(user, + "added")
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/admin/users');
         }
