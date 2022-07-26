@@ -12,12 +12,6 @@ router.get('/', async (req, res) => {
     res.render('admin/classes/listClasses', { classes });
 });
 
-router.get('/listClasses', ensureAuthenticated, async (req, res) => {
-    const classes = await Classes.findAll({ include: { model: Course}
-    });
-    res.render('classes/listClasses', { classes });
-});
-
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Classes.count(),
@@ -36,13 +30,8 @@ router.get('/addClasses', ensureAuthenticated, async (req, res) => {
     res.render('admin/classes/addClasses', { classes, courses });
 });
 
-router.post('/addClasses', ensureAuthenticated, (req, res) => {
-    // let course_name = req.body.course_name.toString();
-    // let course_difficulty = req.body.course_difficulty.toString();
-    // let course_price = req.body.course_price;
-    // let time = req.body.time;
+router.post('/addClasses', ensureAuthenticated, async (req, res) => {
     let date = req.body.date;
-    let class_no = req.body.class_no;
     let pax = req.body.pax;
     let max_pax = req.body.max_pax;
     let CourseId = req.body.CourseId;
@@ -60,21 +49,16 @@ router.post('/addClasses', ensureAuthenticated, (req, res) => {
 router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
     Classes.findByPk(req.params.id, {include: {model: Course}})
         .then((classes) => {
-            if (!classes) {
-                flashMessage(res, 'error', 'Classes not found');
-                res.redirect('/classes/listClasses');
-                return;
-            }
-            res.render('classes/editClasses', { classes });
+            res.render('admin/classes/editClasses', { classes });
         })
         .catch(err => console.log(err));
 });
 
 router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
     let date = req.body.date;
-    let class_no = req.body.class_no;
     let pax = req.body.pax;
     let max_pax = req.body.max_pax;
+    let course_id = req.body.course_id;
 
     Classes.update(
         { date, pax, max_pax, course_id}, { where: { id: req.params.id} }
@@ -83,12 +67,12 @@ router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
             console.log(classes.toJSON());
             res.redirect('admin/classes');
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
 });
 
 router.get('/deleteClasses/:id', ensureAuthenticated, async function (req, res) {
     try {
-        let classes = await Class.findByPk(req.params.id);
+        let classes = await Classes.findByPk(req.params.id);
         if (!classes) {
             flashMessage(res, 'error', 'Classes not found');
             res.redirect('/admin/classes');
