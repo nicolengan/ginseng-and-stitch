@@ -1,28 +1,28 @@
 <p>Home > Workshop > Book Now > Booking Completion</p>
 <div class="container">
-	{{#if classes}}
+	{{#if booking}}
 	<div class="card card-body">
-        {{#each classes}}
+        {{#each booking}}
         <div class="card border-black mb-2 w-100 mx-auto">
                 <p class="text-muted">Congratulations User {{userId}}!</p>
                 <h4>Your Class #{{id}} is booked successfully!</h4>
                 <div class="card-body">
-				    <div class="row">					
+				    <div class="row">		
                         <div class="col">
-                            <p class="details">Details:</p>
-                            <p class="text-primary">Time: {{time}}</p>
-                            <p class="text-primary">Date: {{date}}</p>
-                        </div>
-                        <br>
-                        <div class="col">
-                            <p class="information">Information</p>
-                            <p class="text-primary">Difficulty: {{course_difficulty}}</p>
-                            <p class="text-primary">Course: {{course_name}}</p>
-                            <p class="text-primary">Price: {{course_price}}</p>
-                            <p class="text-primary">Pax: {{pax}}</p>
-                        </div>
-                        <br>
-                    </div>
+						<p class="details">Details:</p>
+                        <p class="text-primary">Date: {{Class.date}}</p>
+					</div>
+
+					<div class="col">
+						<p class="information">Full Information::</p>
+						<p class="text-primary">Course ID: {{course_id}}</p>
+						<p class="text-primary">Class ID: {{class_id}}</p>
+                        <p class="text-primary">Course: {{Course.title}}</p>
+						<p class="text-primary">Course Description: {{Course.description}}</p>
+                        <p class="text-primary">Level: {{Course.level}}</p>
+						<p class="text-primary">Price: {{Course.price}}</p>
+                        <p class="text-primary">Pax: {{Class.pax}}</p>
+					</div>			
                     <button type="button" class="btn btn-light">Receipt to Email</button>
                     <button type="button" class="btn btn-light">Add to Calendar</button>
 			    </div>

@@ -1,0 +1,52 @@
+<style>
+label {
+  display: inline-block;
+}
+
+.container {
+	width: 40%;
+	margin: auto;
+}
+
+.col-75 {
+  margin-top: 2px;
+}
+
+.submit {
+	width: 20%; 
+	margin: auto;
+	text-align: center;
+}
+</style>
+
+<h4><u>New Booking Creation</u></h4>
+<!--booking id, course id, class id,  user id, date created-->
+
+	<div class="container">
+		<p>Please book and change the details to your preferences.</p>
+
+		<form>
+			<!-- should be dynamic -->
+			<div class="form-group">
+				<label for="course_id">Course ID:</label>
+					<select class="form-control" id="class_id">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					</select>
+			</div>
+			<br>
+			<div class="form-group">
+				<label for="class_id">Select which class you want to join:</label>
+					<select class="form-control" id="class_id">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					</select>
+			</div>
+			<br>
+			<div class="submit">
+				<button class="btn btn-primary waves-effect" type="submit">+ Create Booking</button>
+			</div>
+		</form>
+	</div>
