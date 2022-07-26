@@ -63,6 +63,7 @@ router.get('/editProduct/:id', ensureAuthenticated, (req, res) => {
             //     res.redirect('/products');
             //     return;
             // }
+            console.log(product);
             res.render('admin/products/editProduct', { product });
         })
         .catch(err => console.log(err));

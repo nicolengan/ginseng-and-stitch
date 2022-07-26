@@ -10,6 +10,12 @@
                     <div class="card-header col-12">
                         <h5 class="card-title">{{prod_name}}</h5>
                     </div>
+                    <div class="col-lg-2">
+                        <a href="{{posterURL}}" data-title="{{prod_name}}" data-toggle="lightbox">
+                            <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid mb-2"
+                                onerror="this.src='/img/home_img.jpg'" style="max-height:160px">
+                        </a>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col">

@@ -1,4 +1,6 @@
+
 $(".custom-file-input").on("change", function () {
+    console.log("help pls");
     var fileName = $(this).val().split("\\").pop();
     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
@@ -7,7 +9,7 @@ $('#posterUpload').on('change', function () {
     let formdata = new FormData();
     let image = $("#posterUpload")[0].files[0];
     formdata.append('posterUpload', image);
-    fetch('/video/upload', {
+    fetch('/products/upload', {
         method: 'POST',
         body: formdata
     })
