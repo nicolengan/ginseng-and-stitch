@@ -4,6 +4,8 @@ const moment = require('moment');
 const Product = require('../models/Product');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
+const fs = require('fs');
+const upload = require('../helpers/imageUpload');
 
 router.get('/', ensureAuthenticated, (req, res) => {
     Product.findAll({
@@ -36,9 +38,10 @@ router.post('/addProducts', ensureAuthenticated, (req, res) => {
     // Multi-value components return array of strings or undefined
     let stock = req.body.stock;
     let price = req.body.price;
+    let posterURL = req.body.posterURL;
 
     Product.create(
-        { prod_name, prod_desc, difficulty, stock, price }
+        { prod_name, prod_desc, difficulty, stock, price, posterURL }
     )
         .then((product) => {
             console.log(product.toJSON());
@@ -61,6 +64,7 @@ router.get('/editProduct/:id', ensureAuthenticated, (req, res) => {
             //     res.redirect('/products');
             //     return;
             // }
+            console.log(product);
             res.render('admin/products/editProduct', { product });
         })
         .catch(err => console.log(err));
@@ -69,11 +73,14 @@ router.get('/editProduct/:id', ensureAuthenticated, (req, res) => {
 router.post('/editProduct/:id', ensureAuthenticated, (req, res) => {
     let prod_name = req.body.prod_name;
     let prod_desc = req.body.prod_desc.slice(0, 1999);
-    let quantity = req.body.quantity.toString();
+    let stock = req.body.stock.toString();
     let difficulty = req.body.difficulty === undefined ? '' : req.body.difficulty.toString();
+    let price = req.body.price;
+    let posterURL = req.body.posterURL;
+    console.log('im gnna end it all' + posterURL);
 
     Product.update(
-        { prod_name, prod_desc, quantity, difficulty },
+        { prod_name, prod_desc, stock, difficulty, price, posterURL },
         { where: { id: req.params.id } }
     )
         .then((result) => {
@@ -95,6 +102,25 @@ router.get('/deleteProduct/:id', async function (req, res) {
     catch (err) {
         console.log(err);
     }
+});
+
+
+
+router.post('/upload', ensureAuthenticated, (req, res) => {
+    // Creates user id directory for upload if not exist
+    if (!fs.existsSync('./public/uploads/' + req.user.id)) {
+        fs.mkdirSync('./public/uploads/' + req.user.id, { recursive: true });
+    }
+
+    upload(req, res, (err) => {
+        if (err) {
+            // e.g. File too large
+            res.json({ file: '/img/no-image.jpg', err: err });
+        }
+        else {
+            res.json({ file: `/uploads/${req.user.id}/${req.file.filename}` });
+        }
+    });
 });
 
 module.exports = router;
