@@ -10,89 +10,42 @@
 	}
 </style>
 
-{{!-- <!--search button -->
-  <div class="input-group">
-    <div class="form-outline">
-      <input id="search-input" type="search" id="form1" class="form-control" width="48" height="48"/>
-      <button id="search-button" type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
-    </div>
-  </div> --}}
-
 <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
 	<div class="h2 mt-3">Classes</div>
 	<hr class="border border-secondary opacity-50">
-	<form align="left" method="get" action="/admin/classes/addClasses">
-		<button type="submit" class="btn btn-primary mt-2 mb-2">Add Classes</button>
-	</form>
-	{{#if classes}}
-	<div class="card card-body">
-		<h3 class="text-dark">Classes</h3>
-		{{#each classes}}
-		<div class="card border-black mb-2">
-			<div class="card-body">
-				<div class="row">
-					<div class="col">
-						<p class="text-primary">Class ID</p>
-						<p class="text-dark">{{id}}</p>
-					</div>
-
-					<div class="col">
-						<p class="text-primary">Course ID</p>
-						<p class="text-dark">{{CourseId}}</p>
-					</div>
-
-					<div class="col">
-						<p class="text-primary">Title</p>
-						<p class="text-dark">{{Course.title}}</p>
-					</div>
-
-					<div class="col">
-						<p class="text-primary">Difficulty</p>
-						<p class="text-dark">{{Course.level}}</p>
-					</div>
-					
-					<div class="col">
-						<p class="text-primary">Course Price</p>
-						<p class="text-dark">{{Course.price}}</p>
-					</div>
-
-					<div class="col">
-						<p class="text-primary">Date</p>
-						<p class="text-dark">{{date}}</p>
-					</div>
-						
-					<div class="col">
-						<p class="text-primary">Pax</p>
-						<p class="text-dark">{{pax}}</p>
-					</div>
-					
-					<div class="col">
-						<p class="text-primary">Max Pax</p>
-						<p class="text-dark">{{max_pax}}</p>
-					</div>
-
-					<div class="col">
-						<p>
-							<a href="/admin/classes/editClasses/{{id}}" class="card-link mb-2">
-								<i class="fas fa-pencil-alt"></i>
-								Edit
-							</a>
-						</p>
-						<p>
-							<a href="/admin/classes/deleteClasses/{{id}}" class="card-link" data-toggle="confirmation"
-								data-title="Confirm delete?">
-								<i class="fa fa-trash-alt"></i>
-								Delete
-							</a>
-						</p>
-					</div>
-				</div></div>
-			</div>
-		{{/each}}
+	<div id="toolbar">
+		<a id="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Claases</a>
 	</div>
-	{{else}}
-	<h4>No Classes listed</h4>
-	{{/if}}
-</div>
-</div>
+	<div class="table-responsive">
+		<table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
+			data-show-columns="true" data-toolbar="#toolbar" {{!-- data-show-custom-view="true"
+			data-custom-view="customViewFormatter" data-show-custom-view-button="true" --}} data-url="/admin/classes/api/list">
 
+			<thead>
+				<tr>
+					<th data-field="CourseId">Course ID</th>
+					<th data-field="id">Class ID</th>
+					<th data-field="Course.title">Course Title</th>
+					<th data-field="date">Class date</th>
+					<th data-field="max_pax">Max Pax</th>
+					<th data-field="pax">Current Pax</th>
+					<th data-field="icons" data-formatter="generate_actions">actions</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+    <script>
+      var $table = $('#table')
+      function generate_actions(value, row, index) {
+        return `
+<div>
+  <a href="/admin/classes/deleteClasses/${row.id}"><i class="bi bi-trash"></i></a>
+</div>`
+          ;
+      }
+        function draw_picture(value, row, index) {
+  return `<img style="width: 100px; height: 64px" src="${value}">`;
+  }
+
+    </script>

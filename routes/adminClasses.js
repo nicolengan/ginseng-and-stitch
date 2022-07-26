@@ -6,21 +6,10 @@ const Course = require('../models/Course');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 
-router.all('/*', (req, res, next) => {
-    req.app.locals.layout = 'admin'; // set your layout here
-    next(); // pass control to the next handler
-});
-
-router.get('/', (req, res) => {
-    Classes.findAll({
-        // where: { userId: req.user.id },
-        raw: true
-    })
-        .then((classes) => {
-            // pass object to listVideos.handlebar
-            res.render('admin/classes/listClasses', { classes });
-        })
-        .catch(err => console.log(err));
+router.get('/', async (req, res) => {
+    const classes = await Classes.findAll({ include: { model: Course}
+    });
+    res.render('admin/classes/listClasses', { classes });
 });
 
 router.get('/listClasses', ensureAuthenticated, async (req, res) => {
@@ -29,30 +18,47 @@ router.get('/listClasses', ensureAuthenticated, async (req, res) => {
     res.render('classes/listClasses', { classes });
 });
 
-router.get('/addClasses', ensureAuthenticated, (req, res) => {
-    res.render('admin/classes/addClasses');
+router.get('/api/list', async (req, res) => {
+    return res.json({
+        total: await Classes.count(),
+        rows: await Classes.findAll({include: {model: Course}})
+    })
+});
+
+router.get('/addClasses', ensureAuthenticated, async (req, res) => {
+    const classes = await Classes.findAll({include: {model: Course}});
+    const courses = await Course.findAll();
+    console.log(res.json({
+        total: await Classes.count(),
+        rows: await Classes.findAll({include: {model: Course}})
+    }))
+    console.log(classes)
+    res.render('admin/classes/addClasses', { classes, courses });
 });
 
 router.post('/addClasses', ensureAuthenticated, (req, res) => {
+    // let course_name = req.body.course_name.toString();
+    // let course_difficulty = req.body.course_difficulty.toString();
+    // let course_price = req.body.course_price;
+    // let time = req.body.time;
     let date = req.body.date;
     let class_no = req.body.class_no;
     let pax = req.body.pax;
     let max_pax = req.body.max_pax;
-    // Use Video.create({}) to insert a record into the classes table, using the current course's courseId which is retrieved from req.course.id.
-    let courseId = req.course.id;
+    let CourseId = req.body.CourseId;
 
     Classes.create(
-        { date, class_no, pax, max_pax, courseId}
+        { date, pax, max_pax, CourseId}
     )
         .then((classes) => {
             console.log(classes.toJSON());
-            res.redirect('admin/classes/listClasses');
+            res.redirect('/admin/classes');
         })
         .catch(err => console.log(err))
 });
 
 router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
-    Classes.findByPk(req.params.id)
+    Classes.findByPk(req.params.id, {include: {model: Course}})
         .then((classes) => {
             if (!classes) {
                 flashMessage(res, 'error', 'Classes not found');
@@ -71,12 +77,11 @@ router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
     let max_pax = req.body.max_pax;
 
     Classes.update(
-        { date, class_no, pax, max_pax },
-        { where: { id: req.params.id } }
+        { date, pax, max_pax, course_id}, { where: { id: req.params.id} }
     )
-        .then((result) => {
-            console.log(result[0] + ' classes updated');
-            res.redirect('/classes/listClasses');
+        .then((classes) => {
+            console.log(classes.toJSON());
+            res.redirect('admin/classes');
         })
         .catch(err => console.log(err));
 });
@@ -86,12 +91,18 @@ router.get('/deleteClasses/:id', ensureAuthenticated, async function (req, res) 
         let classes = await Class.findByPk(req.params.id);
         if (!classes) {
             flashMessage(res, 'error', 'Classes not found');
-            res.redirect('/classes/listClasses');
+            res.redirect('/admin/classes');
             return;
         }
-        let result = await Class.destroy({ where: { id: classes.id } });
+        // if (req.user.id != classes.userId) {
+        //     flashMessage(res, 'error', 'Unauthorized access');
+        //     res.redirect('admin/classes');
+        //     return;
+        // }
+
+        let result = await Classes.destroy({ where: { id: classes.id } });
         console.log(result + ' classes deleted');
-        res.redirect('/classes/listClasses');
+        res.redirect('/admin/classes');
     }
     catch (err) {
         console.log(err);

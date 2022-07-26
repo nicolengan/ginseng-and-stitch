@@ -17,6 +17,14 @@ router.get('/', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
+// router.get('/api/list', async (req, res) => {
+//     return res.json({
+//         total: await Product.count(),
+//         rows: await Product.findAll()
+//     })
+// });
+
+
 router.get('/addProducts', ensureAuthenticated, (req, res) => {
     res.render('admin/products/addProducts');
 });
@@ -26,14 +34,15 @@ router.post('/addProducts', ensureAuthenticated, (req, res) => {
     let prod_desc = req.body.prod_desc.slice(0, 1999);
     let difficulty =  req.body.difficulty === undefined ? '' : req.body.difficulty.toString();
     // Multi-value components return array of strings or undefined
-    let quantity = req.body.quantity.toString();
+    let stock = req.body.stock;
+    let price = req.body.price;
 
     Product.create(
-        { prod_name, prod_desc, difficulty, quantity }
+        { prod_name, prod_desc, difficulty, stock, price }
     )
         .then((product) => {
             console.log(product.toJSON());
-            res.redirect('/products');
+            res.redirect('/admin/products');
         })
         .catch(err => console.log(err))
 });
@@ -69,23 +78,19 @@ router.post('/editProduct/:id', ensureAuthenticated, (req, res) => {
     )
         .then((result) => {
             console.log(result[0] + ' product updated');
-            res.redirect('/products');
+            res.redirect('/admin/products');
         })
         .catch(err => console.log(err));
 });
 
-router.get('/deleteProduct/:id', ensureAuthenticated, async function (req, res) {
+router.get('/deleteProduct/:id', async function (req, res) {
     try {
-        let product = await Product.findByPk(req.params.id);
-        if (!product) {
-            flashMessage(res, 'error', 'product not found');
-            res.redirect('/products');
-            return;
-        }
-
-        let result = await Product.destroy({ where: { id: product.id } });
-        console.log(result + ' product deleted');
-        res.redirect('/products');
+        await Product.destroy({ where: { id: req.params.id } })
+        .then((result) => {
+            console.log(result[0] + ' deleted');
+            res.redirect('/admin/products');
+        })
+        .catch(err => console.log(err));
     }
     catch (err) {
         console.log(err);
