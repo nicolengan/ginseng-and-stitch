@@ -26,6 +26,7 @@ router.get('/api/list', async (req, res) => {
         rows: await Courses.findAll()
     })
 });
+
 router.get('/addCourses' , (req, res) => {
     res.render('admin/courses/addCourses');
 });

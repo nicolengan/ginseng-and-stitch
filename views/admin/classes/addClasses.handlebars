@@ -22,6 +22,7 @@ label {
 <!--admin create classes -->
 <h4><u>New Class Creation</u></h4>
 	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<h4><u>New Class Creation</u></h4>
 		<form method="POST" action="">
 
 			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
@@ -37,7 +38,7 @@ label {
 					</select>
 				</div>
 			</div>
-			<br>
+			{{!-- <br>
 
 	<div class="container">
 		<form>
@@ -70,7 +71,32 @@ label {
 					</div>
 					<div class="col-75">
 						<input type="number" class="form-control" id="max_pax" name="max_pax" max="5">
-					</div>
+					</div> --}}
+
+			<div class="row">
+			<label for="start">Start date:</label>
+
+			<input type="date" id="start" name="date"
+				value="2022-07-26"
+				min="2018-01-01" max="2022-12-31">
+						</div>
+
+			<div class="row">
+				<div class="col-25">
+					<label for="pax">Pax</label>
+				</div>
+
+				<div class="col-75">
+					<input type="number" id="pax" name="pax" min="1" max="5">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-25">
+					<label for="pax">Max Pax</label>
+				</div>
+
+				<div class="col-75">
+					<input type="number" id="max_pax" name="max_pax" min="1" max="5">
 				</div>
 			</div>
 			<br>

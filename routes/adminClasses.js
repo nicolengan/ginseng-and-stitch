@@ -22,11 +22,6 @@ router.get('/api/list', async (req, res) => {
 router.get('/addClasses', ensureAuthenticated, async (req, res) => {
     const classes = await Classes.findAll({include: {model: Course}});
     const courses = await Course.findAll();
-    console.log(res.json({
-        total: await Classes.count(),
-        rows: await Classes.findAll({include: {model: Course}})
-    }))
-    console.log(classes)
     res.render('admin/classes/addClasses', { classes, courses });
 });
 
