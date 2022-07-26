@@ -4,6 +4,7 @@ const moment = require('moment');
 const Product = require('../models/Product');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
+const fs = require('fs');
 const upload = require('../helpers/imageUpload');
 
 router.get('/', ensureAuthenticated, (req, res) => {
@@ -98,6 +99,8 @@ router.get('/deleteProduct/:id', async function (req, res) {
         console.log(err);
     }
 });
+
+
 
 router.post('/upload', ensureAuthenticated, (req, res) => {
     // Creates user id directory for upload if not exist

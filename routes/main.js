@@ -6,6 +6,7 @@ const ensureAuthenticated = require("../helpers/auth");
 // routes
 const booking = require("./booking");
 const account = require("./account");
+const Product = require('../models/Product');
 // const payment = require("./payment");
 
 router.use('/account', account);
@@ -37,6 +38,18 @@ router.get('/courses', (req, res) => {
 
 router.get('/contactUs', (req, res) => {
     res.render('contactUs');
+});
+
+router.get('/products', (req, res) => {
+    Product.findAll({
+        // where: { userId: req.user.id },
+        raw: true
+    })
+        .then((products) => {
+            // pass object to listVideos.handlebar
+            res.render('products', {products});
+        })
+        .catch(err => console.log(err));
 });
 
 module.exports = router;

@@ -1,1 +1,47 @@
-<h1>products</h1>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
+<div class="container"> 
+    {{#if products}}
+    <h3 class="text-primary">Products</h3>
+    <div class="container">
+        <div class="row">
+            {{#each products}}
+            <div class="col-sm-6">
+                <div class="card border-primary mb-2 ">
+                    <div class="card-header col-12">
+                        <h5 class="card-title">{{prod_name}}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <p class="font-italic">Stock</p>
+                                <p class="text-info">
+                                    {{stock}}
+                                </p>
+                            </div>
+                            <div class="col">
+                                <p class="font-italic">Price</p>
+                                <p class="text-info">
+                                    {{price}}
+                                </p>
+                            </div>
+                            <div class="col">
+                                <p class="font-italic">Difficulty</p>
+                                <p class="text-info">{{difficulty}}</p>
+                            </div>
+                            <div class="col">
+                                <p class="font-italic">Product Description</p>
+                                <p class="text-info">{{prod_desc}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+</div>
+{{else}}
+<h3>No products yet</h3>
+{{/if}}
+</main>
