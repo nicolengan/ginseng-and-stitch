@@ -12,20 +12,47 @@
       </button>
     </div>
   </div> --}}
-  {{!-- <script
-    src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/custom-view/bootstrap-table-custom-view.js"></script> --}}
+  {{!--
+  <script
+    src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/custom-view/bootstrap-table-custom-view.js"></script>
+  --}}
+
+  <!-- warning modal for delete -->
+
+  <div class="modal fade" id="warning" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger" role="alert">
+            This is an admin account, are you sure you want to delete it?</div>
+        </div>
+        <div class="modal-footer">
+          <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel delete</a>
+          <a type="button" id="confirmDelete" class="btn btn-primary">Confirm delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" id="click_id" class="btn btn-primary visually-hidden" data-bs-toggle="modal"
+    data-bs-target="#warning">
+    Warning modal
+  </button>
+
   <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
     <div class="h2 mt-3">Users</div>
     <hr class="border border-secondary opacity-50">
     <div id="toolbar">
-      <a id="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add User</a>
+      <a id="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addUser">Add User</a>
     </div>
     <div class="table-responsive">
       <table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
-        data-show-columns="true" data-toolbar="#toolbar" 
-        {{!-- data-show-custom-view="true"
-        data-custom-view="customViewFormatter" 
-        data-show-custom-view-button="true"  --}}
+        data-show-columns="true" data-toolbar="#toolbar" {{!-- data-show-custom-view="true"
+        data-custom-view="customViewFormatter" data-show-custom-view-button="true" --}}data-id-field="id"
         data-url="/admin/users/api/list">
 
         <thead>
@@ -34,103 +61,119 @@
             <th data-field="name">name</th>
             <th data-field="email">email</th>
             <th data-field="role">role</th>
-            <th data-field="icons" data-formatter="generate_actions">actions</th>
+            <th data-field="icons" data-formatter="generate_actions" data-events="window.operateEvents" id="action">
+              actions</th>
           </tr>
         </thead>
       </table>
     </div>
-    </div>
-{{!-- </main> --}}
-{{!-- <template id="profileTemplate">
-  <div class="col-4 mt-3">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12 col-lg-8 col-md-6">
-            <h3 class="mb-0 text-truncated">%NAME%</h3>
-            </div>
-            <div class="col-12 col-lg-4 col-md-6 text-center">
-              <img src="%IMAGE%" alt="" class="mx-auto rounded-circle img-fluid" style="height: 120px;">
-              <br>
-            </div>
-          <a class="btn btn-danger w-25" role="button">button</a>
-        </div>
-      </div>
-    </div>
   </div>
-</template> --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Placeholder</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
 
-        <form action="/admin/addUser" method="post">
-          <div class="mb-3">
-            <div class="row">
-              <div class="col">
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingFirstName" placeholder="First Name" name="name"
-                    value="{{name}}" required>
-                  <label for="floatingFirstName">First Name</label>
+  <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="adduserLabel">Add user</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form action="/admin/users/addUser" method="post">
+            <div class="mb-3">
+              <div class="row">
+                <div class="col">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingFirstName" placeholder="First Name" name="name"
+                      value="{{name}}" required>
+                    <label for="floatingFirstName">First Name</label>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="mb-3">
-            <div class="form-floating">
-              <input type="email" class="form-control" id="floatingEmail" placeholder="Email"
-                aria-describedby="emailHelp" name="email" value="{{email}}">
-              <label for="floatingEmail">Email</label>
+            <div class="mb-3">
+              <div class="form-floating">
+                <input type="email" class="form-control" id="floatingEmail" placeholder="Email"
+                  aria-describedby="emailHelp" name="email" value="{{email}}">
+                <label for="floatingEmail">Email</label>
+              </div>
             </div>
-          </div>
-          <div class="mb-3">
+            <div class="mb-3">
             <div class="form-floating">
-              <select class="form-select" aria-label="Role" name="role">
-                <option selected>Choose role</option>
+              <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                <option selected>Choose Role</option>
                 <option value="a">Admin</option>
                 <option value="u">User</option>
               </select>
+              <label for="floatingSelect">Choose Role</label>
             </div>
-          </div>
-
-          <div class="mb-3">
-            <div class="form-floating">
-              <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
-              <label for="floatingPassword">Password</label>
             </div>
-          </div>
-          <div class="mb-3">
-            <div class="form-floating">
-              <input type="password" class="form-control" id="floatingConfirmPassword" name="password2"
-                placeholder="Confirm Password">
-              <label for="floatingConfirmPassword">Confirm Password</label>
+
+            <div class="mb-3">
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" name="password"
+                  placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
             </div>
-          </div>
+            <div class="mb-3">
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingConfirmPassword" name="password2"
+                  placeholder="Confirm Password">
+                <label for="floatingConfirmPassword">Confirm Password</label>
+              </div>
+            </div>
 
 
 
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
+        </div>
+        </form>
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
-      </div>
-      </form>
     </div>
-    <script>
-      var $table = $('#table')
-      function generate_actions(value, row, index) {
-        return `
-<div>
-  <a href="/admin/users/deleteUser/${row.id}"><i class="bi bi-trash"></i></a>
-</div>`
-          ;
-      }
-    </script>
-
   </div>
+
+  {{!--
+  <script>
+    var $table = $('#table')
+    var $button = $('#test')
+    $(function () {
+      $button.click(function (row) {
+        var data = JSON.stringify($table.bootstrapTable('getRowByUniqueId', row.id))
+        console.log(data)
+        console.log("l")
+        console.log(`${data.id}`)
+      })
+    })
+  </script> --}}
+
+  <script>
+    var $table = $('#table')
+
+    function generate_actions(value, row, index) {
+      return [
+        `<div class="actions">
+              <a id="" class="delete" href="javascript:void(0)"><i class="bi bi-trash"></i></a>
+            </div>
+            `].join('')
+        ;
+    }
+    window.operateEvents = {
+      'click .delete': function (e, value, row, index) {
+        console.log(row.role)
+        if (row.role == 'a') {
+          $('#click_id').click()
+          $("a#confirmDelete").attr(`href`, `/admin/users/deleteUser/${row.id}`)
+        }
+        if (row.role == 'u') {
+          window.location.href = `/admin/users/deleteUser/${row.id}`;
+        }
+      },
+      'click .edit': function
+      }
+  </script>

@@ -20,12 +20,12 @@ router.get('/', (req, res) => {
         .catch(err => console.log(err));
 });
 
-// router.get('/api/list', async (req, res) => {
-//     return res.json({
-//         total: await Courses.count(),
-//         rows: await Courses.findAll()
-//     })
-// });
+router.get('/api/list', async (req, res) => {
+    return res.json({
+        total: await Courses.count(),
+        rows: await Courses.findAll()
+    })
+});
 router.get('/addCourses' , (req, res) => {
     res.render('admin/courses/addCourses');
 });

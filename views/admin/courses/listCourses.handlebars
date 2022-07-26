@@ -85,13 +85,29 @@
 
 			<thead>
 				<tr>
-					<th data-field="Course.title">id</th>
-					<th data-field="CourseId">name</th>
-					<th data-field="id">email</th>
-					<th data-field="role">role</th>
+					<th data-field="id">Id</th>
+					<th data-field="title">Title</th>
+					<th data-field="description">Description</th>
+					<th data-field="price">Price</th>
+					<th data-field="level">Level</th>
 					<th data-field="icons" data-formatter="generate_actions">actions</th>
 				</tr>
 			</thead>
 		</table>
 	</div>
 </div>
+
+    <script>
+      var $table = $('#table')
+      function generate_actions(value, row, index) {
+        return `
+<div>
+  <a href="/admin/courses/deleteCourses/${row.id}"><i class="bi bi-trash"></i></a>
+</div>`
+          ;
+      }
+        function draw_picture(value, row, index) {
+  return `<img style="width: 100px; height: 64px" src="${value}">`;
+  }
+
+    </script>
