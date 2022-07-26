@@ -48,9 +48,9 @@
 							<label class="custom-file-label" for="customFile">Choose File</label>
 						</div>
 						<div class="text-danger small mb-2" id="posterErr" style="display:none"></div>
-						<img id="poster" src="/img/home_img.jpg" alt="Poster" class="border img-thumbnail img-fluid">
+						<img id="poster" src="{{product.posterURL}}" alt="Poster" class="border img-thumbnail img-fluid">
 						{{!—- Hidden field to submit URL of poster to the server --}}
-						<input id="posterURL" name="posterURL">
+						<input id="posterURL" type="hidden" value="{{product.posterURL}}" name="posterURL">
 					</div>
 					<div class="form-group">
 						<div class="row mb-2">
@@ -94,4 +94,5 @@
 			value: moment().format('DD/MM/YYYY'),
 		});
 	</script>
+	<script src="/js/productImage.js"></script>
 </main>

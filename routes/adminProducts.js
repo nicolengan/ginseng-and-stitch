@@ -38,9 +38,10 @@ router.post('/addProducts', ensureAuthenticated, (req, res) => {
     // Multi-value components return array of strings or undefined
     let stock = req.body.stock;
     let price = req.body.price;
+    let posterURL = req.body.posterURL;
 
     Product.create(
-        { prod_name, prod_desc, difficulty, stock, price }
+        { prod_name, prod_desc, difficulty, stock, price, posterURL }
     )
         .then((product) => {
             console.log(product.toJSON());
@@ -75,9 +76,11 @@ router.post('/editProduct/:id', ensureAuthenticated, (req, res) => {
     let stock = req.body.stock.toString();
     let difficulty = req.body.difficulty === undefined ? '' : req.body.difficulty.toString();
     let price = req.body.price;
+    let posterURL = req.body.posterURL;
+    console.log('im gnna end it all' + posterURL);
 
     Product.update(
-        { prod_name, prod_desc, stock, difficulty, price },
+        { prod_name, prod_desc, stock, difficulty, price, posterURL },
         { where: { id: req.params.id } }
     )
         .then((result) => {

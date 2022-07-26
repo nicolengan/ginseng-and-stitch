@@ -24,6 +24,10 @@ Product.init({
   price: {
     type: sequelize.DECIMAL,
     allowNull: false
+  },
+  posterURL: {
+    type: sequelize.STRING,
+    allowNull: false
   }
   
 }, {

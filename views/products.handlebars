@@ -1,45 +1,38 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
-<div class="container"> 
+<div class="container">
     {{#if products}}
     <h3 class="text-primary">Products</h3>
     <div class="container">
         <div class="row">
             {{#each products}}
-            <div class="col-sm-6">
-                <div class="card border-primary mb-2 ">
-                    <div class="card-header col-12">
-                        <h5 class="card-title">{{prod_name}}</h5>
-                    </div>
-                    <div class="col-lg-2">
+            <div class="col-sm-4">
+                <div class="card border-2 mb-2">
+                    <div>
                         <a href="{{posterURL}}" data-title="{{prod_name}}" data-toggle="lightbox">
-                            <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid mb-2"
-                                onerror="this.src='/img/home_img.jpg'" style="max-height:160px">
+                            <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid"
+                                onerror="this.src='/img/home_img.jpg'">
                         </a>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <p class="font-italic">Stock</p>
-                                <p class="text-info">
-                                    {{stock}}
-                                </p>
-                            </div>
-                            <div class="col">
-                                <p class="font-italic">Price</p>
-                                <p class="text-info">
-                                    {{price}}
-                                </p>
-                            </div>
-                            <div class="col">
-                                <p class="font-italic">Difficulty</p>
+                    <div class="card-header col-12">
+                        <h4 class="card-title text-start">{{prod_name}}</h4>
+                    </div>
+                    
+                        <div class="card-body m-0">
+                            <div class="row text-start">
                                 <p class="text-info">{{difficulty}}</p>
                             </div>
-                            <div class="col">
-                                <p class="font-italic">Product Description</p>
-                                <p class="text-info">{{prod_desc}}</p>
+                            <div class="row text-start">
+                                <h5 class="text">{{prod_desc}}</h5>
+                            </div>
+                            <div class="row text-start">
+                                
+                                    <p class="text fw-bold">
+                                        ${{price}}
+                                    </p>
+                                
                             </div>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
             {{/each}}
