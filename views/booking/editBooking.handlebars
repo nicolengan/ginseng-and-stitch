@@ -13,41 +13,30 @@
 	}
 </style>
 	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-		<h3>Editing Class: </h3>
+		<h3>Editing Booking: </h3>
 		<div class="card card-body">
 			<form action="" method="post">
 				<div class="form-group">
 					<div class="row">
 						<div class="col-25">
-							<label for="date">Start Date:</label>
+							<label for="CourseId">Course ID:</label>
 						</div>
 						<div class="col-75">
-							<input type="date" class="form-control" name="date" value={{classes.date}}>
+							<input type="CourseId" name="CourseId" value={{bookings.CourseId}}>
 						</div>
 					</div>
 					<br>
 
 					<div class="form-group">
 						<div class="row">
-						<label for="pax">Pax:</label>
+						<label for="ClassId">Class ID:</label>
 							<div class="col-75">
-								<input type="number" class="form-control" name="pax" min="1" max="5" value={{classes.pax}}>
-							</div>
-						</div>
-					</div>
-					<br>
-
-					<div class="form-group">
-						<div class="row">
-							<label for="max_pax">Max Pax:</label>
-							<div class="col-75">
-								<input type="number" class="form-control" name="max_pax" min="1" max="5" value={{classes.max_pax}}>
+								<input type="ClassId" name="ClassId" value={{bookings.ClassId}}>
 							</div>
 						</div>
 					</div>
 					<br>
 				</div>
-				<br>
 				<div class="update">
 					<button id="btnSubmit" type="submit" class="btn btn-primary">Update</button>
 				</div>

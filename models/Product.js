@@ -17,7 +17,7 @@ Product.init({
     type: sequelize.STRING,
     allowNull: false
   },
-  stock: {
+  prod_quantity: {
     type: sequelize.INTEGER,
     allowNull: false
   },

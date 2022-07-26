@@ -1,4 +1,3 @@
-
 const db = require('../config/DBConfig');
 const sequelize = require('sequelize');
 

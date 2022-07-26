@@ -10,19 +10,18 @@
                 </div>
                 <div class="card-body">
                     <h5>Description of the Course</h5>
-                    <p class="card-text">{{Description}}</p>
+                    <p class="card-text">{{description}}</p>
                     <h5>Price</h5>
                     <p class="card-text">${{price}}</p>
-                    <h5>Difficulty</h5>
-                    <p class="card-text">{{difficulty}}</p>
+                    <h5>Level</h5>
+                    <p class="card-text">{{level}}</p>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="button"><a href="/booking/listBooking">Book Now</a></button>
+                    <button type="button" class="button"><a href="/booking/addBooking">Book Now</a></button>
                 </div>
             </div>
 		{{/each}}
 	</div>
-
 </div>
 {{else}}
 <h3>No Courses listed</h3>

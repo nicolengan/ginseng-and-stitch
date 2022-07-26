@@ -12,17 +12,6 @@ router.get('/', async (req, res) => {
     res.render('admin/classes/listClasses', { classes });
 });
 
-// router.get('/listClasses', ensureAuthenticated, (req, res) => {
-//     Classes.findAll({
-//         where: { userId: req.user.id },
-//         // order: [['dateClasses', 'ASC']],
-//         raw: true
-//     })
-//         .then((classes) => {
-//             res.render('admin/classes/listClasses', { classes });
-//         })
-//         .catch(err => console.log(err));
-// });
 
 router.get('/api/list', async (req, res) => {
     return res.json({
@@ -38,12 +27,7 @@ router.get('/addClasses', ensureAuthenticated, async (req, res) => {
 });
 
 router.post('/addClasses', ensureAuthenticated, (req, res) => {
-    // let course_name = req.body.course_name.toString();
-    // let course_difficulty = req.body.course_difficulty.toString();
-    // let course_price = req.body.course_price;
-    // let time = req.body.time;
     let date = req.body.date;
-    // let class_no = req.body.class_no;
     let pax = req.body.pax;
     let max_pax = req.body.max_pax;
     let CourseId = req.body.CourseId;
@@ -61,50 +45,28 @@ router.post('/addClasses', ensureAuthenticated, (req, res) => {
 router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
     Classes.findByPk(req.params.id, {include: {model: Course}})
         .then((classes) => {
-            // if (!classes) {
-            //     flashMessage(res, 'error', 'Classes not found');
-            //     res.redirect('/admin/classes');
-            //     return;
-            // }
-            // if (req.user.id != classes.userId) {
-            //     flashMessage(res, 'error', 'Unauthorized access');
-            //     res.redirect('/admin/classes');
-            //     return;
-            // }
-
             res.render('admin/classes/editClasses', { classes });
         })
         .catch(err => console.log(err));
 });
 
 router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
-    // Classes.findAll({
-    // })
-    //     .then((classes) => {
-    //         // pass object to listVideos.handlebar
-    //         res.render('admin/classes', { classes});
-    //     })
-    //     .catch(err => console.log(err));
-
-    // let course_name = req.body.course_name.toString();
-    // let course_difficulty = req.body.course_difficulty.toString();
-    // let course_price = req.body.course_price;
-    // let time = req.body.time;
     let date = req.body.date;
-    // let class_no = req.body.class_no;
     let pax = req.body.pax;
     let max_pax = req.body.max_pax;
-    let course_id = req.body.course_id;
+    let courseId = req.body.courseId;
 
     Classes.update(
-        { date, pax, max_pax, course_id}, { where: { id: req.params.id} }
+        { date, pax, max_pax, courseId}, 
+        { where: { id: req.params.id} }
     )
-        .then((classes) => {
-            console.log(classes.toJSON());
-            res.redirect('admin/classes');
+        .then((result) => {
+            console.log(result[0] + ' classes updated');
+            res.redirect('/admin/classes');
         })
         .catch(err => console.log(err))
 });
+
 
 router.get('/deleteClasses/:id', ensureAuthenticated, async function (req, res) {
     try {
