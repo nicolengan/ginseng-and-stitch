@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
-const Classes = require('../models/Class');
 const ensureAuthenticated = require("../helpers/auth");
-const classes = require("./classes");
-const courses = require("./courses");
-const User = require('../models/User');
+
+// routes
+const booking = require("./booking");
+const account = require("./account");
+// const payment = require("./payment");
+
+router.use('/account', account);
+router.use('/booking', booking);
+// router.use('/payment', payment);
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
@@ -17,16 +22,17 @@ router.get('/about', (req, res) => {
     res.render('about');
 });
 
-router.use('/courses', courses)
 
 router.get('/courses', (req, res) => {
-    res.render('courses');
-});
-
-router.use('/classes', classes)
-
-router.get('/classes', (req, res) => {
-    res.render('classes');
+    Courses.findAll({
+        // where: { userId: req.user.id },
+        raw: true
+    })
+        .then((courses) => {
+            // pass object to listVideos.handlebar
+            res.render('courses', { courses});
+        })
+        .catch(err => console.log(err));
 });
 
 router.get('/contactUs', (req, res) => {

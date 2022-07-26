@@ -1,0 +1,166 @@
+{{!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+        <span data-feather="calendar"></span>
+        This week
+      </button>
+    </div>
+  </div> --}}
+{{!-- <style type="type/css">
+    .search-button{
+      width: 25%; 
+      height: 25%; 
+    }
+    div.container {
+		width: 80%;
+		margin: auto;
+		margin-top: 30px;
+	}
+</style> --}}
+
+{{!-- <!--search button -->
+  <div class="input-group">
+    <div class="form-outline">
+      <input id="search-input" type="search" id="form1" class="form-control" width="48" height="48"/>
+      <button id="search-button" type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+    </div>
+  </div> --}}
+{{!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+        <span data-feather="calendar"></span>
+        This week
+      </button>
+    </div>
+  </div> --}}
+{{!-- <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="h2 mt-3">Classes</div>
+	<hr class="border border-secondary opacity-50">
+	<form align="left" method="get" action="/admin/classes/addClasses">
+		<button type="submit" class="btn btn-primary mt-2 mb-2">Add Classes</button>
+	</form>
+	{{#if classes}}
+	<div class="card card-body">
+		<h3 class="text-primary">Classes</h3>
+		{{#each classes}}
+		<div class="card border-black mb-2 w-100 mx-auto">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="course_id">Class ID</p>
+						<p class="text-primary">{{id}}</p>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="course_id">Course ID</p>
+						<p class="text-primary">{{CourseId}}</p>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="course_name">Title</p>
+						<p class="text-primary">{{Course.title}}</p>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="course_difficulty">Level</p>
+						<p class="text-primary">{{Course.level}}</p>
+					</div>
+					
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="course_price">Course Price</p>
+						<p class="text-primary">${{Course.price}}</p>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="date">Date</p>
+						<p class="text-primary">{{date}}</p>
+					</div>
+											
+						
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="pax">Pax</p>
+						<p class="text-primary">{{pax}}</p>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="pax">Max Pax</p>
+						<p class="text-primary">{{max_pax}}</p>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p>
+							<a href="/admin/classes/editClasses/{{id}}" class="card-link mb-2">
+								<i class="fas fa-pencil-alt"></i>
+								Edit
+							</a>
+						</p>
+						<p>
+							<a href="/admin/classes/deleteClasses/{{id}}" class="card-link" data-toggle="confirmation"
+								data-title="Confirm delete?">
+								<i class="fa fa-trash-alt"></i>
+								Delete
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		{{/each}}
+	</div>
+	{{else}}
+	<h4>No Classes listed</h4>
+	{{/if}}
+</div>
+</div> --}}
+{{!-- </main> --}}
+
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="h2 mt-3">Classes</div>
+	<hr class="border border-secondary opacity-50">
+	<div id="toolbar">
+		<a id="button" class="btn btn-secondary" href="/admin/classes/addClasses">Add Claases</a>
+	</div>
+	<div class="table-responsive">
+		<table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
+			data-show-columns="true" data-toolbar="#toolbar" {{!-- data-show-custom-view="true"
+			data-custom-view="customViewFormatter" data-show-custom-view-button="true" --}} data-url="/admin/classes/api/list">
+
+			<thead>
+				<tr>
+					<th data-field="CourseId">Course ID</th>
+					<th data-field="id">Class ID</th>
+					<th data-field="Course.title">Course Title</th>
+					<th data-field="date">Class date</th>
+					<th data-field="max_pax">Max Pax</th>
+					<th data-field="pax">Current Pax</th>
+					<th data-field="icons" data-formatter="generate_actions">actions</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+    <script>
+      var $table = $('#table')
+      function generate_actions(value, row, index) {
+        return `
+<div>
+  <a href="/admin/classes/deleteClasses/${row.id}"><i class="bi bi-trash"></i></a>
+</div>`
+          ;
+      }
+        function draw_picture(value, row, index) {
+  return `<img style="width: 100px; height: 64px" src="${value}">`;
+  }
+
+    </script>

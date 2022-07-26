@@ -16,7 +16,7 @@ router.get('/listBooking', ensureAuthenticated, (req, res) => {
             raw: true
         })
         .then((classes) => {
-            res.render('booking/listBooking', { classes });
+            res.render('require("./account"booking/listBooking', { classes });
         })
         .catch(err => console.log(err));
 });

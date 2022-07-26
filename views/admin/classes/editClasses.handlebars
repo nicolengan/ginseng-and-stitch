@@ -1,0 +1,187 @@
+
+
+	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<h4><u>Editing Class</u></h4>
+<h6 class="word">Current Class: <br> {{courses.title}}</h6>
+	<form action="" method="post">
+		<form method="POST" action="">
+
+			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+			<div class="row">
+				<div class="col-25">
+					<label for="course_id">Course ID</label>
+				</div>
+				<div class="col-75">
+					<select id="course_id" name="course_id" required>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+					</select>
+				</div>
+			</div>
+			<br>
+
+			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+			{{!-- <div class="row">
+				<div class="col-25">
+					<label for="course_name">Name</label>
+				</div>
+				<div class="col-75">
+					<select id="course_name" name="course_name" required>
+						<option value="Advanced Sewing">Advanced Sewing</option>
+						<option value="Make your own Jacket">Make your own Jacket</option>
+						<option value="Introduction to Sewing">Introduction to Sewing</option>
+						<option value="Pattern Drafting">Pattern Drafting</option>
+					</select>
+				</div>
+			</div>
+			<br> --}}
+
+			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+			{{!-- <div class="row">
+				<div class="col-25">
+					<label for="course_difficulty">Difficulty</label>
+				</div>
+				<div class="col-75">
+					<select id="course_difficulty" name="course_difficulty" required>
+						<option value="Beginner">Beginner</option>
+						<option value="Advanced">Advanced</option>
+						<option value="Intermediate">Intermediate</option>
+					</select>
+				</div>
+			</div>
+			<br> --}}
+
+			<!-- THIS SUPPOSE TO BE A FOREIGN KEY FROM COURSE -->
+			{{!-- <div class="row">
+				<div class="col-25">
+					<label for="course_price">Course Price</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="course_price" name="course_price" value="">
+					<br>
+				</div>
+			</div> --}}
+			{{!-- <br> --}}
+
+			{{!-- <div class="row">
+				<div class="col-25">
+					<label for="time">Timing</label>
+				</div>
+				<div class="col-75">
+					<select id="time" name="time" required>
+						<option value="0930">0930AM</option>
+						<option value="1130">1130AM</option>
+						<option value="1230">1230PM</option>
+						<option value="1400">1400PM</option>
+						<option value="1500">1500PM</option>
+					</select>
+				</div>
+			</div> --}}
+			<br>
+
+			<div class="row">
+				<div class="col-25">
+					<label for="date">Date</label>
+				</div>
+				<div class="col-75">
+					<select id="date" name="date" required>
+						{{classes.}}
+						<option value="06-06-2022">23/5/2022</option>
+						<option value="08-06-2022">29/5/2022</option>
+						<option value="10-06-2022">16/6/2022</option>
+						<option value="12-06-2022">30/7/2022</option>
+					</select>
+				</div>
+			</div>
+			<br>
+
+			{{!-- <div class="row">
+				<div class="col-25">
+					<label for="class_no">Class</label>
+				</div>
+				<div class="col-75">
+					<select id="class_no" name="class_no" required>
+						<option value="1">Class 1</option>
+						<option value="2">Class 2</option>
+					</select>
+				</div>
+			</div> --}}
+			<br>
+
+			<div class="row">
+				<div class="col-25">
+					<label for="pax">Pax</label>
+				</div>
+
+				<div class="col-75">
+					<input type="number" id="pax" name="pax" min="1" max="5">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-25">
+					<label for="pax">Max Pax</label>
+				</div>
+
+				<div class="col-75">
+					<input type="number" id="max_pax" name="max_pax" min="1" max="5">
+				</div>
+			</div>
+			<br>
+			<div class="submit">
+				<button class="btn btn-primary waves-effect" type="submit">Update</button>
+			</div>
+		</form>
+	</div>
+	{{!--
+</main>
+
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="card card-body">
+		<h3>Add Classes</h3>
+		<form action="" method="post">
+			<div class="form-group">
+				{{!-- Practical 5 Exercise 2: Add a title input text here named 'title'--}}
+				<label class="font-italic" for="title">Course ID</label>
+				<select class="form-select" aria-label="Default select example">
+					<option selected>Open this select menu</option>
+					{{#if classes}}
+					{{#each classes}}
+					<option value="{{id}}">{{id}}</option>
+					{{/each}}
+					{{/if}}
+				</select>
+			</div>
+			<div class="form-group mb-4">
+				<label class="font-italic" for="description">Description</label>
+				<textarea class="form-control" id="description" name="description" rows="7" maxlength="2000"></textarea>
+			</div>
+			<div class="form-group mb-4">
+				<label class="font-italic" for="price">Price</label>
+				<input type="number" class="form-control" id="price" name="price" />
+			</div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+				<label class="font-italic">Difficulty</label>
+				<br>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="basic" value="basic" name="difficulty" checked>
+					<label class="form-check-label" for="basic">Basic</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="intermediate" value="intermediate"
+						name="difficulty">
+					<label class="form-check-label" for="intermediate">Intermediate</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="advanced" value="advanced" name="difficulty">
+					<label class="form-check-label" for="advanced">Advanced</label>
+				</div>
+			</div>
+	</div>
+</div>
+<br>
+<button id="btnSubmit" type="submit" class="btn btn-primary">Publish</button>
+</form>
+</div>
+</div>
