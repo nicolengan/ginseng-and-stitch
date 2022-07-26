@@ -11,6 +11,8 @@ const classes = require("./adminClasses");
 const courses = require("./adminCourses");
 const products = require("./adminProducts");
 const users = require("./adminUsers");
+const enquiries = require("./adminEnquiries");
+
 
 router.all('/*', (req, res, next) => {
     req.app.locals.layout = 'admin',
@@ -23,6 +25,7 @@ router.use('/classes', classes);
 router.use('/courses', courses);
 router.use('/products', products);
 router.use('/users', users);
+router.use('/enquiries', enquiries);
 
 router.get('/', (req, res) => {
     res.render('admin/dashboard'

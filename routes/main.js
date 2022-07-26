@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
+const Courses = require('../models/Course');
 const ensureAuthenticated = require("../helpers/auth");
 
 // routes

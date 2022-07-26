@@ -2,22 +2,17 @@ const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const User = require('../models/User');
+const Booking = require('../models/Booking');
+const Class = require('../models/Class');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
 const ensureAuthenticated = require('../helpers/auth');
 const isAdmin = require('../helpers/admin');
 
-router.get('/', ensureAuthenticated, (req, res) => {
-    // User.findAll({
-    //         where: { id: req.user.id },
-    //         raw: true
-    //     })
-    //     .then((users) => {
-    //         res.render('account/account', { users });
-    //     })
-    //     .catch(err => console.log(err));
-    res.render('account/account')
+router.get('/', ensureAuthenticated, async (req, res) => {
+    const bookings = await Booking.findOne({ where: { userId: req.user.id } }, { include: { model: Class } });
+    res.render('account/account', { bookings } )
 });
 
 router.get('/login', (req, res) => {
@@ -114,7 +109,12 @@ router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
 router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
     console.log("L")
     let { oldPassword, newPassword, newPassword2 } = req.body;
+    var hashOld = bcrypt.hashSync(oldPassword, salt);
     let isValid = true;
+    if (hashOld != req.user.password) {
+        flashMessage(res, 'error', 'Old password is wrong');
+        isValid = false;
+    }
     if (newPassword.length < 6) {
         flashMessage(res, 'error', 'Password must be at least 6 characters');
         isValid = false;

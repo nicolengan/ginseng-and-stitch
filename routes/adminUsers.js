@@ -6,13 +6,7 @@ const flashMessage = require('../helpers/messenger');
 
 
 router.get('/', (req, res) => {
-    res.render('admin/users/listUsers'
-        //     , {
-        //         whichPartial: function() {
-        //             return "_adminUser";
-        //        }
-        // }
-    );
+    res.render('admin/users/listUsers');
 });
 
 router.get('/api/list', async (req, res) => {
@@ -22,19 +16,56 @@ router.get('/api/list', async (req, res) => {
     })
 });
 
-// router.get('/editUser/:id', (req, res) => {
-//     console.log(JSON.stringify(req.body));
-//     let name = req.body.name;
-//     let email = req.body.email;
-//     console.log(name);
-//     console.log(email);
-//     User.update({ name, email}, { where: { id: req.params.id } })
-//         .then((result) => {
-//             console.log(result[0] + ' account updated');
-//             res.redirect('/account');
-//         })
-//         .catch(err => console.log(err));
-// });
+router.get('/editUsers/:id', (req, res) => {
+    User.findOne({
+        where: { id: req.params.id },
+        raw: true
+    })
+        .then((user) => {
+            console.log(user)
+            if (user == null) {
+                res.redirect("/admin/user");
+            }
+            else {
+                res.render("admin/users/editUsers", { user });
+            }
+        })
+
+        .catch(err => console.log(err));
+});
+
+router.post('/editUsers/:id', (req, res) => {
+    console.log(JSON.stringify(req.body));
+    let { name, email, password, password2, role } = req.body;
+    let isValid = true;
+    if (password.length < 6) {
+        flashMessage(res, 'error', 'Password must be at least 6 characters');
+        isValid = false;
+    }
+    if (password != password2) {
+        flashMessage(res, 'error', 'Passwords do not match');
+        isValid = false;
+    }
+    if (!isValid) {
+        res.redirect('/admin/users');
+        flashMessage(res, 'error', 'Not valid');
+        console.log("failed")
+        return;
+    }
+    try {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(password, salt);
+        User.update({ name, email, role, hash }, { where: { id: req.params.id } })
+            .then((result) => {
+                console.log(result[0] + ' account updated');
+                res.redirect('/admin/users');
+            })
+            .catch(err => console.log(err));
+    }
+    catch {
+
+    }
+});
 
 router.get('/deleteUser/:id', async (req, res) => {
     let user = await User.findOne({ where: { id: req.params.id } })

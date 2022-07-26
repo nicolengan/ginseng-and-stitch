@@ -4,25 +4,7 @@
     <li class="breadcrumb-item active" aria-current="page">Account</li>
   </ol>
 </nav>
-<div class="card mt-2 w-75">
-
-  {{!-- {{#if users}}
-  {{#each users}} --}}
-  <h5 class="card-header">Account
-  </h5>
-  <div class="card-body">
-    <p class="card-title h5">Welcome {{user.name}}
-        <button class="btn btn-outline-primary position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-name={{user.name}}
-      data-bs-email={{user.email}}>Edit
-      <a class="bi bi-pencil-square">
-      </a>
-    </button>
-    </p>
-
-    <p class="card-text h5">Email: {{user.email}}</p>
-    <a class="card-text btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePassword">Change password</a>
-
-   <!-- modal for user edit-->
+    <!-- modal for user edit-->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -52,7 +34,7 @@
         </div>
       </div>
     </div>
-<!-- modal for password change -->
+    <!-- modal for password change -->
     <div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="changePassword" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -68,55 +50,78 @@
                 <input type="password" class="form-control" name="oldPassword" size="20">
               </div>
 
-           <div class="mb-3">
+              <div class="mb-3">
                 <label for="newPassword" class="col-form-label">New password: </label>
                 <input type="password" class="form-control" name="newPassword" size="20">
               </div>
-          </div>
-           <div class="mb-3">
+              <div class="mb-3">
                 <label for="newPassword2" class="col-form-label">Confirm new password: </label>
                 <input type="password" class="form-control" name="newPassword2" size="20">
               </div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
           </div>
 
-          <div class="modal-footer">
-          </div>
-          </form>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
         </div>
-      </div>
 
+        <div class="modal-footer">
+        </div>
+        </form>
+      </div>
     </div>
-  </div>
-  {{!-- {{/each}}
-  {{/if}} --}}
+
+  <div class="col-sm-6">
+<div class="card mt-2 w-75">
+
+  {{!-- {{#if users}}
+  {{#each users}} --}}
+  <h5 class="card-header">Account
+  </h5>
+  <div class="card-body">
+    <p class="card-title h5">Welcome {{user.name}}
+      <button class="btn btn-outline-primary position-absolute top-0 end-0" data-bs-toggle="modal"
+        data-bs-target="#editModal" data-bs-name={{user.name}} data-bs-email={{user.email}}>Edit
+        <a class="bi bi-pencil-square">
+        </a>
+      </button>
+    </p>
+
+    <p class="card-text h5">Email: {{user.email}}</p>
+    <a class="card-text btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePassword">Change
+      password</a></div></div>
 </div>
 
-<!-- show courses-->
+  
+
+{{!-- {{/each}}
+{{/if}} --}}
 <div class="row w-75 mx-auto my-5">
-  <div class="col-sm-6">
+<!-- show courses-->
+{{#if bookings}}
+  <div class="col-sm-3">
+    {{!-- <img src="../img/home_img.jpg" class="card-img-top" alt="..."> --}}
     <div class="card">
-      <img src="../img/home_img.jpg" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title">Course 1</h5>
-        <p class="card-text">Class 1</p>
+        <h5 class="card-title">{{bookings.id}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{course.title}}</h6>
+        <p class="card-text">{{course.description}}</p>
+        <p class="card-text">{{class.date}}</p>
         <a href="#" class="btn btn-primary">Edit booking details</a>
         <a href="#" class="btn btn-danger">Delete booking</a>
       </div>
     </div>
-  </div>
-  <div class="col-sm-6">
+</div>
+{{else}}
+  <div class="col-sm-3">
     <div class="card">
-      <img src="../img/home_img.jpg" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title">Course 2</h5>
-        <p class="card-text">Class 2</p>
-        <a href="#" class="btn btn-primary">Edit booking details</a>
-        <a href="#" class="btn btn-danger">Delete booking</a>
+        <p class="h4">No bookings found</p>
+        <a href="/courses" class="btn btn-primary">View courses</a>
       </div>
     </div>
   </div>
+
+{{/if}}
 </div>
 
 <script>
@@ -133,7 +138,6 @@
     // If necessary, you could initiate an AJAX request here
     // and then do the updating in a callback.
     //
-
     // Update the modal's content.
     var modalTitle = exampleModal.querySelector('.modal-title')
     var modalBodyName = exampleModal.querySelector('.modal-body input.name')
