@@ -215,13 +215,8 @@ router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
 
 router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
     console.log("L")
-    let { oldPassword, newPassword, newPassword2 } = req.body;
-    var hashOld = bcrypt.hashSync(oldPassword, salt);
+    let { newPassword, newPassword2 } = req.body;
     let isValid = true;
-    if (hashOld != req.user.password) {
-        flashMessage(res, 'error', 'Old password is wrong');
-        isValid = false;
-    }
     if (newPassword.length < 6) {
         flashMessage(res, 'error', 'Password must be at least 6 characters');
         isValid = false;

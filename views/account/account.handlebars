@@ -45,10 +45,6 @@
       <div class="modal-body">
 
         <form action="/account/changePassword/{{user.id}}" method="post">
-          <div class="mb-3">
-            <label for="oldPassword" class="col-form-label">Old password: </label>
-            <input type="password" class="form-control" name="oldPassword" size="20">
-          </div>
 
           <div class="mb-3">
             <label for="newPassword" class="col-form-label">New password: </label>
@@ -108,9 +104,9 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">{{Course.title}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{Class.pax}}</h6>
-        <p class="card-text">{{Course.description}}</p>
-        <p class="card-text">{{Classes.date}}</p>
+        <h6 class="card-subtitle mb-2 text-muted">{{Class.date}}</h6>
+        <p class="card-text">Description: {{Course.description}}</p>
+        {{!-- <p class="card-text">{{Classes.date}}</p> --}}
         <a href="/booking/editBooking/{{id}}" class="btn btn-primary">Edit booking details</a>
         <a href="/booking/deleteBooking/{{id}}" class="btn btn-danger">Delete booking</a>
       </div>
