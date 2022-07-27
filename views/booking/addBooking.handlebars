@@ -1,104 +1,106 @@
 <style>
-label {
-  display: inline-block;
-}
+	label {
+		display: inline-block;
+	}
 
-.container {
-	width: 40%;
-	margin: auto;
-}
+	.container {
+		width: 40%;
+		margin: auto;
+	}
 
-.col-75 {
-  margin-top: 2px;
-}
+	.col-75 {
+		margin-top: 2px;
+	}
 
-.submit {
-	width: 20%; 
-	margin: auto;
-	text-align: center;
-}
+	.submit {
+		width: 20%;
+		margin: auto;
+		text-align: center;
+	}
 </style>
 <p>Home > Courses > Book Now </p>
 <h4><u>New Booking Creation</u></h4>
 <!--booking id, course id, class id,  user id, date created-->
-	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-		<p>Please book and change the details to your preferences.</p>
-		<div class="card card-body">
-			<form action="" method="post">
-				{{!-- <div class="form-group">
-					<div class="row">
-						<div class="col-25">
-							<label for="BookingId">Booking ID:</label>
-						</div>
-						<div class="col-75">
-							<select id="BookingId" name="BookingId" required>
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<p>Please book and change the details to your preferences.</p>
+	<div class="card card-body">
+		<form action="" method="post">
+			{{!-- <div class="form-group">
+				<div class="row">
+					<div class="col-25">
+						<label for="BookingId">Booking ID:</label>
+					</div>
+					<div class="col-75">
+						<select id="BookingId" name="BookingId" required>
 							{{#each booking}}
 							<option value="{{id}}" name="BookingId">{{id}}</option>
 							{{/each}}
-						</div>
 					</div>
 				</div>
-					<br> --}}
-				{{!-- <div class="form-group">
-					<div class="row">
-						<div class="col-25">
-							<label for="UserID">User ID:</label>
-						</div>
-						<div class="col-75">
-							<select id="UserId" name="UserId" required>
+			</div>
+			<br> --}}
+			{{!-- <div class="form-group">
+				<div class="row">
+					<div class="col-25">
+						<label for="UserID">User ID:</label>
+					</div>
+					<div class="col-75">
+						<select id="UserId" name="UserId" required>
 							{{#each user}}
 							<option value="{{id}}" name="UserId">{{id}}</option>
 							{{/each}}
-							</select>
-						</div>
+						</select>
 					</div>
 				</div>
-				<br> --}}
-				<div class="form-group">
-					<div class="row">
-						<div class="col-25">
-							<label for="CourseId">Course ID:</label>
-						</div>
-						<div class="col-75">
-							<select id="CourseId" name="CourseId" required>
+			</div>
+			<br> --}}
+			<div class="form-group">
+				<div class="row">
+					<div class="col-25">
+						<label for="CourseId">Course ID:</label>
+					</div>
+					<div class="col-75">
+						<select class="form-select" id="CourseId" name="CourseId" aria-label="Default">
+							<option selected>Course name</option>
 							{{#each courses}}
 							<option value="{{id}}" name="CourseId">{{id}}</option>
 							{{/each}}
-							</select>
-						</div>
+						</select>
 					</div>
 				</div>
-				<br>
-				<div class="form-group">
-					<div class="row">
-						<div class="col-25">
-							<label for="ClassId">Class ID:</label>
-						</div>
-						<div class="col-75">
-							<select id="ClassId" name="ClassId" required>
-							{{#each courses}}
+			</div>
+			<br>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-25">
+						<label for="ClassId">Class ID:</label>
+					</div>
+					<div class="col-75">
+						<select class="form-select" name="ClassId" aria-label="Default select example">
+							<option selected>Class name</option>
+							{{#each classes}}
 							<option value="{{id}}" name="ClassId">{{id}}</option>
 							{{/each}}
-							</select>
-						</div>
+						</select>
 					</div>
 				</div>
-				<br>
-				{{!-- <div class="form-group">
-					<div class="row">
-						<div class="col-75">
-							<label for="ClassDetails">Class Start Date:</label>
-							{{#each booking}}
-                        		<p class="text-primary">{{classes.date}}</p>
-							{{/each}}
-						</div>
+			</div>
+			<br>
+			{{!-- <div class="form-group">
+				<div class="row">
+					<div class="col-75">
+						<label for="ClassDetails">Class Start Date:</label>
+						{{#each booking}}
+						<p class="text-primary">{{classes.date}}</p>
+						{{/each}}
 					</div>
 				</div>
-				<br> --}}
-				<div class="submit">
-					<button class="btn btn-primary waves-effect" type="submit">+ Create Booking</button>
-					<button class="btn btn-info" type="submit"><a href="/booking/listBooking">Current Booking</a></button>
-				</div>
-			</form>
-		</div>
+			</div>
+			<br> --}}
+			<div class="submit">
+				<button class="btn btn-primary waves-effect" type="submit">+ Create Booking</button>
+				<button class="btn btn-info" type="submit"><a href="/booking/listBooking">Current Booking</a></button>
+			</div>
+		</form>
 	</div>
+</div>

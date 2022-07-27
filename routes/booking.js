@@ -46,9 +46,10 @@ router.get('/addBooking', ensureAuthenticated, async (req, res) => {
 router.post('/addBooking', ensureAuthenticated, async (req, res) => {
     let CourseId = req.body.CourseId;
     let ClassId = req.body.ClassId;
+    let UserId = req.user.id
 
     Booking.create(
-        { CourseId, ClassId }
+        { CourseId, ClassId, UserId}
     )
         .then((classes) => {
             console.log(classes.toJSON());
@@ -93,7 +94,7 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
         }
         let result = await booking.destroy({ where: { id: booking.id } });
         console.log(result + ' booking deleted');
-        res.redirect('/booking/listBooking');
+        res.redirect('/account');
     }
     catch (err) {
         console.log(err);

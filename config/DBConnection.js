@@ -16,12 +16,12 @@ const setUpDB = (drop) => {
             console.log("The table for the Database was just (re)created!");
 
             //user_id in cart
-            Cart.belongsTo(User);
-            User.hasOne(Cart);
+            // Cart.belongsTo(User);
+            // User.hasOne(Cart);
 
             //product_id in cart
-            Cart.belongsTo(Product);
-            Product.hasMany(Cart);
+            // Cart.belongsTo(Product);
+            // Product.hasMany(Cart);
 
             // //booking_id in cart
             // Cart.hasMany(Booking);
@@ -42,8 +42,8 @@ const setUpDB = (drop) => {
             Course.hasMany(Booking, {sourceKey: 'id', foreignKey: 'CourseId'});
 
             // User_id in Booking
-            // Booking.belongsTo(User, {foreignKey: 'UserId', targetKey: 'id', onDelete: 'CASCADE'});
-            // User.hasMany(Booking, {sourceKey: 'id', foreignKey: 'UserId'});
+            Booking.belongsTo(User, {foreignKey: 'UserId', targetKey: 'id', onDelete: 'CASCADE'});
+            User.hasMany(Booking, {sourceKey: 'id', foreignKey: 'UserId'});
 
             // Cart_id in Booking
             // Booking.belongsTo(Cart, {foreignKey: 'CartId', targetKey: 'id', onDelete: 'CASCADE'});

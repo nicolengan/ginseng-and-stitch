@@ -4,6 +4,7 @@ const flashMessage = require('../helpers/messenger');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
 const Class = require('../models/Class');
+const Course = require('../models/Course');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
@@ -11,7 +12,8 @@ const ensureAuthenticated = require('../helpers/auth');
 const isAdmin = require('../helpers/admin');
 
 router.get('/', ensureAuthenticated, async (req, res) => {
-    const bookings = await Booking.findOne({ where: { userId: req.user.id } }, { include: { model: Class } });
+    const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class}, { model: Course}]});
+    // console.log(JSON.stringify(bookings))
     res.render('account/account', { bookings } )
 });
 
