@@ -46,12 +46,17 @@ router.post('/editUsers/:id', (req, res) => {
         flashMessage(res, 'error', 'Passwords do not match');
         isValid = false;
     }
+    if (user.email == "admin@gmail.com") {
+        flashMessage(res, 'error', 'Unable to edit root admin account, please try again')
+        isValid = false;
+    }
     if (!isValid) {
         res.redirect('/admin/users');
         flashMessage(res, 'error', 'Not valid');
         console.log("failed")
         return;
     }
+
     try {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(password, salt);
