@@ -58,31 +58,31 @@ router.post('/addBooking', ensureAuthenticated, async (req, res) => {
         .catch(err => console.log(err))
 });
 
-// router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
-//     Booking.findByPk(req.params.id, {include: [
-//         {model: Class},
-//         {model: Course}  
-//     ]})
-//         .then((booking) => {
-//             res.render('booking/editBooking', { booking });
-//         })
-//         .catch(err => console.log(err));
-// });
+router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
+    Booking.findByPk(req.params.id, {include: [
+        {model: Class},
+        {model: Course}  
+    ]})
+        .then((booking) => {
+            res.render('booking/editBooking', { booking });
+        })
+        .catch(err => console.log(err));
+});
 
-// router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
-//     let CourseId = req.body.CourseId;
-//     let ClassId = req.body.ClassId;
+router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
+    let CourseId = req.body.CourseId;
+    let ClassId = req.body.ClassId;
 
-//     Booking.update(
-//         { CourseId, ClassId},
-//         { where: { id: req.params.id} }
-//     )
-//         .then((result) => {
-//             console.log(result[0] + ' booking updated');
-//             res.redirect('/booking/listBooking');
-//         })
-//         .catch(err => console.log(err))
-// });
+    Booking.update(
+        { CourseId, ClassId},
+        { where: { id: req.params.id} }
+    )
+        .then((result) => {
+            console.log(result[0] + ' booking updated');
+            res.redirect('/booking/listBooking');
+        })
+        .catch(err => console.log(err))
+});
 
 router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) {
     try {

@@ -22,7 +22,7 @@
 							<label for="CourseId">Course ID:</label>
 						</div>
 						<div class="col-75">
-							<input type="CourseId" name="CourseId" value={{bookings.CourseId}}>
+							<input type="CourseId" name="CourseId" value={{booking.CourseId}}>
 						</div>
 					</div>
 					<br>
@@ -31,7 +31,7 @@
 						<div class="row">
 						<label for="ClassId">Class ID:</label>
 							<div class="col-75">
-								<input type="ClassId" name="ClassId" value={{bookings.ClassId}}>
+								<input type="ClassId" name="ClassId" value={{booking.ClassId}}>
 							</div>
 						</div>
 					</div>
@@ -43,3 +43,19 @@
 			</form>
 		</div>
 	</div>
+
+		{{!-- <div class="form-group">
+				<div class="row">
+					<div class="col-25">
+						<label for="title">Course Name:</label>
+					</div>
+					<div class="col-75">
+						<select class="form-select" id="title" name="title" aria-label="Default">
+							{{#each courses}}
+							<option value="{{title}}" name="title">{{title}}</option>
+							{{/each}}
+						</select>
+					</div>
+				</div>
+			</div>
+			<br> --}}
