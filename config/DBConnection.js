@@ -34,7 +34,7 @@ const setUpDB = (drop) => {
             Course.hasMany(Class, { sourceKey: 'id', foreignKey: 'CourseId'});
             
             //Class_id in Booking
-            Booking.belongsTo(Class, {foreignKey: 'ClassId', targetKey: 'id', onDelete: 'CASCADE'});
+            Booking.belongsTo(Class, {foreignKey: 'ClassId', targetKey: 'id'});
             Class.hasMany(Booking, {sourceKey: 'id', foreignKey: 'ClassId'});
             
             //Course_id in Booking
