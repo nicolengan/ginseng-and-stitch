@@ -15,23 +15,26 @@ function sendEmail(email, token) {
     var email = email;
     var token = token;
     let mail = nodemailer.createTransport({
-        service: 'gmail',
+        // service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
         auth: {
             user: 'skylarhiyagaming@gmail.com', // Your email id
-            pass: 'mjbtqsqqdkhoeptc' // Your password
+            pass: 'xpsuaskucepikgoe' // Your password
         }
     });
     var mailOptions = {
         from: 'skylarhiyagaming@gmail.com',
         to: email,
         subject: 'Reset Password Link - Ginseng and stitch',
-        html: '<p>You requested for reset password, kindly use this <a href="http://localhost:5000/reset-password?token=' + token + '">link</a> to reset your password</p>'
+        html: '<p>You requested for reset password, kindly use this <a href="http://localhost:5000/account/resetPassword?token=' + token + '">link</a> to reset your password</p>'
     };
     mail.sendMail(mailOptions, function (error, info) {
         if (error) {
-            console.log(1)
+            console.log(error)
         } else {
-            console.log(0)
+            console.log(info)
         }
     });
 }
@@ -110,13 +113,13 @@ router.post('/login',
         }
     });
 
-router.get('/resetPassword', (req, res) => {
-    res.render('account/resetPassword');
+router.get('/resetEmail', (req, res) => {
+    res.render('account/sendEmail');
 });
 
 router.post('/sendEmail', async function (req, res) {
-    console.log("wow");
     var email = req.body.email;
+    console.log(email);
     try {
         const user = await User.findOne({ where: { email: email } })
         if (!user) {
@@ -126,9 +129,7 @@ router.post('/sendEmail', async function (req, res) {
         else {
             var token = randtoken.generate(20);
             var sent = sendEmail(email, token);
-            var data = {
-                token: token
-            };
+            console.log(sent + " " + token)
             user.update({ token: token });
             flashMessage(res, 'success', 'Email sent');
             res.redirect('/');
@@ -138,6 +139,56 @@ router.post('/sendEmail', async function (req, res) {
         console.log(err);
     }
 });
+router.get('/resetPassword', function (req, res, next) {
+    // console.log(req.query.token)
+    res.render('account/resetPassword');
+});
+
+router.post('/resetPassword', async function (req, res, next) {
+    var token = req.query.token
+    console.log(token + " token")
+    var password = req.body.password;
+    var password2 = req.body.password2;
+    let isValid = true;
+    if (password.length < 6) {
+        flashMessage(res, 'error', 'Password must be at least 6 characters');
+        isValid = false;
+    }
+    if (password != password2) {
+        flashMessage(res, 'error', 'Passwords do not match');
+        isValid = false;
+    }
+    if (!isValid) {
+        console.log("valid false")
+        flashMessage(res, 'error', 'Unable to reset password, please try again.');
+        return;
+    }
+    try {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(password, salt);
+        // If all is well, checks if user is already registered
+        let check = await User.findOne({ where: { token: token } });
+        if (!check) {
+            // If user is found, that means email has already been registered
+            console.log("check false")
+            flashMessage(res, 'error', ' Unable to reset password, please try again.');
+            res.redirect('/account/login')
+        } else {
+            // Create new user record 
+            // Use hashed password
+            User.update({ password: hash }, { where: { token: token } })
+                .then((result) => {
+                    console.log(result[0] + ' account updated');
+                    flashMessage(res, 'success', ' Password changed successfully!');
+                    res.redirect('/account/login');
+                })
+                .catch(err => console.log(err));
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+})
 
 router.get('/logout', (req, res, next) => {
     req.logout(function (err) {
