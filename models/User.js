@@ -13,12 +13,18 @@ User.init({
   email: {
     type: sequelize.STRING,
     unique: 'email',
+    allowNull: false
   },
   role: {
     type: sequelize.CHAR,
     defaultValue: 'u',
+    allowNull: false
   },
   password: {
+    type: sequelize.STRING,
+    allowNull: false
+  },
+  token: {
     type: sequelize.STRING
   }
   
