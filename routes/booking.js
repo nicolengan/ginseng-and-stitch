@@ -9,10 +9,12 @@ const Course = require('../models/Course');
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Booking.count(),
-        rows: await Booking.findAll({include: [
-            {model: Class},
-            {model: Course}
-        ]})
+        rows: await Booking.findAll({
+            include: [
+                { model: Class },
+                { model: Course }
+            ]
+        })
     })
 });
 
@@ -21,10 +23,10 @@ router.get('/api/list', async (req, res) => {
 
 //book will be listBooking
 router.get('/listBooking', ensureAuthenticated, async (req, res) => {
-    const booking = await Booking.findAll({ 
+    const booking = await Booking.findAll({
         include: [
-            {model:Class},
-            {model:Course}
+            { model: Class },
+            { model: Course }
         ]
     });
     res.render('booking/listBooking', { booking });
@@ -34,8 +36,8 @@ router.get('/listBooking', ensureAuthenticated, async (req, res) => {
 router.get('/addBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
-            {model: Class, attributes:['id']},
-            {model: Course}
+            { model: Class, attributes: ['id'] },
+            { model: Course }
         ]
     });
     const courses = await Course.findAll();
@@ -46,9 +48,10 @@ router.get('/addBooking', ensureAuthenticated, async (req, res) => {
 router.post('/addBooking', ensureAuthenticated, async (req, res) => {
     let CourseId = req.body.CourseId;
     let ClassId = req.body.ClassId;
+    let UserId = req.user.id
 
     Booking.create(
-        { CourseId, ClassId }
+        { CourseId, ClassId, UserId }
     )
         .then((classes) => {
             console.log(classes.toJSON());
@@ -57,31 +60,32 @@ router.post('/addBooking', ensureAuthenticated, async (req, res) => {
         .catch(err => console.log(err))
 });
 
-// router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
-//     Booking.findByPk(req.params.id, {include: [
-//         {model: Class},
-//         {model: Course}  
-//     ]})
-//         .then((booking) => {
-//             res.render('booking/editBooking', { booking });
-//         })
-//         .catch(err => console.log(err));
-// });
+router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
+    var booking = Booking.findByPk(req.params.id, {
+        include: [
+            { model: Class },
+            { model: Course }
+        ]
+    })
+    const courses = await Course.findAll();
+    const classes = await Class.findAll();
+    res.render('booking/editBooking', { booking, courses, classes });
+});
 
-// router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
-//     let CourseId = req.body.CourseId;
-//     let ClassId = req.body.ClassId;
+router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
+    let CourseId = req.body.CourseId;
+    let ClassId = req.body.ClassId;
 
-//     Booking.update(
-//         { CourseId, ClassId},
-//         { where: { id: req.params.id} }
-//     )
-//         .then((result) => {
-//             console.log(result[0] + ' booking updated');
-//             res.redirect('/booking/listBooking');
-//         })
-//         .catch(err => console.log(err))
-// });
+    Booking.update(
+        { CourseId, ClassId },
+        { where: { id: req.params.id } }
+    )
+        .then((result) => {
+            console.log(result[0] + ' booking updated');
+            res.redirect('/booking/listBooking');
+        })
+        .catch(err => console.log(err))
+});
 
 router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) {
     try {
@@ -93,7 +97,7 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
         }
         let result = await booking.destroy({ where: { id: booking.id } });
         console.log(result + ' booking deleted');
-        res.redirect('/booking/listBooking');
+        res.redirect('/account');
     }
     catch (err) {
         console.log(err);
@@ -101,10 +105,10 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
 });
 
 router.get('/checkout', async (req, res) => {
-    const booking = await Booking.findAll({ 
+    const booking = await Booking.findAll({
         include: [
-            {model: Class},
-            {model: Course}
+            { model: Class },
+            { model: Course }
         ]
     });
     const courses = await Course.findAll();
@@ -113,10 +117,10 @@ router.get('/checkout', async (req, res) => {
 });
 
 router.get('/confirm', async (req, res) => {
-    const booking = await Booking.findAll({ 
+    const booking = await Booking.findAll({
         include: [
-            {model: Class},
-            {model: Course} 
+            { model: Class },
+            { model: Course }
         ]
     });
     const courses = await Course.findAll();
@@ -136,15 +140,15 @@ router.get('/confirm', async (req, res) => {
 // });
 
 router.get('/successful', async (req, res) => {
-    const booking = await Booking.findAll({ 
+    const booking = await Booking.findAll({
         include: [
-            {model: Class},
-            {model: Course} 
+            { model: Class },
+            { model: Course }
         ]
     });
     const courses = await Course.findAll();
     const classes = await Class.findAll();
-    res.render('booking/successful', { booking, courses, classes});
+    res.render('booking/successful', { booking, courses, classes });
 });
 
 module.exports = router;

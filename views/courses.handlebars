@@ -1,34 +1,57 @@
-<h1>Our Courses</h1>
+{{!-- <h1>Our Courses</h1> --}}
 
-	{{#if courses}}
-		<h2 class="text-primary">Courses Listed</h2>
-		{{#each courses}}
-        <div class="card-body"></div>
-            <div class="card border-primary mb-2 w-50 mx-auto">
-                <div class="card-header">
-                    <h1 class="card-title">{{title}}</h>
-                </div>
-                <div class="card-body">
-                    <h5>Description of the Course</h5>
-                    <p class="card-text">{{description}}</p>
-                    <h5>Price</h5>
-                    <p class="card-text">${{price}}</p>
-                    <h5>Level</h5>
-                    <p class="card-text">{{level}}</p>
-                </div>
-                <div class="text-center">
-                    <button type="button" class="button"><a href="/booking/addBooking">Book Now</a></button>
+{{!-- {{#if courses}}
+<h2 class="text-primary">Courses Listed</h2>
+{{#each courses}}
+<div class="card-body"></div>
+<div class="card border-primary mb-2 w-50 mx-auto">
+    <div class="card-header">
+        <h1 class="card-title">{{title}}</h>
+    </div>
+    <div class="card-body">
+        <h5>Description of the Course</h5>
+        <p class="card-text">{{description}}</p>
+        <h5>Price</h5>
+        <p class="card-text">${{price}}</p>
+        <h5>Level</h5>
+        <p class="card-text">{{level}}</p>
+    </div>
+    <div class="text-center">
+        <button type="button" class="button"><a href="/booking/addBooking">Book Now</a></button>
+    </div>
+</div>
+{{/each}}
+</div>
+</div>
+{{else}}
+<h3>No Courses listed</h3>
+{{/if}} --}}
+
+<script>
+    $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+    });
+</script>
+{{#if courses}}
+<h2 class="text-primary mt-4">Courses Listed</h2>
+
+<div class="row">
+    {{#each courses}}
+    <div class="col">
+        <div class="card" style="">
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+
+                <p class="card-text">{{description}}</p>
+                <div class="d-flex flex-row mb-3">
+                    <div class="p-2"><h6 class="card-subtitle mb-2 text-muted">${{price}}</h6></div>
+                    <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking">Book Now</a></div>
                 </div>
             </div>
-		{{/each}}
-	</div>
+        </div>
+    </div>
+    {{/each}}
 </div>
 {{else}}
 <h3>No Courses listed</h3>
 {{/if}}
-
-<script>
-	$('[data-toggle=confirmation]').confirmation({
-		rootSelector: '[data-toggle=confirmation]',
-	});
-</script>

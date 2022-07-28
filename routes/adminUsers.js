@@ -36,16 +36,8 @@ router.get('/editUsers/:id', (req, res) => {
 
 router.post('/editUsers/:id', (req, res) => {
     console.log(JSON.stringify(req.body));
-    let { name, email, password, password2, role } = req.body;
+    let { name, email,role } = req.body;
     let isValid = true;
-    if (password.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 characters');
-        isValid = false;
-    }
-    if (password != password2) {
-        flashMessage(res, 'error', 'Passwords do not match');
-        isValid = false;
-    }
     if (!isValid) {
         res.redirect('/admin/users');
         flashMessage(res, 'error', 'Not valid');
@@ -53,17 +45,15 @@ router.post('/editUsers/:id', (req, res) => {
         return;
     }
     try {
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(password, salt);
-        User.update({ name, email, role, hash }, { where: { id: req.params.id } })
+        User.update({ name, email, role }, { where: { id: req.params.id } })
             .then((result) => {
                 console.log(result[0] + ' account updated');
                 res.redirect('/admin/users');
             })
             .catch(err => console.log(err));
     }
-    catch {
-
+    catch (err) {
+        console.log(err);
     }
 });
 
