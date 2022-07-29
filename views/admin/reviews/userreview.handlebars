@@ -1,0 +1,42 @@
+<script
+	src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/custom-view/bootstrap-table-custom-view.js"></script>
+
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="h2 mt-3">Review</div>
+	<hr class="border border-secondary opacity-50">
+	<div id="toolbar">
+	</div>
+	<div class="table-responsive">
+		<table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
+			data-show-columns="true" data-toolbar="#toolbar" {{!-- data-show-custom-view="true"
+			data-custom-view="customViewFormatter" data-show-custom-view-button="true" --}} data-url="/admin/review/api/list">
+
+			<thead>
+				<tr>
+					<th data-field="id">Id</th>
+					<th data-field="name">Name</th>
+					<th data-field="email">Email</th>
+					<th data-field="title">Course Name</th>
+					<th data-field="rating">Star Rating</th>
+                    <th data-field="review">Review</th>
+					<th data-field="icons" data-formatter="generate_actions">actions</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+
+    <script>
+      var $table = $('#table')
+      function generate_actions(value, row, index) {
+        return `
+<div>
+  <a href="/admin/review/deletereview/${row.id}"><i class="bi bi-trash"></i></a>
+</div>`
+          ;
+      }
+        function draw_picture(value, row, index) {
+  return `<img style="width: 100px; height: 64px" src="${value}">`;
+  }
+
+    </script>

@@ -34,6 +34,17 @@ router.get('/', (req, res) => {
     //         return "";
     //    }
     // }
+
+    // Get all courses; IE Courese.GetAll
+
+    // Lopp through courses, get all reviews where courseID = courses[].id
+    // reconstruct into a new object, IE
+    // ReviewData
+    //  course
+    //  review[]
+
+    // Send as context to handlerbar
+
     );
 });
 

@@ -5,6 +5,8 @@ const ensureAuthenticated = require("../helpers/auth");
 const Booking = require('../models/Booking');
 const Class = require('../models/Class');
 const Course = require('../models/Course');
+const User = require('../models/User');
+const nodemailer = require("nodemailer");
 
 router.get('/api/list', async (req, res) => {
     return res.json({
@@ -104,7 +106,7 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
     }
 });
 
-router.get('/checkout', async (req, res) => {
+router.get('/checkout/', async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
@@ -122,33 +124,78 @@ router.get('/confirm', async (req, res) => {
             { model: Class },
             { model: Course }
         ]
+        
     });
     const courses = await Course.findAll();
     const classes = await Class.findAll();
     res.render('booking/confirm', { booking, courses, classes });
 });
 
-// router.get('/payment', (req, res) => {
-//     Booking.findAll({
-//         // where: { userId: req.user.id },
-//         raw: true
-//     })
-//     .then((booking) => {
-//         res.render('booking/payment', { booking });
-//     })
-//     .catch(err => console.log(err));
-// });
 
-router.get('/successful', async (req, res) => {
+router.get('/successful/:id', async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
             { model: Course }
-        ]
+        ],
+        where:{
+            id: req.params.id
+        }
     });
-    const courses = await Course.findAll();
-    const classes = await Class.findAll();
-    res.render('booking/successful', { booking, courses, classes });
+    // const courses = await Course.findAll();
+    // const classes = await Class.findAll();
+    res.render('booking/successful', { booking });
 });
+
+function sendEmail(email, booking) {
+    var email = email;
+    var token = token;
+    let mail = nodemailer.createTransport({
+        // service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'skylarhiyagaming@gmail.com', // Your email id
+            pass: 'xpsuaskucepikgoe' // Your password
+        }
+    });
+    var mailOptions = {
+        from: 'skylarhiyagaming@gmail.com',
+        to: email,
+        subject: 'Successful Course Booking',
+        html: '<p>Successful booking. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review"</p> '
+    };
+    mail.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error)
+        } else {
+            console.log(info)
+        }
+    });
+}
+
+router.get('/successful/sendEmail/:id', async (req, res) =>{
+    const booking = await Booking.findOne({
+        include: [
+            { model: Class },
+            { model: Course }
+        ],
+        where:{
+            id: req.params.id
+        }
+    });
+
+    // const user = await User.findOne({ where: { id: res.user.id } })
+        
+    console.log(req.user.email);
+
+    sendEmail(req.user.email, booking);
+
+    
+
+    res.redirect('/account');
+});
+
 
 module.exports = router;

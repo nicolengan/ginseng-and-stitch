@@ -127,6 +127,22 @@ describe('Record', function () {
       }));
     });
     it('stores validation error when they happen', async function () {
+      const baseError = {
+        message: 'test base error'
+      };
+      const propertyErrors = {
+        param2: {
+          type: 'required',
+          message: 'Field is required'
+        }
+      };
+      resource.create = _sinon.default.stub().rejects(new _validationError.default(propertyErrors, baseError));
+      record = new _baseRecord.default(newParams, resource);
+      await record.save();
+      (0, _chai.expect)(record.error('param2')).to.deep.equal(propertyErrors.param2);
+      (0, _chai.expect)(record.baseError).to.deep.equal(baseError);
+    });
+    it('stores validation error when they happen (even when there is no baseError specified)', async function () {
       const propertyErrors = {
         param2: {
           type: 'required',
@@ -137,6 +153,7 @@ describe('Record', function () {
       record = new _baseRecord.default(newParams, resource);
       await record.save();
       (0, _chai.expect)(record.error('param2')).to.deep.equal(propertyErrors.param2);
+      (0, _chai.expect)(record.baseError).to.be.null;
     });
   });
   describe('#update', function () {
@@ -164,7 +181,10 @@ describe('Record', function () {
       it('stores what was returned by BaseResource#update to this.params', function () {
         (0, _chai.expect)(record.get('param2')).to.equal(newParams.param2);
       });
-      it('resets the errors when there are no', function () {
+      it('resets the baseError when there is none', function () {
+        (0, _chai.expect)(record.baseError).to.deep.equal(null);
+      });
+      it('resets the errors when there are none', function () {
         (0, _chai.expect)(record.errors).to.deep.equal({});
       });
       it('calls the BaseResource#update function with the id and new params', function () {
@@ -172,6 +192,9 @@ describe('Record', function () {
       });
     });
     context('resource throws validation error', function () {
+      const baseError = {
+        message: 'test base error'
+      };
       const propertyErrors = {
         param2: {
           type: 'required',
@@ -181,10 +204,13 @@ describe('Record', function () {
       beforeEach(async function () {
         resource = _sinon.default.createStubInstance(_baseResource.default, {
           properties: _sinon.default.stub().returns(properties),
-          update: _sinon.default.stub().rejects(new _validationError.default(propertyErrors))
+          update: _sinon.default.stub().rejects(new _validationError.default(propertyErrors, baseError))
         });
         record = new _baseRecord.default(params, resource);
         this.returnedValue = await record.update(newParams);
+      });
+      it('stores validation baseError', function () {
+        (0, _chai.expect)(record.baseError).to.deep.equal(baseError);
       });
       it('stores validation errors', function () {
         (0, _chai.expect)(record.error('param2')).to.deep.equal(propertyErrors.param2);

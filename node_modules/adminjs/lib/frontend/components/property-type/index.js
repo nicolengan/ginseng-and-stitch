@@ -24,6 +24,10 @@ var textarea = _interopRequireWildcard(require("./textarea"));
 
 var password = _interopRequireWildcard(require("./password"));
 
+var currency = _interopRequireWildcard(require("./currency"));
+
+var phone = _interopRequireWildcard(require("./phone"));
+
 var _basePropertyProps = require("./base-property-props");
 
 Object.keys(_basePropertyProps).forEach(function (key) {
@@ -74,6 +78,8 @@ const BasePropertyComponentExtended = Object.assign(_basePropertyComponent.defau
   RichText: camelizePropertyType(richtext),
   Reference: camelizePropertyType(reference),
   TextArea: camelizePropertyType(textarea),
-  Password: camelizePropertyType(password)
+  Password: camelizePropertyType(password),
+  Currency: camelizePropertyType(currency),
+  Phone: camelizePropertyType(phone)
 });
 exports.BasePropertyComponent = exports.default = BasePropertyComponentExtended;

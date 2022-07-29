@@ -4,7 +4,7 @@ const Booking = require('../models/Booking');
 const Class = require('../models/Class');
 const Course = require('../models/Course');
 const Product = require('../models/Product');
-const Cart = require('../models/Cart');
+const Review = require('../models/Review');
 
 const setUpDB = (drop) => {
 
@@ -26,17 +26,17 @@ const setUpDB = (drop) => {
             // //booking_id in cart
             // Cart.hasMany(Booking);
             // Booking.belongsTo(Cart);
-            
+
             // Course_id in class
 
             // creates CourseId  foreign key in Class
             Class.belongsTo(Course, {foreignKey: 'CourseId', targetKey: 'id', onDelete: 'CASCADE'});
             Course.hasMany(Class, { sourceKey: 'id', foreignKey: 'CourseId'});
-            
+
             //Class_id in Booking
             Booking.belongsTo(Class, {foreignKey: 'ClassId', targetKey: 'id'});
             Class.hasMany(Booking, {sourceKey: 'id', foreignKey: 'ClassId'});
-            
+
             //Course_id in Booking
             Booking.belongsTo(Course, {foreignKey: 'CourseId', targetKey: 'id', onDelete: 'CASCADE'});
             Course.hasMany(Booking, {sourceKey: 'id', foreignKey: 'CourseId'});
@@ -48,7 +48,7 @@ const setUpDB = (drop) => {
             // Cart_id in Booking
             // Booking.belongsTo(Cart, {foreignKey: 'CartId', targetKey: 'id', onDelete: 'CASCADE'});
             // Cart.hasOne(Booking, {sourceKey: 'id', foreignKey: 'CartId'});
-            
+
         })
         .catch(err => console.log(err));
 };

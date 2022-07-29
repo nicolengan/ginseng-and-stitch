@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import { expect } from 'chai'
 import _ from 'lodash'
 import i18n from 'i18next'
-import { render, RenderResult } from 'react-testing-library'
+import { render, RenderResult } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { Switch, Route } from 'react-router'
 import { AxiosResponse } from 'axios'
@@ -24,13 +24,15 @@ const defaultStore = {
 const renderSubject = (store: Partial<ReduxState> = {}, location?: string): RenderResult => {
   const path = '/resources/:resourceId/records/:recordId/:actionName'
   const storeWithDefault = _.merge(defaultStore, store)
+  // TODO: fix children props
+  const StoreProvider = Provider as any
   const renderResult = render(
     <TestContextProvider location={location}>
-      <Provider store={createStore(storeWithDefault)}>
+      <StoreProvider store={createStore(storeWithDefault)}>
         <Switch>
           <Route path={path} exact component={RecordAction} />
         </Switch>
-      </Provider>
+      </StoreProvider>
     </TestContextProvider>,
   )
 

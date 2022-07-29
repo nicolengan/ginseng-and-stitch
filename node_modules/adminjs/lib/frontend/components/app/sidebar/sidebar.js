@@ -55,7 +55,7 @@ const SidebarOriginal = props => {
     resources: resources
   })), /*#__PURE__*/_react.default.createElement(_sidebarPages.default, {
     pages: pages
-  }), (branding === null || branding === void 0 ? void 0 : branding.softwareBrothers) && /*#__PURE__*/_react.default.createElement(_sidebarFooter.default, null));
+  }), /*#__PURE__*/_react.default.createElement(_sidebarFooter.default, null));
 };
 
 const Sidebar = (0, _allowOverride.default)(SidebarOriginal, 'Sidebar');

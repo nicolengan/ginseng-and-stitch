@@ -7,17 +7,11 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _reactSelect = _interopRequireDefault(require("react-select"));
-
-var _styledComponents = require("styled-components");
-
 var _designSystem = require("@adminjs/design-system");
 
 var _recordPropertyIsEqual = require("../record-property-is-equal");
 
 var _propertyLabel = require("../utils/property-label");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -44,7 +38,6 @@ const SelectEdit = props => {
   var _record$params$proper, _record$params;
 
   const {
-    theme,
     record,
     property,
     onChange
@@ -55,13 +48,9 @@ const SelectEdit = props => {
   }
 
   const propValue = (_record$params$proper = (_record$params = record.params) === null || _record$params === void 0 ? void 0 : _record$params[property.path]) !== null && _record$params$proper !== void 0 ? _record$params$proper : '';
-  const styles = (0, _designSystem.selectStyles)(theme);
   const selected = property.availableValues.find(av => av.value === propValue);
-  return /*#__PURE__*/_react.default.createElement(_reactSelect.default, _extends({
-    isClearable: true,
-    styles: styles,
+  return /*#__PURE__*/_react.default.createElement(_designSystem.Select, _extends({
     value: selected,
-    required: property.isRequired,
     options: property.availableValues,
     onChange: s => {
       var _s$value;
@@ -100,6 +89,6 @@ const TextEdit = props => {
   }, property.props));
 };
 
-var _default = (0, _styledComponents.withTheme)( /*#__PURE__*/(0, _react.memo)(Edit, _recordPropertyIsEqual.recordPropertyIsEqual));
+var _default = /*#__PURE__*/(0, _react.memo)(Edit, _recordPropertyIsEqual.recordPropertyIsEqual);
 
 exports.default = _default;

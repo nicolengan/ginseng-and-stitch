@@ -41,7 +41,7 @@ function sendEmail(email, token) {
 /* home page */
 router.get('/', ensureAuthenticated, async (req, res) => {
     const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
-    // console.log(JSON.stringify(bookings))
+
     res.render('account/account', { bookings })
 });
 
@@ -254,5 +254,37 @@ router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
     }
 
 });
+
+router.get('/review/:id', async (req, res) => {
+    const booking = await Booking.findOne({
+        include: [
+            { model: Class },
+            { model: User },
+            { model: Course }
+        ],
+        where :
+        {
+            id: req.params.id
+        }
+    });
+
+
+    const user = booking.User;
+    const course = booking.Course;
+
+    res.render('account/review', { user , course });
+});
+
+router.post('/review/:id', async function (req, res){
+    let { rate, review } = req.body;
+
+    
+
+
+    console.log('Review sent');
+    res.redirect('/');
+    flashMessage(res, 'success', ' Review sent successfully');
+});
+
 
 module.exports = router;
