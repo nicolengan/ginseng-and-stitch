@@ -9,7 +9,7 @@ Review.init({
     type: sequelize.INTEGER
   },
   review: {
-    type: sequelize.STRING(102400)
+    type: sequelize.TEXT()
   }
 
 }, {

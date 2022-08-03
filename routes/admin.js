@@ -7,11 +7,13 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
 const flashMessage = require('../helpers/messenger');
+
 const classes = require("./adminClasses");
 const courses = require("./adminCourses");
 const products = require("./adminProducts");
 const users = require("./adminUsers");
 const enquiries = require("./adminEnquiries");
+const reviews = require("./adminReviews");
 
 
 router.all('/*', (req, res, next) => {
@@ -26,6 +28,7 @@ router.use('/courses', courses);
 router.use('/products', products);
 router.use('/users', users);
 router.use('/enquiries', enquiries);
+router.use('/reviews', reviews);
 
 router.get('/', (req, res) => {
     res.render('admin/dashboard'

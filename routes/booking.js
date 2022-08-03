@@ -84,7 +84,9 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     )
         .then((result) => {
             console.log(result[0] + ' booking updated');
-            res.redirect('/booking/listBooking');
+
+            sendEmailUpdate(req.user.email, req.params.id);
+            res.redirect('/account');
         })
         .catch(err => console.log(err))
 });
@@ -147,7 +149,7 @@ router.get('/successful/:id', async (req, res) => {
     res.render('booking/successful', { booking });
 });
 
-function sendEmail(email, booking) {
+async function sendEmail(email, booking) {
     var email = email;
     var token = token;
     let mail = nodemailer.createTransport({
@@ -164,7 +166,7 @@ function sendEmail(email, booking) {
         from: 'skylarhiyagaming@gmail.com',
         to: email,
         subject: 'Successful Course Booking',
-        html: '<p>Successful booking. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review"</p> '
+        html: '<p>Successful booking. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking.id + '"</p> '
     };
     mail.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -190,12 +192,38 @@ router.get('/successful/sendEmail/:id', async (req, res) =>{
         
     console.log(req.user.email);
 
-    sendEmail(req.user.email, booking);
-
-    
+    await sendEmail(req.user.email, booking);
 
     res.redirect('/account');
 });
 
+
+async function sendEmailUpdate(email, booking) {
+    var email = email;
+    var token = token;
+    let mail = nodemailer.createTransport({
+        // service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'skylarhiyagaming@gmail.com', // Your email id
+            pass: 'xpsuaskucepikgoe' // Your password
+        }
+    });
+    var mailOptions = {
+        from: 'skylarhiyagaming@gmail.com',
+        to: email,
+            subject: 'Successful Course Booking Update',
+            html: '<p>Successful booking update. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking + '"</p> '
+        };
+        mail.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error)
+            } else {
+                console.log(info)
+            }
+        });
+    }
 
 module.exports = router;
