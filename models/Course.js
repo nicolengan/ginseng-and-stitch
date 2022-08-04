@@ -18,6 +18,10 @@ Course.init({
   },
   level: {
     type: sequelize.STRING,
+  },
+  coursePic: {
+    type: sequelize.STRING,
+    allowNull: false
   }
   
 }, {
