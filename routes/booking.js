@@ -86,6 +86,7 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
             console.log(result[0] + ' booking updated');
 
             sendEmailUpdate(req.user.email, req.params.id);
+            flashMessage(res, 'successfully updated booking');
             res.redirect('/account');
         })
         .catch(err => console.log(err))

@@ -56,12 +56,12 @@ router.post('/userreview', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err))
 });
 
-router.get('/deleteReview/:id', async function (req, res) {
+router.get('/deletedreview/:id', async function (req, res) {
     try {
         await Review.destroy({ where: { id: req.params.id } })
         .then((result) => {
             console.log(result[0] + ' deleted');
-            res.redirect('/admin/userriew');
+            res.redirect('/admin/reviews');
         })
         .catch(err => console.log(err));
     }

@@ -303,8 +303,8 @@ router.post('/review/:id', async function (req, res){
     )
     .then((review) =>{
         console.log('Review sent');
-        res.redirect('/');
         flashMessage(res, 'success', ' Review sent successfully');
+        res.redirect('/account');
     });
 });
 
