@@ -3,13 +3,14 @@
         rootSelector: '[data-toggle=confirmation]',
     });
 </script>
-{{#if courses}}
+
+{{!-- {{#if courses}}
 <h2 class="text mt-4">Courses Listed</h2>
 
-<div class="row m-2">
+<div class="row m-2 l-2">
     {{#each courses}}
-    <div class="col-m-4">
-        <div class="card border-2 mb-2">
+    <div class="col m-4 l-4">
+        <div class="card border-2 mb-2" style="width: 18rem;">
             <div>
                 <a href="{{coursePic}}" data-title="{{title}}" data-toggle="lightbox">
                     <img src="{{coursePic}}" alt="Poster" class="img-thumbnail img-fluid"
@@ -34,42 +35,58 @@
                     </p>
                 </div>
                 <div class="container">
-                    {{!-- {{#if Reviews}}
-                    <h3 class="text">Reviews</h3>
-                    <div class="container">
-                        <div class="row">
-                            {{#each Reviews}}
-                            <div class="col-sm-4">
-                                <div class="card border-2 mb-2">
-                                    <div class="card-header col-12">
-                                        <h4 class="card-title text-start">{{user_name}}</h4>
-                                    </div>
-                                        <div class="card-body m-0">
-                                            <div class="row text-start">
-                                                <p class="text">{{user_emai}}</p>
-                                            </div>
-                                            <div class="row text-start">
-                                                <h5 class="text">{{star_count}}</h5>
-                                            </div>
-                                            <div class="row text-start">
-                                                <p class="text-info">{{review}}</p>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                            {{/each}}
-                        </div>
-                    </div>
-                </div>
-                {{else}}
-                <h3>No Reviews yet</h3>
-                {{/if}} --}}
                 </div>
             </div>
-            <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking">Book Pls</a></div>
+            <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking">Book Class</a></div>
         </div>
     {{/each}}
 </div>
 {{else}}
 <h3>No Courses listed</h3>
+{{/if}} --}}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
+<div class="container">
+    {{#if courses}}
+    <h3 class="text">Our Courses</h3>
+    <div class="container">
+        <div class="row">
+            {{#each courses}}
+            <div class="col-sm-4">
+                <div class="card border-2 mb-2">
+                    <div>
+                        <a href="{{coursePic}}" data-title="{{title}}" data-toggle="lightbox">
+                            <img src="{{coursePic}}" alt="Poster" class="img-thumbnail img-fluid"
+                                onerror="this.src='/img/home_img.jpg'">
+                        </a>
+                    </div>
+                    <div class="card-header col-12">
+                        <h4 class="card-title text-start">{{title}}</h4>
+                    </div>
+
+                    <div class="card-body m-0">
+                        <div class="row text-start">
+                            <p class="text-info">{{level}}</p>
+                        </div>
+                        <div class="row text-start">
+                            <h5 class="text">{{description}}</h5>
+                        </div>
+                        <div class="row text-start">
+
+                            <p class="text fw-bold">
+                                ${{price}}
+                            </p>
+                        </div>
+                        <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking">Book Class</a></div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+</div>
+{{else}}
+<h3>No products yet</h3>
 {{/if}}
+</main>

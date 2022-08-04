@@ -38,37 +38,27 @@
 					</div>
 					<div class="col-lg-3">
 						<div class="custom-file mb-2">
-							<input type="file" class="custom-file-input" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
-							
+							<input type="file" class="custom-file-input" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif/jfif">
 						</div>
 						<div class="text-danger small mb-2" id="posterErr" type="hidden" style="display:none"></div>
-						<img id="poster" src="/img/home_img.jpg" alt="Poster" class="border img-thumbnail img-fluid">
-						{{!—- Hidden field to submit URL of poster to the server --}}
 						<input id="coursePic" type="hidden" value="{{coursePic}}" name="coursePic">
 					</div>
 					<div class="form-group">
 						<div class="row mb-2">
 							<div class="col-12 col-sm-12 col-md-12 col-lg-6">
-								<label class="font-italic">Difficulty</label>
+								<label class="font-italic">Level</label>
 								<br>
-								{{!-- Practical 5 Exercise 2: Language radio buttons here named 'language'--}}
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="difficulty" id="diffBeginner"
-										value="Beginner" checked
-										onclick="ensureOneCheck('difficulty', 'difficultyErr', 'btnSubmit')">
-									<label class="form-check-label" for="beginner">Beginner</label>
+									<input class="form-check-input" type="radio" id="Basic" value="Basic" name="level">
+									<label class="form-check-label" for="Basic">Basic</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="difficulty" id="diffIntermediate"
-										value="Intermediate"
-										onclick="ensureOneCheck('difficulty', 'difficultyErr', 'btnSubmit')">
-									<label class="form-check-label" for="intermediate">Intermediate</label>
+									<input class="form-check-input" type="radio" id="Intermediate" value="Intermediate" name="level">
+									<label class="form-check-label" for="Intermediate">Intermediate</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="difficulty" id="diffMaster"
-										value="Master"
-										onclick="ensureOneCheck('difficulty', 'difficultyErr', 'btnSubmit')">
-									<label class="form-check-label" for="master">Master</label>
+									<input class="form-check-input" type="radio" id="Advanced" value="Advanced" name="level">
+									<label class="form-check-label" for="Advanced">Advanced</label>
 								</div>
 							</div>
 						</div>

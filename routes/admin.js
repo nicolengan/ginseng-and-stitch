@@ -51,4 +51,13 @@ router.get('/', (req, res) => {
     );
 });
 
+router.get('/logout', (req, res, next) => {
+    req.logout(function (err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+        console.log("Admin logged out successfully");
+        flashMessage(res, 'success', ' logged out successfully');
+    });
+});
+
 module.exports = router;
