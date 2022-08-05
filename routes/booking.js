@@ -167,7 +167,7 @@ async function sendEmail(email, booking) {
         from: 'skylarhiyagaming@gmail.com',
         to: email,
         subject: 'Successful Course Booking',
-        html: '<p>Successful booking. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking.id + '"</p> '
+        html: '<p>Successful booking. We hope you enjoy your class. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking.id + '"</p> '
     };
     mail.sendMail(mailOptions, function (error, info) {
         if (error) {
