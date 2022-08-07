@@ -6,6 +6,8 @@ const ensureAuthenticated = require('../helpers/auth');
 const User = require('../models/User');
 const isAdmin = require('../helpers/admin');
 const {clampnumber} = require('../helpers/validate');
+const fs = require('fs');
+const upload = require('../helpers/imageUpload');
 
 
 router.get('/', (req, res) => {
@@ -27,19 +29,20 @@ router.get('/api/list', async (req, res) => {
     })
 });
 
-router.get('/addCourses' , (req, res) => {
+router.get('/addCourses' ,ensureAuthenticated, (req, res) => {
     res.render('admin/courses/addCourses');
 });
 
-router.post('/addCourses', (req, res) => {
+router.post('/addCourses', ensureAuthenticated,(req, res) => {
     let title = req.body.title;
     let description = req.body.description.slice(0, 1999);
-    let uuid = req.body.uuid;
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
     let level = req.body.level;
+    let coursePic = req.body.coursePic;
+    let uuid = req.body.uuid;
 
     Courses.create(
-        { title, uuid , description, price, level  }
+        { title, uuid , description, price, level, coursePic, uuid }
         )
         .then((courses) => {
             console.log(courses.toJSON());
@@ -71,11 +74,13 @@ router.get('/editCourses/:id', (req, res) => {
 router.post('/editCourses/:id', (req, res) => {
     let title = req.body.title;
     let Description = req.body.description.slice(0, 1999);
+    let uuid = req.body.uuid;
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
-    let difficulty = req.body.difficulty;
+    let level = req.body.level;
+    let coursePic = req.body.coursePic;
     
     Courses.update(
-        { title, Description, price, difficulty },
+        { title, Description, price, level, coursePic, uuid },
         { where: { id: req.params.id } }
     )
     .then((result) => {
@@ -106,6 +111,23 @@ router.get('/deleteCourses/:id',  async (req, res) => {
     catch (err) {
         console.log(err);
     }
+});
+
+router.post('/upload', ensureAuthenticated, (req, res) => {
+    // Creates user id directory for upload if not exist
+    if (!fs.existsSync('./public/uploads/' + req.user.id)) {
+        fs.mkdirSync('./public/uploads/' + req.user.id, { recursive: true });
+    }
+
+    upload(req, res, (err) => {
+        if (err) {
+            // e.g. File too large
+            res.json({ file: '/img/no-image.jpg', err: err });
+        }
+        else {
+            res.json({ file: `/uploads/${req.user.id}/${req.file.filename}` });
+        }
+    });
 });
 
 module.exports = router;

@@ -1,48 +1,83 @@
-<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-	<div class="card card-body">
-		<h3>Add Courses</h3>
-		<form action="" method="post">
-			<div class="form-group">
-				{{!-- Practical 5 Exercise 2: Add a title input text here named 'title'--}}
-				<label class="font-italic" for="title">Title</label>
-				<input class="form-control" id="title" name="title" />
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1 class="h2">Dashboard</h1>
+		<div class="btn-toolbar mb-2 mb-md-0">
+			<div class="btn-group me-2">
+				<button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+				<button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
 			</div>
-			<div class="form-group mb-4">
-				<label class="font-italic" for="description">Description</label>
-				<textarea class="form-control" id="description" name="description" rows="7" maxlength="2000"></textarea>
-			</div>
-            <div class="form-group mb-4">
-                <label class="font-italic" for="price">Price</label>
-                <input type="number" class="form-control" id="price" name="price" />
-            </div>
-				<div class="col-12 col-sm-12 col-md-6 col-lg-6">
-						<label class="font-italic">Level</label>
-						<br>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" id="Basic" value="Basic" name="level" checked>
-							<label class="form-check-label" for="Basic">Basic</label>
+			<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+				<span data-feather="calendar"></span>
+				This week
+			</button>
+		</div>
+	</div>
+	<div class="container">
+
+		<div class="card card-body">
+			<h3>Add Courses</h3>
+			<form action="" method="post">
+				<div class="row mb-3">
+					<div class="col-lg-9">
+						<div class="form-group">
+							{{!-- Practical 5 Exercise 2: Add a title input text here named 'title'--}}
+							<label class="font-italic" for="title">Title</label>
+							<input class="form-control" id="title" name="title" value="{{title}}" />
 						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" id="Intermediate" value="Intermediate" name="level">
-							<label class="form-check-label" for="Intermediate">Intermediate</label>
+						<div class="form-group">
+							<label class="font-italic" for="description">Course Description</label>
+							<textarea class="form-control" id="description" name="description" rows="7" maxlength="2000"
+								value="{{description}}"></textarea>
 						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" id="Advanced" value="Advanced" name="level">
-							<label class="form-check-label" for="Advanced">Advanced</label>
+						<div class="form-group">
+							{{!-- Practical 5 Exercise 2: Add a title input text here named 'title'--}}
+							<label class="font-italic" for="price">Price</label>
+							<input class="form-control" id="price" name="price" value="{{price}}" />
 						</div>
 					</div>
+					<div class="col-lg-3">
+						<div class="custom-file mb-2">
+							<input type="file" class="custom-file-input" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif/jfif">
+						</div>
+						<div class="text-danger small mb-2" id="posterErr" type="hidden" style="display:none"></div>
+						<input id="coursePic" type="hidden" value="{{coursePic}}" name="coursePic">
+					</div>
+					<div class="form-group">
+						<div class="row mb-2">
+							<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+								<label class="font-italic">Level</label>
+								<br>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" id="Basic" value="Basic" name="level">
+									<label class="form-check-label" for="Basic">Basic</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" id="Intermediate" value="Intermediate" name="level">
+									<label class="form-check-label" for="Intermediate">Intermediate</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" id="Advanced" value="Advanced" name="level">
+									<label class="form-check-label" for="Advanced">Advanced</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
 				</div>
-				<button id="btnSubmit" type="submit" class="btn btn-primary">Publish</button>
-			</div>
-			<br>
-		</form>
+			<button id="btnSubmit" type="submit" class="btn btn-primary">Save
+			</button>
+			</form>
+		</div>
 	</div>
-</div>
+
+	{{!--
+	<script>
+		$('#datepicker').datepicker({
+			format: 'dd/mm/yyyy',
+			uiLibrary: 'bootstrap4',
+			value: moment().format('DD/MM/YYYY'),
+		});
+	</script> --}}
+	<script src="/js/courseImage.js"></script>
 </main>
-<script>
-	$('#datepicker').datepicker({
-		format: 'dd/mm/yyyy',
-		uiLibrary: 'bootstrap4',
-		value: moment().format('DD/MM/YYYY'),
-	});
-</script>

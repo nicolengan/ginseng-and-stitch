@@ -2,47 +2,73 @@
 	<div class="card card-body">
 		<h3>Edit Course Details</h3>
 		<form action="" method="post">
-			<div class="form-group">
-				{{!-- Practical 5 Exercise 2: Add a title input text here named 'title'--}}
-				<label class="font-italic" for="title">Title</label>
-				<input class="form-control" id="title" name="title" value="{{course.title}}"
-					onblur="initialiseTitle()" />
-			</div>
-			<div class="form-group mb-4">
-				<label class="font-italic" for="description">Description</label>
-				<textarea class="form-control" id="description" name="description" rows="7"
-					maxlength="2000">{{course.description}}</textarea>
-			</div>
-            <div class="form group mb-4">
-                <label class="font-italic" for="price">Price</label>
-                <input class="form-control" id="price" name="price" value="{{course.price}}"/>
-            </div>
-			<div class="col-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="font-italic">Level</label>
+			<div class="row mb-3">
+				<div class="col-lg-9">
+					<div class="form-group">
+						{{!-- Practical 5 Exercise 2: Add a title input text here named 'title'--}}
+						<label class="font-italic" for="title">Title</label>
+						<input class="form-control" id="title" name="title" value="{{course.title}}"
+							onblur="initialiseTitle()" />
+					</div>
+					<div class="form-group mb-4">
+						<label class="font-italic" for="description">Description</label>
+						<textarea class="form-control" id="description" name="description" rows="7"
+							maxlength="2000">{{course.description}}</textarea>
+					</div>
+					<div class="form group mb-4">
+						<label class="font-italic" for="price">Price</label>
+						<input class="form-control" id="price" name="price" value="{{course.price}}" />
+					</div>
+				</div>
+				{{!-- <div class="col-lg-3">
+						<div class="custom-file mb-2">
+							<input type="file" class="custom-file-input" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif/jfif">
+						</div>
+						<div class="text-danger small mb-2" id="posterErr" type="hidden" style="display:none"></div>
+						<img id="poster" src="{{course.coursePic}}" alt="Poster" class="border img-thumbnail img-fluid">
+						{{!—- Hidden field to submit URL of poster to the server --}}
+						{{!-- <input id="coursePic" type="hidden" value="{{coursePic}}" name="coursePic">
+					</div> --}}
+					<div class="col-lg-3">
+						<div class="custom-file mb-2">
+							<input type="file" class="custom-file-input" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif/jfif">
+						</div>
+						<img id="poster" src="{{course.coursePic}}" alt="Poster" class="border img-thumbnail img-fluid">
+						<div class="text-danger small mb-2" id="posterErr" type="hidden" style="display:none"></div>
+						<input id="coursePic" type="hidden" value="{{course.coursePic}}" name="coursePic">
+					</div>
+				<div class="form-group">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-italic">Level</label>
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Basic" value="Basic" name="level"
+								{{radioCheck course.level "Basic" }}>
+							<label class="form-check-label" for="Basic">Basic</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Intermediate" value="Intermediate"
+								name="level" {{radioCheck course.level "Intermediate" }}>
+							<label class="form-check-label" for="Intermediate">Intermediate</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Advanced" value="Advanced" name="level"
+								{{radioCheck course.level "Advanced" }}>
+							<label class="form-check-label" for="Advanced">Advanced</label>
+						</div>
+					</div>
+				</div>
 				<br>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" id="Basic" value="Basic" name="level"
-						{{radioCheck course.level "Basic" }}>
-					<label class="form-check-label" for="Basic">Basic</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" id="Intermediate" value="Intermediate" name="level"
-						{{radioCheck course.level "Intermediate" }}>
-					<label class="form-check-label" for="Intermediate">Intermediate</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" id="Advanced" value="Advanced" name="level"
-						{{radioCheck course.level "Advanced" }}>
-					<label class="form-check-label" for="Advanced">Advanced</label>
-				</div>
 			</div>
-			<br>
 			<button id="btnSubmit" type="submit" class="btn btn-primary">Save Changes</button>
-        </form>
-    </div>
+		</form>
+	</div>
+	<script src="/js/courseImage.js"></script>
 </div>
+
 </main>
 
 {{!-- <input class="form-control" id="title" name="title" value="{{courses.title}}" />
-<textarea class="form-control" id="Description" name="Description" rows="7" maxlength="2000">{{courses.Description}}</textarea>
-<input class="form-control" id="price" name="price" value="{{courses.price}}"/> --}}
+<textarea class="form-control" id="Description" name="Description" rows="7"
+	maxlength="2000">{{courses.Description}}</textarea>
+<input class="form-control" id="price" name="price" value="{{courses.price}}" /> --}}

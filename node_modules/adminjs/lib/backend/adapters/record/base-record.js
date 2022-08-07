@@ -35,7 +35,12 @@ class BaseRecord {
    */
 
   /**
-   * Object containing all validation errors: this.errors[path] = 'errorMessage'
+   * Object containing any base/overall validation error messages:
+   * this.baseError = { message: 'errorMessage' }
+   */
+
+  /**
+   * Object containing all validation errors: this.errors[path] = { message: 'errorMessage' }
    */
 
   /**
@@ -49,6 +54,7 @@ class BaseRecord {
   constructor(params, resource) {
     this.resource = resource;
     this.params = params ? _flat.flat.flatten(params) : {};
+    this.baseError = null;
     this.errors = {};
     this.populated = {};
   }
@@ -148,6 +154,7 @@ class BaseRecord {
       this.storeParams(returnedParams);
     } catch (e) {
       if (e instanceof _validationError.default) {
+        this.baseError = e.baseError;
         this.errors = e.propertyErrors;
         return this;
       }
@@ -155,6 +162,7 @@ class BaseRecord {
       throw e;
     }
 
+    this.baseError = null;
     this.errors = {};
     return this;
   }
@@ -184,6 +192,7 @@ class BaseRecord {
       this.storeParams(returnedParams);
     } catch (e) {
       if (e instanceof _validationError.default) {
+        this.baseError = e.baseError;
         this.errors = e.propertyErrors;
         return this;
       }
@@ -191,6 +200,7 @@ class BaseRecord {
       throw e;
     }
 
+    this.baseError = null;
     this.errors = {};
     return this;
   }
@@ -212,6 +222,7 @@ class BaseRecord {
       this.storeParams(returnedParams);
     } catch (e) {
       if (e instanceof _validationError.default) {
+        this.baseError = e.baseError;
         this.errors = e.propertyErrors;
         return this;
       }
@@ -219,6 +230,7 @@ class BaseRecord {
       throw e;
     }
 
+    this.baseError = null;
     this.errors = {};
     return this;
   }
@@ -315,6 +327,7 @@ class BaseRecord {
     return {
       params: this.params,
       populated,
+      baseError: this.baseError,
       errors: this.errors,
       id: this.id(),
       title: this.resource.decorate().titleOf(this),

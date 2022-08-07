@@ -44,7 +44,7 @@ const NewAction = {
     } = context;
 
     if (request.method === 'post') {
-      var _request$payload;
+      var _request$payload, _populatedRecord$base;
 
       const params = _paramConverter.paramConverter.prepareParams((_request$payload = request.payload) !== null && _request$payload !== void 0 ? _request$payload : {}, resource);
 
@@ -69,10 +69,11 @@ const NewAction = {
         };
       }
 
+      const baseMessage = ((_populatedRecord$base = populatedRecord.baseError) === null || _populatedRecord$base === void 0 ? void 0 : _populatedRecord$base.message) || translateMessage('thereWereValidationErrors', resource.id());
       return {
         record: record.toJSON(currentAdmin),
         notice: {
-          message: translateMessage('thereWereValidationErrors', resource.id()),
+          message: baseMessage,
           type: 'error'
         }
       };

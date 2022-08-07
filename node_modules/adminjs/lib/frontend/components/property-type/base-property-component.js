@@ -29,6 +29,10 @@ var textarea = _interopRequireWildcard(require("./textarea"));
 
 var password = _interopRequireWildcard(require("./password"));
 
+var currency = _interopRequireWildcard(require("./currency"));
+
+var phone = _interopRequireWildcard(require("./phone"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -64,7 +68,9 @@ const types = {
   string: defaultType,
   number: defaultType,
   float: defaultType,
-  mixed: null
+  mixed: null,
+  currency,
+  phone
 };
 /**
  * @load ./base-property-component.doc.md

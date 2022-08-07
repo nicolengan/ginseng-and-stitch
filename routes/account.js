@@ -10,6 +10,7 @@ const passport = require('passport');
 const ensureAuthenticated = require('../helpers/auth');
 const randtoken = require('rand-token');
 const nodemailer = require("nodemailer");
+const Review = require('../models/Review');
 
 function sendEmail(email, token) {
     var email = email;
@@ -41,7 +42,7 @@ function sendEmail(email, token) {
 /* home page */
 router.get('/', ensureAuthenticated, async (req, res) => {
     const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
-    // console.log(JSON.stringify(bookings))
+
     res.render('account/account', { bookings })
 });
 
@@ -254,5 +255,60 @@ router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
     }
 
 });
+
+router.get('/review/:id', async (req, res) => {
+    const booking = await Booking.findOne({
+        include: [
+            { model: Class },
+            { model: User },
+            { model: Course }
+        ],
+        where :
+        {
+            id: req.params.id
+        }
+    });
+
+
+    const user = booking.User;
+    const course = booking.Course;
+
+    res.render('account/review', { user , course });
+});
+
+router.post('/review/:id', async function (req, res){
+    let { rate, review } = req.body;
+    
+    const star_count = rate;
+
+    const booking = await Booking.findOne({
+        include: [
+            { model: Class },
+            { model: User },
+            { model: Course }
+        ],
+        where :
+        {
+            id: req.params.id
+        }
+    });
+
+    console.log(booking);
+
+    const CourseId = booking.CourseId;
+    const UserId = booking.UserId;
+
+    Review.create(
+        { star_count, review, CourseId, UserId }
+    )
+    .then((review) =>{
+        console.log('Review sent');
+        flashMessage(res, 'success', ' Review sent successfully');
+        res.redirect('/account');
+    });
+});
+
+
+
 
 module.exports = router;

@@ -45,9 +45,10 @@ router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
     let description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
     let level = req.body.level;
+    let coursePic = req.body.coursePic;
 
     Courses.create(
-        { title, description, price, level }
+        { title, description, price, level, coursePic }
         )
         .then((courses) => {
             console.log(courses.toJSON());
@@ -81,16 +82,18 @@ router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     let description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
     let level = req.body.level;
+    let coursePic = req.body.coursePic;
+    console.log('im gnna end it all period');
     
     Courses.update(
-        { title, description, price, level},
+        { title, description, price, level, coursePic},
         { where: { id: req.params.id } }
     )
-    .then((result) => {
-        console.log(result[0] + ' course updated');
-        res.redirect('/courses/listCourses');
-    })
-    .catch(err => console.log(err));
+        .then((result) => {
+            console.log(result[0] + ' course updated');
+            res.redirect('/courses/listCourses');
+        })
+        .catch(err => console.log(err));
 });
 
 router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) {

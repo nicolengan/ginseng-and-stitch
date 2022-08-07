@@ -7,10 +7,6 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _reactSelect = _interopRequireDefault(require("react-select"));
-
-var _styledComponents = require("styled-components");
-
 var _designSystem = require("@adminjs/design-system");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42,19 +38,18 @@ class Filter extends _react.default.PureComponent {
   renderInput() {
     const {
       property,
-      filter,
-      theme
+      filter
     } = this.props;
     const filterKey = `filter-${property.path}`;
     const value = filter[property.path] || '';
 
     if (property.availableValues) {
       const selected = property.availableValues.find(av => av.value === value);
-      return /*#__PURE__*/_react.default.createElement(_reactSelect.default, {
+      return /*#__PURE__*/_react.default.createElement(_designSystem.Select, {
+        variant: "filter",
         value: typeof selected === 'undefined' ? '' : selected,
         isClearable: true,
         options: property.availableValues,
-        styles: (0, _designSystem.filterStyles)(theme),
         onChange: this.handleSelectChange
       });
     }
@@ -77,6 +72,5 @@ class Filter extends _react.default.PureComponent {
 
 }
 
-var _default = (0, _styledComponents.withTheme)(Filter);
-
+var _default = Filter;
 exports.default = _default;

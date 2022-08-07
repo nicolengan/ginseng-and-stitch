@@ -11,13 +11,17 @@ Course.init({
     allowNull: false
   },
   description: {
-    type: sequelize.STRING
+    type: sequelize.STRING,
   },
   price: {
     type: sequelize.DECIMAL,
   },
   level: {
     type: sequelize.STRING,
+  },
+  coursePic: {
+    type: sequelize.STRING,
+    allowNull: false
   }
   
 }, {

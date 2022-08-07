@@ -130,9 +130,9 @@ const Login = props => {
     textAlign: "center"
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Button, {
     variant: "primary"
-  }, translateButton('login'))))), branding.softwareBrothers ? /*#__PURE__*/_react.default.createElement(_designSystem.Box, {
+  }, translateButton('login'))))), branding.withMadeWithLove ? /*#__PURE__*/_react.default.createElement(_designSystem.Box, {
     mt: "xxl"
-  }, /*#__PURE__*/_react.default.createElement(_designSystem.SoftwareBrothers, null)) : null));
+  }, /*#__PURE__*/_react.default.createElement(_designSystem.MadeWithLove, null)) : null));
 };
 
 exports.Login = Login;
