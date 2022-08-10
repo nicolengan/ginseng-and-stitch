@@ -8,22 +8,35 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const nodemailer = require("nodemailer");
 
+router.get('/', async (req, res) => {
+    const booking = await Booking.findAll({
+        include: [
+            { model: Class },
+            { model: Course }
+        ]
+    });
+    res.render('booking/listBooking', { booking });
+});
+
+
+// router.get('/api/list', async (req, res) => {
+//     return res.json({
+//         total: await Booking.count(),
+//         rows: await Booking.findAll()
+//     })
+// });
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Booking.count(),
         rows: await Booking.findAll({
             include: [
                 { model: Class },
-                { model: Course }
+                { model: Course}
             ]
         })
     })
 });
 
-// BOOKING SESSION
-//booking id, course id, class id, user id, date created
-
-//book will be listBooking
 router.get('/listBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
@@ -38,7 +51,7 @@ router.get('/listBooking', ensureAuthenticated, async (req, res) => {
 router.get('/addBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
-            { model: Class, attributes: ['id'] },
+            { model: Class },
             { model: Course }
         ]
     });
@@ -109,25 +122,30 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
     }
 });
 
-router.get('/checkout/', async (req, res) => {
-    const booking = await Booking.findAll({
-        include: [
-            { model: Class },
-            { model: Course }
-        ]
-    });
-    const courses = await Course.findAll();
-    const classes = await Class.findAll();
-    res.render('booking/checkout', { booking, courses, classes });
-});
+// router.get('/payment/:id', async (req, res) => {
+//     const booking = await Booking.findAll({
+//         include: [
+//             { model: Class },
+//             { model: Course }
+//         ],
+//         where:{
+//             id: req.params.id
+//         }
+//     });
+//     const courses = await Course.findAll();
+//     const classes = await Class.findAll();
+//     res.render('booking/checkout', { booking, courses, classes });
+// });
 
-router.get('/confirm', async (req, res) => {
+router.get('/confirm/:id', async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
             { model: Course }
-        ]
-        
+        ],
+        where:{
+            id: req.params.id
+        }
     });
     const courses = await Course.findAll();
     const classes = await Class.findAll();

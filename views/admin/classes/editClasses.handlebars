@@ -1,4 +1,19 @@
- <style>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1 class="h2">Dashboard</h1>
+		<div class="btn-toolbar mb-2 mb-md-0">
+			<div class="btn-group me-2">
+				<button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+				<button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+			</div>
+			<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+				<span data-feather="calendar"></span>
+				This week
+			</button>
+		</div>
+	</div>
+	 <style>
 	.container{
 		width: 40%;
 		margin: auto;
@@ -13,9 +28,21 @@
 	}
 </style>
 	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-		<h3>Editing Class: </h3>
+		<h3>Edit Class #{{classes.id}} </h3>
 		<div class="card card-body">
 			<form action="" method="post">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-25">
+							<label for="time">Class Start Timing: </label>
+						</div>
+						<div class="col-75">
+							<input type="time" class="form-control" name="time" value={{classes.time}}>
+						</div>
+					</div>
+				</div>
+				<br>
+
 				<div class="form-group">
 					<div class="row">
 						<div class="col-25">
@@ -23,16 +50,6 @@
 						</div>
 						<div class="col-75">
 							<input type="date" class="form-control" name="date" value={{classes.date}}>
-						</div>
-					</div>
-					<br>
-
-					<div class="form-group">
-						<div class="row">
-						<label for="pax">Pax:</label>
-							<div class="col-75">
-								<input type="number" class="form-control" name="pax" min="1" max="5" value={{classes.pax}}>
-							</div>
 						</div>
 					</div>
 					<br>
@@ -54,3 +71,4 @@
 			</form>
 		</div>
 	</div>
+</main>

@@ -1,3 +1,19 @@
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1 class="h2">Dashboard</h1>
+		<div class="btn-toolbar mb-2 mb-md-0">
+			<div class="btn-group me-2">
+				<button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+				<button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+			</div>
+			<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+				<span data-feather="calendar"></span>
+				This week
+			</button>
+		</div>
+	</div>
+	
 <style>
 	label {
 		display: inline-block;
@@ -20,43 +36,55 @@
 </style>
 
 	<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+		<div class="table-responsive">
+		<table class="table table-striped" id="table" data-toggle="table" data-filter-control="true"
+			data-show-columns="true" data-url="/admin/courses/api/list">
+			<thead>
+				<tr class="table-active">
+					<th data-field="id">Course ID</th>
+					<th data-field="title">Course Title</th>
+					<th data-field="level">Course Level</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<br>
 		<div class="card card-body">
 			<h3>Add Classes</h3>
 			<form action="" method="post">
 			<div class="form-group">
 				<div class="row">
-				<div class="col-25">
-					<label for="CourseId">Course ID</label>
-				</div>
-				<div class="col-75">
-					<select id="CourseId" name="CourseId" required>
-						{{#each courses}}
-						<option value="{{id}}" name="CourseId">{{id}}</option>
-						{{/each}}
-					</select>
+					<div class="col-25">
+						<label for="CourseId">Course ID</label>
+					</div>
+					<div class="col-75">
+						<select id="CourseId" name="CourseId" required>
+							{{#each courses}}
+							<option value="{{id}}" name="CourseId">{{id}}</option>
+							{{/each}}
+						</select>
+					</div>
 				</div>
 			</div>
 			<br>
-
+			<div class="form-group">
+				<div class="row">
+					<div class="col-25">
+						<label for="time">Class Start Timing: </label>
+					</div>
+					<div class="col-75">
+						<input type="time" class="form-control" name="time" min="09:00" max="18:00" value={{Class.time}}>
+					</div>
+				</div>
 			</div>
+			<br>
 			<div class="form-group">
 				<div class="row">
 					<div class="col-25">
 						<label for="date">Start Date: </label>
 					</div>
 					<div class="col-75">
-						<input type="date" class="form-control" name="date" value={{Class.date}}>
-					</div>
-				</div>
-			</div>
-			<br>
-			<div class="form-group">
-				<div class="row">
-					<div class="col-25">
-						<label for="pax">Pax</label>
-					</div>
-					<div class="col-75">
-						<input type="number" class="form-control" id="pax" name="pax" min="0" max="5">
+						<input type="date" class="form-control" name="date" min="2022-08-16" value={{Class.date}}>
 					</div>
 				</div>
 			</div>
@@ -67,7 +95,7 @@
 						<label for="max_pax">Max Pax</label>
 					</div>
 					<div class="col-75">
-						<input type="number" class="form-control" id="max_pax" name="max_pax" max="5">
+						<input type="number" class="form-control" id="max_pax" name="max_pax" min="1" max="5" value={{Class.max_pax}}>
 					</div>
 				</div>
 			</div>
@@ -78,3 +106,4 @@
 		</form>
 	</div>
 </div>
+</main>
