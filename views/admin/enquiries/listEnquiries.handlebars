@@ -35,29 +35,14 @@
                             <p>
                                 %COMMENTS%
                             </p>
-                            <p>
-                                <span class="badge text-bg-primary">%STATUS%</span>
-                                {{!-- <span class="badge text-bg-success">answered</span>
-                                <span class="badge text-bg-secondary">pending</span> --}}
-                            </p>
-                            <a class="btn btn-primary" href="/admin/enquiries/replyEnquiries/%ID%"></a>
-                        </div> 
-                        {{!-- <div class="col-12 col-lg-4 col-md-6 text-center">
-                            <img src="%IMAGE%" alt="" class="mx-auto rounded-circle img-fluid" style="height: 120px;">
-                            <br>
-                        </div> --}}
-                        {{!-- <div class="col-12 col-lg-4">
-                            <h3 class="mb-0">%FOLLOWING%</h3>
-                            <small>Following</small>
-                            <button class="btn btn-outline-info btn-block" title="View Profile"><span
-                                    class="fa fa-user"></span></button>
                         </div>
-                        <div class="col-12 col-lg-4">
-                            <h3 class="mb-0">%SNIPPETS%</h3>
-                            <small>Snippets</small>
-                            <button type="button" class="btn btn-outline-primary btn-block" title="Options"><span
-                                    class="fa fa-cog"></span></button>
-                        </div> --}}
+                    </div>
+                    <div class="row">
+                        <div class="d-flex flex-row ps-1">
+                            <div class="p-2 h5"><span class="badge %ATTR%">%STATUS%</span></div>
+                            <div class="p-2 ms-auto"><a class="btn btn-primary"
+                                    href="/admin/enquiries/replyEnquiries/%ID%">Reply</a></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,19 +52,28 @@
         function customViewFormatter(data) {
             var template = $('#profileTemplate').html()
             var view = ''
+            var status = ''
+            var attr = ''
             $.each(data, function (i, row) {
+                if (row.status == 0) {
+                    status = "Pending"
+                    attr = "text-bg-secondary"
+                }
+                else if (row.status == 1) {
+                    status = "Resolved"
+                    attr = "text-bg-success"
+                }
                 view += template.replace('%NAME%', row.name)
                     .replace('%EMAIL%', row.email)
                     .replace('%SUBJECT%', row.subject)
                     .replace('%COMMENTS%', row.comments)
-                    .replace('%STATUS%', row.status)
+                    .replace('%STATUS%', status)
                     .replace('%ID%', row.id)
+                    .replace('%ATTR%', attr)
             })
-
             return `<div class="row mx-0">${view}</div>`
         }
         var $table = $('#table')
-
         window.operateEvents = {
         }
     </script>

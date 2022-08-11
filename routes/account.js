@@ -11,11 +11,11 @@ const ensureAuthenticated = require('../helpers/auth');
 const sendEmail = require('../helpers/sendEmail');
 const randtoken = require('rand-token');
 const Review = require('../models/Review');
+const validator = require("email-validator");
 
 /* home page */
 router.get('/', ensureAuthenticated, async (req, res) => {
     const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
-
     res.render('account/account', { bookings })
 });
 
@@ -29,7 +29,7 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async function (req, res) {
     let { name, email, password, password2 } = req.body;
-
+    
     let isValid = true;
     if (password.length < 6) {
         flashMessage(res, 'error', 'Password must be at least 6 characters');
@@ -37,6 +37,10 @@ router.post('/register', async function (req, res) {
     }
     if (password != password2) {
         flashMessage(res, 'error', 'Passwords do not match');
+        isValid = false;
+    }
+    if (!validator.validate(email)){
+        flashMessage(res, 'error', 'Email is not in a valid format (name@email.com), please try again.');
         isValid = false;
     }
     if (!isValid) {

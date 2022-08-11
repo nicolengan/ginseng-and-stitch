@@ -8,7 +8,6 @@ Enquiry.init({
   name: {
     type: sequelize.STRING,
     allowNull: false
-    
   },
   email: {
     type: sequelize.STRING,
@@ -26,8 +25,8 @@ Enquiry.init({
     type: sequelize.STRING
   },
   status: {
-    type: sequelize.STRING,
-    defaultValue: '0',
+    type: sequelize.BOOLEAN,
+    defaultValue: 0,
     allowNull: false
   },
   reply: {

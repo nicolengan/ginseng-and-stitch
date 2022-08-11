@@ -3,9 +3,9 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const Courses = require('../models/Course');
 const Enquiry = require('../models/Enquiry');
-const ensureAuthenticated = require("../helpers/auth");
 const fs = require('fs');
 const upload = require('../helpers/fileUpload');
+const validator = require("email-validator");
 // routes
 const booking = require("./booking");
 const account = require("./account");
@@ -18,6 +18,7 @@ router.use('/booking', booking);
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
+
     // renders views/index.handlebars, passing title as an object
     res.render('index', { title: title })
 });
@@ -45,6 +46,16 @@ router.get('/contactUs', (req, res) => {
 
 router.post('/contactUs', (req, res) => {
     let { name, email, subject, comments, fileURL } = req.body;
+    let isValid = true;
+    if (!validator.validate(email)) {
+        flashMessage(res, 'error', 'Email is not in a valid format (name@email.com), please try again.');
+        isValid = false;
+    }
+    if (!isValid) {
+        res.render('contactUs', {
+        });
+        return;
+    }
     Enquiry.create(
         { name, email, subject, comments, fileURL }
     )
@@ -72,9 +83,9 @@ router.post('/fileUpload', (req, res) => {
             res.json({ file: '/img/no-image.jpg', err: err });
         }
         else {
-            res.json({
-                file: `/uploads/contactUs/${req.file.filename}`
-            });
+                res.json({
+                    file: `/uploads/contactUs/${req.file.filename}`
+                });
         }
     });
 });

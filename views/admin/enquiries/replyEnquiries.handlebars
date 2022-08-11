@@ -1,21 +1,42 @@
 <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="card card-body">
-        <h3>Replying <span class="text-primary">{{enquiry.name}}</span></h3>
-        <form action="/admin/enquiries/replyEnquiries/{{enquiry.id}}" method="post">
+        <h3>Replying to <span class="text-primary">{{name}}</span></h3>
+        <form action="/admin/enquiries/replyEnquiries/{{id}}" method="post">
             {{!-- <div class="mb-3">
                 <label for="name" class="col-form-label">Name:</label>
                 <input type="text" class="form-control name" name="name" value="{{enquiry.name}}" size="25">
             </div> --}}
-
+            <h5 class="card-title lead">To: {{email}}</h5>
+            <p class="card-text"><span class="fw-semibold">{{subject}}</span><br>{{comments}}</p>
             <div class="mb-3">
-                <label for="email" class="col-form-label">Reply:</label>
-                <input type="text" class="form-control email" name="reply" value="{{enquiry.reply}}">
+                <div class="form-check form-check-inline ps-0">
+                    <input type="radio" class="btn-check" name="status" id="pending" value="0">
+                    <label class="btn btn-outline-secondary" for="pending">Pending</label>
+                </div>
+                <div class="form-check form-check-inline ps-1">
+                    <input type="radio" class="btn-check" name="status" id="resolved" value="1">
+                    <label class="btn btn-outline-success" for="resolved">Resolved</label>
+                </div>
             </div>
+            <div class="mb-3">
+                <label for="reply" class="col-form-label">Reply:</label>
+                <textarea type="textarea" class="form-control" name="reply" style="height: 200px"
+                    value="{{reply}}"></textarea>
+            </div>
+            <div class="d-flex flex-row ps-1">
+                <div class="p-2 ms-auto"><a href="/admin/enquiries" class="btn btn-secondary me-2">Close</a><button class="btn btn-primary" type="submit" value="Submit">Save changes</button></div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    console.log({{ status }})
+    if ({{ status }} == 0) {
+        $('#pending').prop('checked', true)
+    }
+    else if ({{ status }} == 1)
+    {
+        $('#resolved').prop('checked', true)
+    }
 
-<div class="">
-    <a href="/admin/enquiries" class="btn btn-secondary">Close</a>
-    <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
-</div>
-</form>
-</div>
-</div>
+</script>
