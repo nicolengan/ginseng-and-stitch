@@ -6,6 +6,7 @@ const User = require('../models/User');
 const Review = require('../models/Review');
 const isAdmin = require('../helpers/admin');
 const {clampnumber} = require('../helpers/validate');
+const Booking = require('../models/Booking');
 
 
 router.all('/*', (req, res, next) => {
@@ -29,16 +30,26 @@ router.get('/addCourses' ,  ensureAuthenticated, isAdmin, (req, res) => {
     res.render('courses/addCourses');
 });
 
-router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
-    Courses.findAll({
-        // where: { userId: req.user.id },
-        raw: true
-    })
-        .then((courses) => {
-            // pass object to listVideos.handlebar
-            res.render('courses/listCourses', { courses});
-        })
-        .catch(err => console.log(err));
+// router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
+//     Courses.findAll({
+//         // where: { userId: req.user.id },
+//         raw: true
+//     })
+//         .then((courses) => {
+//             // pass object to listVideos.handlebar
+//             res.render('courses/listCourses', { courses});
+//         })
+//         .catch(err => console.log(err));
+// });
+
+router.get('/listCourses', ensureAuthenticated, isAdmin, async (req, res) => {
+    const courses = await Courses.findAll({
+        include: [
+            { model: Review },
+            { model: Booking }
+        ]
+    });
+    res.render('courses/listCourses', { courses});
 });
 
 router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
