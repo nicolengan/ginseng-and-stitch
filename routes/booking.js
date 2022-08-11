@@ -24,12 +24,15 @@ router.get('/api/list', async (req, res) => {
 //booking id, course id, class id, user id, date created
 
 //book will be listBooking
-router.get('/listBooking', ensureAuthenticated, async (req, res) => {
+router.get('/listBooking/:id', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
             { model: Course }
-        ]
+        ],
+        where:{
+            id: req.params.id
+        }
     });
     res.render('booking/listBooking', { booking });
 });
@@ -121,12 +124,15 @@ router.get('/checkout/', async (req, res) => {
     res.render('booking/checkout', { booking, courses, classes });
 });
 
-router.get('/confirm', async (req, res) => {
+router.get('/confirm/:id', async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
             { model: Course }
-        ]
+        ],
+        where:{
+            id: req.params.id
+        }
         
     });
     const courses = await Course.findAll();
