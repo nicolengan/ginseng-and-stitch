@@ -77,7 +77,6 @@ router.post('/editProduct/:id', ensureAuthenticated, (req, res) => {
     let difficulty = req.body.difficulty === undefined ? '' : req.body.difficulty.toString();
     let price = req.body.price;
     let posterURL = req.body.posterURL;
-    console.log('im gnna end it all' + posterURL);
 
     Product.update(
         { prod_name, prod_desc, stock, difficulty, price, posterURL },

@@ -8,10 +8,12 @@ const ensureAuthenticated = require("../helpers/auth");
 const booking = require("./booking");
 const account = require("./account");
 const Product = require('../models/Product');
+const cart = require('./cart');
 // const payment = require("./payment");
 
 router.use('/account', account);
 router.use('/booking', booking);
+router.use('/cart', cart);
 // router.use('/payment', payment);
 
 router.get('/', (req, res) => {
@@ -52,5 +54,6 @@ router.get('/products', (req, res) => {
         })
         .catch(err => console.log(err));
 });
+
 
 module.exports = router;
