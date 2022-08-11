@@ -20,15 +20,22 @@
 						<input class="form-control" id="price" name="price" value="{{course.price}}" />
 					</div>
 				</div>
-				<div class="col-lg-3">
+				{{!-- <div class="col-lg-3">
 						<div class="custom-file mb-2">
-							<input type="file" class="custom-file-input" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
-							
+							<input type="file" class="custom-file-input" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif/jfif">
 						</div>
 						<div class="text-danger small mb-2" id="posterErr" type="hidden" style="display:none"></div>
 						<img id="poster" src="{{course.coursePic}}" alt="Poster" class="border img-thumbnail img-fluid">
 						{{!—- Hidden field to submit URL of poster to the server --}}
-						<input id="coursePic" type="hidden" value="{{coursePic}}" name="coursePic">
+						{{!-- <input id="coursePic" type="hidden" value="{{coursePic}}" name="coursePic">
+					</div> --}}
+					<div class="col-lg-3">
+						<div class="custom-file mb-2">
+							<input type="file" class="custom-file-input" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif/jfif">
+						</div>
+						<img id="poster" src="{{course.coursePic}}" alt="Poster" class="border img-thumbnail img-fluid">
+						<div class="text-danger small mb-2" id="posterErr" type="hidden" style="display:none"></div>
+						<input id="coursePic" type="hidden" value="{{course.coursePic}}" name="coursePic">
 					</div>
 				<div class="form-group">
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6">

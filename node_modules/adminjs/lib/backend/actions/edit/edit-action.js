@@ -41,7 +41,7 @@ const EditAction = {
    * @memberof module:EditAction
    */
   handler: async (request, response, context) => {
-    var _request$payload;
+    var _request$payload, _populatedRecord$base;
 
     const {
       record,
@@ -83,10 +83,11 @@ const EditAction = {
       };
     }
 
+    const baseMessage = ((_populatedRecord$base = populatedRecord.baseError) === null || _populatedRecord$base === void 0 ? void 0 : _populatedRecord$base.message) || translateMessage('thereWereValidationErrors', resource.id());
     return {
       record: populatedRecord.toJSON(currentAdmin),
       notice: {
-        message: translateMessage('thereWereValidationErrors'),
+        message: baseMessage,
         type: 'error'
       }
     };

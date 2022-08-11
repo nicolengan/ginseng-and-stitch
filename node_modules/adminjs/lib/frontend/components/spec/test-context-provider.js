@@ -21,10 +21,12 @@ const TestContextProvider = props => {
   const {
     children,
     location
-  } = props;
+  } = props; // TODO: fix children props
+
+  const Router = _reactRouterDom.StaticRouter;
   return /*#__PURE__*/_react.default.createElement(_styledComponents.ThemeProvider, {
     theme: theme
-  }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.StaticRouter, {
+  }, /*#__PURE__*/_react.default.createElement(Router, {
     location: location || '/'
   }, children));
 };

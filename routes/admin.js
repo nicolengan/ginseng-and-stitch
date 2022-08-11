@@ -7,11 +7,13 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
 const flashMessage = require('../helpers/messenger');
+
 const classes = require("./adminClasses");
 const courses = require("./adminCourses");
 const products = require("./adminProducts");
 const users = require("./adminUsers");
 const enquiries = require("./adminEnquiries");
+const reviews = require("./adminReviews");
 
 
 router.all('/*', (req, res, next) => {
@@ -26,6 +28,7 @@ router.use('/courses', courses);
 router.use('/products', products);
 router.use('/users', users);
 router.use('/enquiries', enquiries);
+router.use('/reviews', reviews);
 
 router.get('/', (req, res) => {
     res.render('admin/dashboard'
@@ -34,7 +37,27 @@ router.get('/', (req, res) => {
     //         return "";
     //    }
     // }
+
+    // Get all courses; IE Courese.GetAll
+
+    // Lopp through courses, get all reviews where courseID = courses[].id
+    // reconstruct into a new object, IE
+    // ReviewData
+    //  course
+    //  review[]
+
+    // Send as context to handlerbar
+
     );
+});
+
+router.get('/logout', (req, res, next) => {
+    req.logout(function (err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+        console.log("Admin logged out successfully");
+        flashMessage(res, 'success', ' logged out successfully');
+    });
 });
 
 module.exports = router;

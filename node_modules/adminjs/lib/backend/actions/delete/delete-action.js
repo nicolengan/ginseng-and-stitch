@@ -56,11 +56,14 @@ const DeleteAction = {
     try {
       await resource.delete(request.params.recordId);
     } catch (error) {
-      if (error instanceof _validationError.default && error.baseError) {
+      if (error instanceof _validationError.default) {
+        var _error$baseError;
+
+        const baseMessage = ((_error$baseError = error.baseError) === null || _error$baseError === void 0 ? void 0 : _error$baseError.message) || translateMessage('thereWereValidationErrors', resource.id());
         return {
           record: record.toJSON(currentAdmin),
           notice: {
-            message: error.baseError.message,
+            message: baseMessage,
             type: 'error'
           }
         };

@@ -32,6 +32,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
+var _client = require("react-dom/client");
+
 var _reactRedux = _interopRequireDefault(require("react-redux"));
 
 var _reactRouter = _interopRequireDefault(require("react-router"));
@@ -73,6 +75,7 @@ window.global = {};
 window.Lodash = Lodash;
 window.React = _react.default;
 window.ReactDOM = _reactDom.default;
+window.createRoot = _client.createRoot;
 window.Redux = _redux.default;
 window.ReactRedux = _reactRedux.default;
 window.flat = _flat.default;

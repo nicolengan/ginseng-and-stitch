@@ -46,7 +46,7 @@ const Filter = props => {
     mt: "default"
   }, `- ${translateProperty('to')}: `), /*#__PURE__*/_react.default.createElement(_designSystem.DatePicker, {
     value: toValue,
-    onChange: data => onChange(toKey, data),
+    onChange: date => onChange(toKey, date),
     propertyType: property.type
   })));
 };

@@ -3,8 +3,10 @@ const router = express.Router();
 const Courses = require('../models/Course');
 const ensureAuthenticated = require('../helpers/auth');
 const User = require('../models/User');
+const Review = require('../models/Review');
 const isAdmin = require('../helpers/admin');
 const {clampnumber} = require('../helpers/validate');
+const Booking = require('../models/Booking');
 
 
 router.all('/*', (req, res, next) => {
@@ -19,7 +21,7 @@ router.get('/', (req, res) => {
     })
         .then((courses) => {
             // pass object to listVideos.handlebar
-            res.render('courses', { courses});
+            res.render('courses', { courses, Review });
         })
         .catch(err => console.log(err));
 });
@@ -28,16 +30,26 @@ router.get('/addCourses' ,  ensureAuthenticated, isAdmin, (req, res) => {
     res.render('courses/addCourses');
 });
 
-router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
-    Courses.findAll({
-        // where: { userId: req.user.id },
-        raw: true
-    })
-        .then((courses) => {
-            // pass object to listVideos.handlebar
-            res.render('courses/listCourses', { courses});
-        })
-        .catch(err => console.log(err));
+// router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
+//     Courses.findAll({
+//         // where: { userId: req.user.id },
+//         raw: true
+//     })
+//         .then((courses) => {
+//             // pass object to listVideos.handlebar
+//             res.render('courses/listCourses', { courses});
+//         })
+//         .catch(err => console.log(err));
+// });
+
+router.get('/listCourses', ensureAuthenticated, isAdmin, async (req, res) => {
+    const courses = await Courses.findAll({
+        include: [
+            { model: Review },
+            { model: Booking }
+        ]
+    });
+    res.render('courses/listCourses', { courses});
 });
 
 router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
@@ -45,9 +57,10 @@ router.post('/addCourses', ensureAuthenticated, isAdmin, (req, res) => {
     let description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
     let level = req.body.level;
+    let coursePic = req.body.coursePic;
 
     Courses.create(
-        { title, description, price, level }
+        { title, description, price, level, coursePic }
         )
         .then((courses) => {
             console.log(courses.toJSON());
@@ -81,16 +94,18 @@ router.post('/editCourses/:id', ensureAuthenticated, isAdmin, (req, res) => {
     let description = req.body.description.slice(0, 1999);
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
     let level = req.body.level;
+    let coursePic = req.body.coursePic;
+    console.log('im gnna end it all period');
     
     Courses.update(
-        { title, description, price, level},
+        { title, description, price, level, coursePic},
         { where: { id: req.params.id } }
     )
-    .then((result) => {
-        console.log(result[0] + ' course updated');
-        res.redirect('/courses/listCourses');
-    })
-    .catch(err => console.log(err));
+        .then((result) => {
+            console.log(result[0] + ' course updated');
+            res.redirect('/courses/listCourses');
+        })
+        .catch(err => console.log(err));
 });
 
 router.get('/deleteCourses/:id', ensureAuthenticated, async function (req, res) {

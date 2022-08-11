@@ -2,7 +2,7 @@
 
 var _react = _interopRequireDefault(require("react"));
 
-var _reactTestingLibrary = require("react-testing-library");
+var _react2 = require("@testing-library/react");
 
 var _sinon = _interopRequireDefault(require("sinon"));
 
@@ -37,9 +37,11 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 const renderSubject = props => {
   const onSelect = _sinon.default.stub();
 
-  const onSelectAll = _sinon.default.stub();
+  const onSelectAll = _sinon.default.stub(); // TODO: fix children props
 
-  const renderResult = (0, _reactTestingLibrary.render)( /*#__PURE__*/_react.default.createElement(_testContextProvider.default, null, /*#__PURE__*/_react.default.createElement(_reactRedux.Provider, {
+
+  const StoreProvider = _reactRedux.Provider;
+  const renderResult = (0, _react2.render)( /*#__PURE__*/_react.default.createElement(_testContextProvider.default, null, /*#__PURE__*/_react.default.createElement(StoreProvider, {
     store: (0, _store.default)({})
   }, /*#__PURE__*/_react.default.createElement(_recordsTable.RecordsTable, _extends({}, props, {
     onSelect: onSelect,
