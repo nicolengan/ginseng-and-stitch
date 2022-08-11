@@ -3,6 +3,7 @@ const router = express.Router();
 const Courses = require('../models/Course');
 const ensureAuthenticated = require('../helpers/auth');
 const User = require('../models/User');
+const Review = require('../models/Review');
 const isAdmin = require('../helpers/admin');
 const {clampnumber} = require('../helpers/validate');
 
@@ -19,7 +20,7 @@ router.get('/', (req, res) => {
     })
         .then((courses) => {
             // pass object to listVideos.handlebar
-            res.render('courses', { courses});
+            res.render('courses', { courses, Review });
         })
         .catch(err => console.log(err));
 });
