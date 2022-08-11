@@ -37,12 +37,19 @@ router.get('/api/list', async (req, res) => {
     })
 });
 
+// BOOKING SESSION
+//booking id, course id, class id, user id, date created
+
+//book will be listBooking
 router.get('/listBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
             { model: Course }
-        ]
+        ],
+        where:{
+            id: req.params.id
+        }
     });
     res.render('booking/listBooking', { booking });
 });
@@ -122,30 +129,25 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
     }
 });
 
-// router.get('/payment/:id', async (req, res) => {
-//     const booking = await Booking.findAll({
-//         include: [
-//             { model: Class },
-//             { model: Course }
-//         ],
-//         where:{
-//             id: req.params.id
-//         }
-//     });
-//     const courses = await Course.findAll();
-//     const classes = await Class.findAll();
-//     res.render('booking/checkout', { booking, courses, classes });
-// });
+router.get('/checkout/', async (req, res) => {
+    const booking = await Booking.findAll({
+        include: [
+            { model: Class },
+            { model: Course }
+        ]
+    });
+    const courses = await Course.findAll();
+    const classes = await Class.findAll();
+    res.render('booking/checkout', { booking, courses, classes });
+});
 
 router.get('/confirm/:id', async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
             { model: Course }
-        ],
-        where:{
-            id: req.params.id
-        }
+        ]
+        
     });
     const courses = await Course.findAll();
     const classes = await Class.findAll();
@@ -185,7 +187,7 @@ async function sendEmail(email, booking) {
         from: 'skylarhiyagaming@gmail.com',
         to: email,
         subject: 'Successful Course Booking',
-        html: '<p>Successful booking. We hope you enjoy your class. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking.id + '"</p> '
+        html: '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
     };
     mail.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -234,7 +236,7 @@ async function sendEmailUpdate(email, booking) {
         from: 'skylarhiyagaming@gmail.com',
         to: email,
             subject: 'Successful Course Booking Update',
-            html: '<p>Successful booking update. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking + '"</p> '
+            html: '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + booking + '</p> '
         };
         mail.sendMail(mailOptions, function (error, info) {
             if (error) {
