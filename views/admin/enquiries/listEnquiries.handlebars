@@ -1,0 +1,85 @@
+<script
+    src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/custom-view/bootstrap-table-custom-view.js"></script>
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <div class="h2 mt-3">Enquiries</div>
+    <hr class="border border-secondary opacity-50">
+    <table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
+        data-show-columns="true" data-toolbar="#toolbar" data-show-custom-view="true"
+        data-custom-view="customViewFormatter" data-show-custom-view-button="true" data-id-field="id"
+        data-url="/admin/enquiries/api/list">
+        <thead>
+            <tr>
+                <th data-field="id">id</th>
+                <th data-field="name">name</th>
+                <th data-field="email">email</th>
+                <th data-field="subject">subject</th>
+                <th data-field="comments">comments</th>
+                <th data-field="icons" data-formatter="generate_actions" data-events="window.operateEvents" id="action">
+                    actions</th>
+            </tr>
+        </thead>
+    </table>
+
+    <template id="profileTemplate">
+        <div class="col-3 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-lg-8 col-md-6">
+                            <h3 class="mb-0 text-truncated">%NAME%</h3>
+                            <p class="lead">%EMAIL%</p>
+                            <p class="h5">
+                                %SUBJECT%
+                            </p>
+                            <p>
+                                %COMMENTS%
+                            </p>
+                            <p>
+                                <span class="badge text-bg-primary">%STATUS%</span>
+                                {{!-- <span class="badge text-bg-success">answered</span>
+                                <span class="badge text-bg-secondary">pending</span> --}}
+                            </p>
+                            <a class="btn btn-primary" href="/admin/enquiries/replyEnquiries/%ID%"></a>
+                        </div> 
+                        {{!-- <div class="col-12 col-lg-4 col-md-6 text-center">
+                            <img src="%IMAGE%" alt="" class="mx-auto rounded-circle img-fluid" style="height: 120px;">
+                            <br>
+                        </div> --}}
+                        {{!-- <div class="col-12 col-lg-4">
+                            <h3 class="mb-0">%FOLLOWING%</h3>
+                            <small>Following</small>
+                            <button class="btn btn-outline-info btn-block" title="View Profile"><span
+                                    class="fa fa-user"></span></button>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <h3 class="mb-0">%SNIPPETS%</h3>
+                            <small>Snippets</small>
+                            <button type="button" class="btn btn-outline-primary btn-block" title="Options"><span
+                                    class="fa fa-cog"></span></button>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        function customViewFormatter(data) {
+            var template = $('#profileTemplate').html()
+            var view = ''
+            $.each(data, function (i, row) {
+                view += template.replace('%NAME%', row.name)
+                    .replace('%EMAIL%', row.email)
+                    .replace('%SUBJECT%', row.subject)
+                    .replace('%COMMENTS%', row.comments)
+                    .replace('%STATUS%', row.status)
+                    .replace('%ID%', row.id)
+            })
+
+            return `<div class="row mx-0">${view}</div>`
+        }
+        var $table = $('#table')
+
+        window.operateEvents = {
+        }
+    </script>

@@ -1,0 +1,21 @@
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="card card-body">
+        <h3>Replying <span class="text-primary">{{enquiry.name}}</span></h3>
+        <form action="/admin/enquiries/replyEnquiries/{{enquiry.id}}" method="post">
+            {{!-- <div class="mb-3">
+                <label for="name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control name" name="name" value="{{enquiry.name}}" size="25">
+            </div> --}}
+
+            <div class="mb-3">
+                <label for="email" class="col-form-label">Reply:</label>
+                <input type="text" class="form-control email" name="reply" value="{{enquiry.reply}}">
+            </div>
+
+<div class="">
+    <a href="/admin/enquiries" class="btn btn-secondary">Close</a>
+    <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
+</div>
+</form>
+</div>
+</div>

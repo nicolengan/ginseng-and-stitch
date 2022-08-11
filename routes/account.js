@@ -8,37 +8,10 @@ const Course = require('../models/Course');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const ensureAuthenticated = require('../helpers/auth');
+const sendEmail = require('../helpers/sendEmail');
 const randtoken = require('rand-token');
-const nodemailer = require("nodemailer");
 const Review = require('../models/Review');
 
-function sendEmail(email, token) {
-    var email = email;
-    var token = token;
-    let mail = nodemailer.createTransport({
-        // service: 'gmail',
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'skylarhiyagaming@gmail.com', // Your email id
-            pass: 'xpsuaskucepikgoe' // Your password
-        }
-    });
-    var mailOptions = {
-        from: 'skylarhiyagaming@gmail.com',
-        to: email,
-        subject: 'Reset Password Link - Ginseng and stitch',
-        html: '<p>You requested for reset password, kindly use this <a href="http://localhost:5000/account/resetPassword?token=' + token + '">link</a> to reset your password</p>'
-    };
-    mail.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error)
-        } else {
-            console.log(info)
-        }
-    });
-}
 /* home page */
 router.get('/', ensureAuthenticated, async (req, res) => {
     const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
@@ -129,7 +102,9 @@ router.post('/sendEmail', async function (req, res) {
         }
         else {
             var token = randtoken.generate(20);
-            var sent = sendEmail(email, token);
+            var subject = 'Reset Password Link - Ginseng and stitch';
+            var message = '<p>You requested for reset password, kindly use this <a href="http://localhost:5000/account/resetPassword?token=' + token + '">link</a> to reset your password</p>';
+            var sent = sendEmail(email, subject, message);
             console.log(sent + " " + token)
             user.update({ token: token });
             flashMessage(res, 'success', 'Email sent');
@@ -208,7 +183,7 @@ router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
     console.log(email);
     User.update({ name, email }, { where: { id: req.params.id } })
         .then((result) => {
-            console.log(result[0] + ' account updated');
+            console.log(result);
             res.redirect('/account');
         })
         .catch(err => console.log(err));

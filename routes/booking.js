@@ -159,12 +159,12 @@ async function sendEmail(email, booking) {
         port: 465,
         secure: true,
         auth: {
-            user: 'skylarhiyagaming@gmail.com', // Your email id
-            pass: 'xpsuaskucepikgoe' // Your password
+            user: 'ginsengandstitch@gmail.com', // Your email id
+            pass: 'szuhchynibnlqpjz' // Your password
         }
     });
     var mailOptions = {
-        from: 'skylarhiyagaming@gmail.com',
+        from: 'ginsengandstitch@gmail.com',
         to: email,
         subject: 'Successful Course Booking',
         html: '<p>Successful booking. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking.id + '"</p> '
