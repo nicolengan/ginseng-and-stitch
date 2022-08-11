@@ -167,7 +167,7 @@ async function sendEmail(email, booking) {
         from: 'ginsengandstitch@gmail.com',
         to: email,
         subject: 'Successful Course Booking',
-        html: '<p>Successful booking. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking.id + '"</p> '
+        html: '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
     };
     mail.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -216,7 +216,7 @@ async function sendEmailUpdate(email, booking) {
         from: 'skylarhiyagaming@gmail.com',
         to: email,
             subject: 'Successful Course Booking Update',
-            html: '<p>Successful booking update. \n Please remember to drop us a review, your feedback is much appreciated \n http://localhost:5000/account/review/' + booking + '"</p> '
+            html: '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + booking + '</p> '
         };
         mail.sendMail(mailOptions, function (error, info) {
             if (error) {

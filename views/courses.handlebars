@@ -2,48 +2,16 @@
     $('[data-toggle=confirmation]').confirmation({
         rootSelector: '[data-toggle=confirmation]',
     });
+
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', function () {
+    myInput.focus()
+    })
 </script>
 
-{{!-- {{#if courses}}
-<h2 class="text mt-4">Courses Listed</h2>
 
-<div class="row m-2 l-2">
-    {{#each courses}}
-    <div class="col m-4 l-4">
-        <div class="card border-2 mb-2" style="width: 18rem;">
-            <div>
-                <a href="{{coursePic}}" data-title="{{title}}" data-toggle="lightbox">
-                    <img src="{{coursePic}}" alt="Poster" class="img-thumbnail img-fluid"
-                        onerror="this.src='/img/home_img.jpg'">
-                </a>
-            </div>
-            <div class="card-header col-12">
-                <h4 class="card-title text-start">{{title}}</h4>
-            </div>
-
-            <div class="card-body m-0">
-                <div class="row text-start">
-                    <p class="text-info">{{level}}</p>
-                </div>
-                <div class="row text-start">
-                    <h5 class="text">{{description}}</h5>
-                </div>
-                <div class="row text-start">
-
-                    <p class="text fw-bold">
-                        ${{price}}
-                    </p>
-                </div>
-                <div class="container">
-                </div>
-            </div>
-            <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking">Book Class</a></div>
-        </div>
-    {{/each}}
-</div>
-{{else}}
-<h3>No Courses listed</h3>
-{{/if}} --}}
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
 <div class="container">
@@ -77,7 +45,59 @@
                                 ${{price}}
                             </p>
                         </div>
-                        <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking">Book Class</a></div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            More Info
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>{{level}}</p>
+                                        <p>{{description}}</p>
+                                        <p>${{price}}</p>
+                                        {{#if review}}
+                                        <section style="color: #000; background-color: #f3f2f2;">
+                                            <div class="container py-5">
+                                                <div class="row d-flex justify-content-center">
+                                                <div class="col-md-10 col-xl-8 text-center">
+                                                    <h3 class="fw-bold mb-4">Testimonials</h3>
+                                                    <p class="mb-4 pb-2 mb-md-5 pb-md-0">
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet
+                                                    numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum
+                                                    quisquam eum porro a pariatur veniam.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        <div class="row text-center">
+                                        {{#each reviews}}
+                                            <div class="col-md-4 mb-4 mb-md-0">
+                                                <div class="card">
+                                                <div class="card-body py-4 mt-2">
+                                                    <h5 class="font-weight-bold">{{User.name}}</h5>
+                                                    <ul class="list-unstyled d-flex justify-content-center">
+                                                        <p>{{star_count}}</p>
+                                                        <p class="mb-2">
+                                                        <i class="fas fa-quote-left pe-2"></i>{{review}}
+                                                    </p>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        {{/each}}
+                                        </div>
+                                    </div>
+                                    {{/if}}
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking">Book Class</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,6 +107,6 @@
 
 </div>
 {{else}}
-<h3>No products yet</h3>
+<h3>No Courses yet</h3>
 {{/if}}
 </main>
