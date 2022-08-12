@@ -10,7 +10,7 @@ var _lodash = _interopRequireDefault(require("lodash"));
 
 var _i18next = _interopRequireDefault(require("i18next"));
 
-var _reactTestingLibrary = require("react-testing-library");
+var _react2 = require("@testing-library/react");
 
 var _reactRedux = require("react-redux");
 
@@ -41,11 +41,13 @@ const defaultStore = {
 const renderSubject = (store = {}, location) => {
   const path = '/resources/:resourceId/records/:recordId/:actionName';
 
-  const storeWithDefault = _lodash.default.merge(defaultStore, store);
+  const storeWithDefault = _lodash.default.merge(defaultStore, store); // TODO: fix children props
 
-  const renderResult = (0, _reactTestingLibrary.render)( /*#__PURE__*/_react.default.createElement(_testContextProvider.default, {
+
+  const StoreProvider = _reactRedux.Provider;
+  const renderResult = (0, _react2.render)( /*#__PURE__*/_react.default.createElement(_testContextProvider.default, {
     location: location
-  }, /*#__PURE__*/_react.default.createElement(_reactRedux.Provider, {
+  }, /*#__PURE__*/_react.default.createElement(StoreProvider, {
     store: (0, _store.default)(storeWithDefault)
   }, /*#__PURE__*/_react.default.createElement(_reactRouter.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouter.Route, {
     path: path,

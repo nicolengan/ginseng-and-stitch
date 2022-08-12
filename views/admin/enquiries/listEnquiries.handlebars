@@ -1,0 +1,79 @@
+<script
+    src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/custom-view/bootstrap-table-custom-view.js"></script>
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <div class="h2 mt-3">Enquiries</div>
+    <hr class="border border-secondary opacity-50">
+    <table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
+        data-show-columns="true" data-toolbar="#toolbar" data-show-custom-view="true"
+        data-custom-view="customViewFormatter" data-show-custom-view-button="true" data-id-field="id"
+        data-url="/admin/enquiries/api/list">
+        <thead>
+            <tr>
+                <th data-field="id">id</th>
+                <th data-field="name">name</th>
+                <th data-field="email">email</th>
+                <th data-field="subject">subject</th>
+                <th data-field="comments">comments</th>
+                <th data-field="icons" data-formatter="generate_actions" data-events="window.operateEvents" id="action">
+                    actions</th>
+            </tr>
+        </thead>
+    </table>
+
+    <template id="profileTemplate">
+        <div class="col-3 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-lg-8 col-md-6">
+                            <h3 class="mb-0 text-truncated">%NAME%</h3>
+                            <p class="lead">%EMAIL%</p>
+                            <p class="h5">
+                                %SUBJECT%
+                            </p>
+                            <p>
+                                %COMMENTS%
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="d-flex flex-row ps-1">
+                            <div class="p-2 h5"><span class="badge %ATTR%">%STATUS%</span></div>
+                            <div class="p-2 ms-auto"><a class="btn btn-primary"
+                                    href="/admin/enquiries/replyEnquiries/%ID%">Reply</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        function customViewFormatter(data) {
+            var template = $('#profileTemplate').html()
+            var view = ''
+            var status = ''
+            var attr = ''
+            $.each(data, function (i, row) {
+                if (row.status == 0) {
+                    status = "Pending"
+                    attr = "text-bg-secondary"
+                }
+                else if (row.status == 1) {
+                    status = "Resolved"
+                    attr = "text-bg-success"
+                }
+                view += template.replace('%NAME%', row.name)
+                    .replace('%EMAIL%', row.email)
+                    .replace('%SUBJECT%', row.subject)
+                    .replace('%COMMENTS%', row.comments)
+                    .replace('%STATUS%', status)
+                    .replace('%ID%', row.id)
+                    .replace('%ATTR%', attr)
+            })
+            return `<div class="row mx-0">${view}</div>`
+        }
+        var $table = $('#table')
+        window.operateEvents = {
+        }
+    </script>

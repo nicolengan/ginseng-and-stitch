@@ -27,7 +27,7 @@ const {
   terser
 } = require('rollup-plugin-terser');
 
-const external = ['lodash', 'react', 'react-dom', 'redux', 'react-redux', 'flat', 'react-router', 'react-router-dom', 'react-datepicker', 'styled-components', 'prop-types', 'adminjs', '@adminjs/design-system', 'adminjs/property-types', 'adminjs/types', 'adminjs/style', 'axios', 'recharts', '@carbon/icons-react', 'react-select', 'react-select/async', 'react-select/creatable', 'i18next', 'react-i18next', 'punycode', 'uuid'];
+const external = ['lodash', 'react', 'react-dom', 'redux', 'react-redux', 'flat', 'react-router', 'react-router-dom', 'react-datepicker', 'styled-components', 'prop-types', 'adminjs', '@adminjs/design-system', 'adminjs/property-types', 'adminjs/types', 'adminjs/style', 'axios', 'recharts', '@carbon/icons-react', 'i18next', 'react-i18next', 'punycode', 'uuid'];
 const globals = {
   lodash: 'Lodash',
   react: 'React',
@@ -35,9 +35,6 @@ const globals = {
   axios: 'axios',
   flat: 'flat',
   recharts: 'Recharts',
-  'react-select': 'ReactSelect',
-  'react-select/async': 'ReactSelectAsync',
-  'react-select/creatable': 'ReactSelectCreatable',
   '@carbon/icons-react': 'CarbonIcons',
   'react-datepicker': 'ReactDatepicker',
   'styled-components': 'styled',
@@ -53,7 +50,6 @@ const globals = {
   'adminjs/style': 'AdminJS.style',
   i18next: 'i18n',
   'react-i18next': 'ReactI18Next',
-  Quill: 'Quill',
   punycode: 'punycode'
 };
 const extensions = ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx', '.scss'];

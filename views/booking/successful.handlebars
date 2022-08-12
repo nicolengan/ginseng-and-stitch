@@ -2,7 +2,7 @@
 <div class="container">
 	{{#if booking}}
 	<div class="card card-body">
-        {{#each booking}}
+        {{#each booking}} 
         <div class="card border-black mb-2 w-50 mx-auto">
 			<h5>Your Booking #{{id}} is booked successfully!</h5>
                 <div class="card-body">
@@ -41,7 +41,7 @@
 						<br>		
 					</div>
 						<div class="Receipt">
-							<button type="button" class="btn btn-dark">Receipt to Email</button>
+							<a class="btn btn-dark" href="sendEmail/{{id}}">Receipt to Email</a>
 							{{!-- <button type="button" class="btn btn-dark">Add to Calendar</button> --}}
 						</div>
 				</div>

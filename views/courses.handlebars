@@ -1,57 +1,118 @@
-{{!-- <h1>Our Courses</h1> --}}
-
-{{!-- {{#if courses}}
-<h2 class="text-primary">Courses Listed</h2>
-{{#each courses}}
-<div class="card-body"></div>
-<div class="card border-primary mb-2 w-50 mx-auto">
-    <div class="card-header">
-        <h1 class="card-title">{{title}}</h>
-    </div>
-    <div class="card-body">
-        <h5>Description of the Course</h5>
-        <p class="card-text">{{description}}</p>
-        <h5>Price</h5>
-        <p class="card-text">${{price}}</p>
-        <h5>Level</h5>
-        <p class="card-text">{{level}}</p>
-    </div>
-    <div class="text-center">
-        <button type="button" class="button"><a href="/booking/addBooking">Book Now</a></button>
-    </div>
-</div>
-{{/each}}
-</div>
-</div>
-{{else}}
-<h3>No Courses listed</h3>
-{{/if}} --}}
-
 <script>
     $('[data-toggle=confirmation]').confirmation({
         rootSelector: '[data-toggle=confirmation]',
     });
+
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    })
 </script>
-{{#if courses}}
-<h2 class="text-primary mt-4">Courses Listed</h2>
 
-<div class="row">
-    {{#each courses}}
-    <div class="col">
-        <div class="card" style="">
-            <div class="card-body">
-                <h5 class="card-title">{{title}}</h5>
 
-                <p class="card-text">{{description}}</p>
-                <div class="d-flex flex-row mb-3">
-                    <div class="p-2"><h6 class="card-subtitle mb-2 text-muted">${{price}}</h6></div>
-                    <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking">Book Now</a></div>
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
+<div class="container">
+    {{#if courses}}
+    <h3 class="text">Our Courses</h3>
+    <div class="container">
+
+        {{#each courses}}
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card border-2 mb-2">
+                    <div>
+                        <a href="{{coursePic}}" data-title="{{title}}" data-toggle="lightbox">
+                            <img src="{{coursePic}}" alt="Poster" class="img-thumbnail img-fluid"
+                                onerror="this.src='/img/home_img.jpg'">
+                        </a>
+                    </div>
+                    <div class="card-header col-12">
+                        <h4 class="card-title text-start">{{title}}</h4>
+                    </div>
+
+                    <div class="card-body m-0">
+                        <div class="row text-start">
+                            <p class="text-info">{{level}}</p>
+                        </div>
+                        <div class="row text-start">
+                            <h5 class="text">{{description}}</h5>
+                        </div>
+                        <div class="row text-start">
+
+                            <p class="text fw-bold">
+                                ${{price}}
+                            </p>
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                            More Info
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>{{level}}</p>
+                                        <p>{{description}}</p>
+                                        <p>${{price}}</p>
+                                        <section style="color: #000; background-color: #f3f2f2;">
+                                            <div class="container py-5">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-md-10 col-xl-8 text-center">
+                                                        <h3 class="fw-bold mb-4">Testimonials</h3>
+                                                        <p class="mb-4 pb-2 mb-md-5 pb-md-0">
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                            Fugit, error amet
+                                                            numquam iure provident voluptate esse quasi, veritatis totam
+                                                            voluptas nostrum
+                                                            quisquam eum porro a pariatur veniam.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row text-center">
+                                                    
+                                                    <div class="col-md-4 mb-4 mb-md-0">
+                                                        <div class="card">
+                                                            <div class="card-body py-4 mt-2">
+                                                                <h5 class="font-weight-bold"></h5>
+                                                                <ul class="list-unstyled d-flex justify-content-center">
+                                                                    <p>{{'Reviews.star_count'}}</p>
+                                                                    <p class="mb-2">
+                                                                        <i class="fas fa-quote-left pe-2"></i>{{'Reviews.review'}}
+                                                                    </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <div class="p-2"><a class="btn btn-primary"
+                                                        href="/booking/addBooking">Book Class</a></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {{/each}}
+
         </div>
+
     </div>
-    {{/each}}
-</div>
-{{else}}
-<h3>No Courses listed</h3>
-{{/if}}
+    {{else}}
+    <h3>No Courses yet</h3>
+    {{/if}}
+    </main>

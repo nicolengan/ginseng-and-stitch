@@ -7,10 +7,6 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _reactSelect = _interopRequireDefault(require("react-select"));
-
-var _styledComponents = require("styled-components");
-
 var _designSystem = require("@adminjs/design-system");
 
 var _mapValue = _interopRequireDefault(require("./map-value"));
@@ -35,8 +31,7 @@ class Filter extends _react.default.PureComponent {
   render() {
     const {
       property,
-      filter = {},
-      theme
+      filter = {}
     } = this.props;
     const value = typeof filter[property.path] === 'undefined' ? '' : filter[property.path];
     const options = [{
@@ -47,17 +42,16 @@ class Filter extends _react.default.PureComponent {
       label: (0, _mapValue.default)(false)
     }];
     const selected = options.find(o => o.value === value);
-    return /*#__PURE__*/_react.default.createElement(_designSystem.FormGroup, null, /*#__PURE__*/_react.default.createElement(_designSystem.Label, null, property.label), /*#__PURE__*/_react.default.createElement(_reactSelect.default, {
+    return /*#__PURE__*/_react.default.createElement(_designSystem.FormGroup, null, /*#__PURE__*/_react.default.createElement(_designSystem.Label, null, property.label), /*#__PURE__*/_react.default.createElement(_designSystem.Select, {
+      variant: "filter",
       value: typeof selected === 'undefined' ? '' : selected,
       isClearable: true,
       options: options,
-      styles: (0, _designSystem.filterStyles)(theme),
       onChange: this.handleChange
     }));
   }
 
 }
 
-var _default = (0, _styledComponents.withTheme)(Filter);
-
+var _default = Filter;
 exports.default = _default;

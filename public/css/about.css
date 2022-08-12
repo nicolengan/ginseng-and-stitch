@@ -1,0 +1,66 @@
+.container {
+    padding: 60px 120px;
+  }
+
+.row {
+    padding: 20px;
+}
+
+h3, h4 {
+    margin: 10px 0 30px 0;
+    letter-spacing: 10px;      
+    font-size: 20px;
+    color: #111;
+  }
+
+  .person {
+    border: 10px solid transparent;
+    margin-bottom: 25px;
+    width: 80%;
+    height: 80%;
+    opacity: 0.7;
+  }
+  .person:hover {
+    border-color: #f1f1f1;
+  }
+  .carousel-inner img {
+    width: 100%; /* Set width to 100% */
+    height: 750px;
+    margin: auto;
+  }
+  
+  .carousel-caption h3 {
+    color: #fff !important;
+  }
+  
+  @media (max-width: 600px) {
+    .carousel-caption {
+      display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+  }
+
+  footer {
+    background-color: #E8DDD8;
+    color: #808080;
+    padding-bottom: 20px;
+  }
+
+.carousel-inner {
+    width:100%;
+    height:600px;
+  }
+
+  .overlay { 
+    color:#fff;
+    position:absolute;
+    z-index:12;
+    top:50%;
+    left:0;
+    width:100%;
+    text-align:center;
+  }
+
+#overlay_title{
+    font-size: 150px;
+    text-shadow: -1px -1px 0 #808080, 1px -1px 0 #808080, -1px 1px 0 #808080, 1px 1px 0 #808080;
+}

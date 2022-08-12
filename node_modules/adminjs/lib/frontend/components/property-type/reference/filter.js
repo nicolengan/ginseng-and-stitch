@@ -7,10 +7,6 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _async = _interopRequireDefault(require("react-select/async"));
-
-var _styledComponents = require("styled-components");
-
 var _designSystem = require("@adminjs/design-system");
 
 var _apiClient = _interopRequireDefault(require("../../../utils/api-client"));
@@ -52,16 +48,15 @@ class Filter extends _react.default.PureComponent {
   render() {
     const {
       property,
-      filter,
-      theme
+      filter
     } = this.props;
     const value = typeof filter[property.path] === 'undefined' ? '' : filter[property.path];
     const selected = (this.options || []).find(o => o.value === value);
-    return /*#__PURE__*/_react.default.createElement(_designSystem.FormGroup, null, /*#__PURE__*/_react.default.createElement(_designSystem.Label, null, property.label), /*#__PURE__*/_react.default.createElement(_async.default, {
+    return /*#__PURE__*/_react.default.createElement(_designSystem.FormGroup, null, /*#__PURE__*/_react.default.createElement(_designSystem.Label, null, property.label), /*#__PURE__*/_react.default.createElement(_designSystem.SelectAsync, {
+      variant: "filter",
       value: typeof selected === 'undefined' ? '' : selected,
       isClearable: true,
       cacheOptions: true,
-      styles: (0, _designSystem.filterStyles)(theme),
       loadOptions: this.loadOptions,
       onChange: this.handleChange,
       defaultOptions: true
@@ -70,6 +65,5 @@ class Filter extends _react.default.PureComponent {
 
 }
 
-var _default = (0, _styledComponents.withTheme)(Filter);
-
+var _default = Filter;
 exports.default = _default;

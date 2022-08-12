@@ -134,7 +134,8 @@ const Dashboard = () => {
     p: "lg"
   }, /*#__PURE__*/_react.default.createElement(Card, {
     as: "a",
-    href: box.href
+    href: box.href,
+    target: "_blank"
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Text, {
     textAlign: "center"
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Illustration, {
@@ -149,7 +150,8 @@ const Dashboard = () => {
   }, /*#__PURE__*/_react.default.createElement(Card, {
     as: "a",
     flex: true,
-    href: "https://join.slack.com/t/adminbro/shared_invite/zt-djsqxxpz-_YCS8UMtQ9Ade6DPuLR7Zw"
+    href: "https://join.slack.com/t/adminbro/shared_invite/zt-djsqxxpz-_YCS8UMtQ9Ade6DPuLR7Zw",
+    target: "_blank"
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Box, {
     flexShrink: 0
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Illustration, {
@@ -162,7 +164,8 @@ const Dashboard = () => {
   }, /*#__PURE__*/_react.default.createElement(Card, {
     as: "a",
     flex: true,
-    href: "https://github.com/SoftwareBrothers/adminjs/issues"
+    href: "https://github.com/SoftwareBrothers/adminjs/issues",
+    target: "_blank"
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Box, {
     flexShrink: 0
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Illustration, {
@@ -177,13 +180,14 @@ const Dashboard = () => {
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Text, {
     textAlign: "center"
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Illustration, {
-    variant: "SoftwareBrothersLogo"
+    variant: "AdminJSLogo"
   }), /*#__PURE__*/_react.default.createElement(_designSystem.H4, null, translateMessage('needMoreSolutions_title')), /*#__PURE__*/_react.default.createElement(_designSystem.Text, null, translateMessage('needMoreSolutions_subtitle')), /*#__PURE__*/_react.default.createElement(_designSystem.Text, {
     mt: "xxl"
   }, /*#__PURE__*/_react.default.createElement(_designSystem.Button, {
     as: "a",
     variant: "primary",
-    href: "https://softwarebrothers.co/services"
+    href: "https://share.hsforms.com/1IedvmEz6RH2orhcL6g2UHA8oc5a",
+    target: "_blank"
   }, translateButton('contactUs')))))));
 };
 

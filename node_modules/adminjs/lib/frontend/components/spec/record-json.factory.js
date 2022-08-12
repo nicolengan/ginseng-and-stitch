@@ -18,6 +18,7 @@ _factoryGirl.default.define('RecordJSON', Object, {
     'nested.param': 'value2'
   },
   populated: {},
+  baseError: null,
   errors: {},
   id: _factoryGirl.default.sequence('JSONRecord.id', n => `someId${n}`),
   title: _factoryGirl.default.sequence('JSONRecord.id', n => `someTitle${n}`),

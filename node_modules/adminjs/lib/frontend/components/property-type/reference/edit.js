@@ -7,10 +7,6 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _async = _interopRequireDefault(require("react-select/async"));
-
-var _styledComponents = require("styled-components");
-
 var _designSystem = require("@adminjs/design-system");
 
 var _apiClient = _interopRequireDefault(require("../../../utils/api-client"));
@@ -31,8 +27,7 @@ const Edit = props => {
   const {
     onChange,
     property,
-    record,
-    theme
+    record
   } = props;
   const {
     reference: resourceId
@@ -75,7 +70,6 @@ const Edit = props => {
     value: '',
     label: ''
   };
-  const styles = (0, _designSystem.selectStyles)(theme);
   (0, _react.useEffect)(() => {
     if (!selectedValue && selectedId) {
       setLoadingRecord(c => c + 1);
@@ -97,19 +91,17 @@ const Edit = props => {
     error: Boolean(error)
   }, /*#__PURE__*/_react.default.createElement(_propertyLabel.PropertyLabel, {
     property: property
-  }), /*#__PURE__*/_react.default.createElement(_async.default, _extends({
+  }), /*#__PURE__*/_react.default.createElement(_designSystem.SelectAsync, _extends({
     cacheOptions: true,
     value: selectedOption,
-    styles: styles,
     defaultOptions: true,
     loadOptions: loadOptions,
     onChange: handleChange,
     isClearable: true,
     isDisabled: property.isDisabled,
-    isLoading: loadingRecord
+    isLoading: !!loadingRecord
   }, property.props)), /*#__PURE__*/_react.default.createElement(_designSystem.FormMessage, null, error === null || error === void 0 ? void 0 : error.message));
 };
 
-var _default = (0, _styledComponents.withTheme)(Edit);
-
+var _default = Edit;
 exports.default = _default;
