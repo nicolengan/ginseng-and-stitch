@@ -33,11 +33,6 @@
 
 <body>
 	{{> _navbar }}
-	<div class="">
-		{{> _flashmsg }}
-		{{{body}}}
-
-	</div>
 
 	<!-- Custom JS -->
 	<!-- Bootstrap JS -->
@@ -47,6 +42,11 @@
 		crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+		<div class="">
+		{{> _flashmsg }}
+		{{{body}}}
+
+	</div>
 </body>
 
 </html>

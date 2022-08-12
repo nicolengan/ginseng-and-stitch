@@ -1,4 +1,18 @@
 
+<script>
+    $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+    });
+
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    })
+</script>
+
+
 
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
@@ -6,8 +20,9 @@
     {{#if courses}}
     <h3 class="text">Our Courses</h3>
     <div class="container">
+
+        {{#each courses}}
         <div class="row">
-            {{#each courses}}
             <div class="col-sm-4">
                 <div class="card border-2 mb-2">
                     <div>
@@ -34,9 +49,64 @@
                             </p>
                         </div>            
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
                             More Info
                         </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>{{level}}</p>
+                                        <p>{{description}}</p>
+                                        <p>${{price}}</p>
+                                        <section style="color: #000; background-color: #f3f2f2;">
+                                            <div class="container py-5">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-md-10 col-xl-8 text-center">
+                                                        <h3 class="fw-bold mb-4">Testimonials</h3>
+                                                        <p class="mb-4 pb-2 mb-md-5 pb-md-0">
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                            Fugit, error amet
+                                                            numquam iure provident voluptate esse quasi, veritatis totam
+                                                            voluptas nostrum
+                                                            quisquam eum porro a pariatur veniam.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row text-center">
+                                                    
+                                                    <div class="col-md-4 mb-4 mb-md-0">
+                                                        <div class="card">
+                                                            <div class="card-body py-4 mt-2">
+                                                                <h5 class="font-weight-bold"></h5>
+                                                                <ul class="list-unstyled d-flex justify-content-center">
+                                                                    <p>{{'Reviews.star_count'}}</p>
+                                                                    <p class="mb-2">
+                                                                        <i class="fas fa-quote-left pe-2"></i>{{'Reviews.review'}}
+                                                                    </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <div class="p-2"><a class="btn btn-primary"
+                                                        href="/booking/addBooking">Book Class</a></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {{/each}}
@@ -108,3 +178,4 @@
     modalBodyReview.value = review
   })
 </script>
+
