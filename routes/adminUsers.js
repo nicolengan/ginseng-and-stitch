@@ -10,6 +10,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/list', async (req, res) => {
+    console.log("hiii")
+
     return res.json({
         total: await User.count(),
         rows: await User.findAll()
@@ -59,10 +61,6 @@ router.post('/editUsers/:id', (req, res) => {
 
 router.get('/deleteUser/:id', async (req, res) => {
     let user = await User.findOne({ where: { id: req.params.id } })
-    // if (user.role != 'a')
-    // {
-
-    // }
     if (user.email == "admin@gmail.com") {
         flashMessage(res, 'error', 'Unable to delete root admin account, please try again')
         res.redirect('/admin/users')
@@ -72,7 +70,9 @@ router.get('/deleteUser/:id', async (req, res) => {
             await user.destroy()
                 .then((result) => {
                     console.log(user + ' deleted');
+                    flashMessage(res, 'success', 'Account deleted')
                     res.redirect('/admin/users');
+                    
                 })
                 .catch(err => console.log(err));
         }
