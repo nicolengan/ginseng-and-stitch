@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const Courses = require('../models/Course');
+const Review = require('../models/Review');
+const Users = require('../models/User');
 const Enquiry = require('../models/Enquiry');
 const fs = require('fs');
 const upload = require('../helpers/fileUpload');
@@ -31,9 +33,15 @@ router.get('/about', (req, res) => {
 router.get('/courses', (req, res) => {
     Courses.findAll({
         // where: { userId: req.user.id },
+        include: [
+            { model: Review,         include: [
+                { model: Users }
+            ]}
+        ],
         raw: true
     })
         .then((courses) => {
+            console.log(courses)
             // pass object to listVideos.handlebar
             res.render('courses', { courses });
         })

@@ -6,6 +6,7 @@ const Booking = require('../models/Booking');
 const Class = require('../models/Class');
 const Course = require('../models/Course');
 const User = require('../models/User');
+const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
 
 router.get('/api/list', async (req, res) => {
@@ -60,7 +61,7 @@ router.post('/addBooking', ensureAuthenticated, async (req, res) => {
     )
         .then((classes) => {
             console.log(classes.toJSON());
-            res.redirect('/booking/listBooking');
+            res.redirect('/booking/listBooking/' + classes.id);
         })
         .catch(err => console.log(err))
 });
@@ -87,10 +88,11 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     )
         .then((result) => {
             console.log(result[0] + ' booking updated');
-
-            sendEmailUpdate(req.user.email, req.params.id);
+            var subject =  'Successful Course Booking Update'
+            var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
+            sendEmail(req.user.email, subject, html );
             flashMessage(res, 'successfully updated booking');
-            res.redirect('/account');
+            res.redirect('/account/listBooking');
         })
         .catch(err => console.log(err))
 });
@@ -156,34 +158,6 @@ router.get('/successful/:id', async (req, res) => {
     res.render('booking/successful', { booking });
 });
 
-async function sendEmail(email, booking) {
-    var email = email;
-    var token = token;
-    let mail = nodemailer.createTransport({
-        // service: 'gmail',
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'ginsengandstitch@gmail.com', // Your email id
-            pass: 'szuhchynibnlqpjz' // Your password
-        }
-    });
-    var mailOptions = {
-        from: 'ginsengandstitch@gmail.com',
-        to: email,
-        subject: 'Successful Course Booking',
-        html: '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
-    };
-    mail.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error)
-        } else {
-            console.log(info)
-        }
-    });
-}
-
 router.get('/successful/sendEmail/:id', async (req, res) =>{
     const booking = await Booking.findOne({
         include: [
@@ -198,39 +172,11 @@ router.get('/successful/sendEmail/:id', async (req, res) =>{
     // const user = await User.findOne({ where: { id: res.user.id } })
         
     console.log(req.user.email);
-
-    await sendEmail(req.user.email, booking);
+    var subject = 'Successful Course Booking';
+    var html = '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
+    sendEmail(req.user.email, subject, html);
 
     res.redirect('/account');
 });
-
-
-async function sendEmailUpdate(email, booking) {
-    var email = email;
-    var token = token;
-    let mail = nodemailer.createTransport({
-        // service: 'gmail',
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'skylarhiyagaming@gmail.com', // Your email id
-            pass: 'xpsuaskucepikgoe' // Your password
-        }
-    });
-    var mailOptions = {
-        from: 'skylarhiyagaming@gmail.com',
-        to: email,
-            subject: 'Successful Course Booking Update',
-            html: '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + booking + '</p> '
-        };
-        mail.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error)
-            } else {
-                console.log(info)
-            }
-        });
-    }
 
 module.exports = router;

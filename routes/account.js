@@ -236,10 +236,8 @@ router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
 });
 
 router.get('/review/:id', async (req, res) => {
-    const booking = await Booking.findOne({
+    const review = await Booking.findOne({
         include: [
-            { model: Class },
-            { model: User },
             { model: Course }
         ],
         where :
@@ -249,10 +247,7 @@ router.get('/review/:id', async (req, res) => {
     });
 
 
-    const user = booking.User;
-    const course = booking.Course;
-
-    res.render('account/review', { user , course });
+    res.render('account/review', { review });
 });
 
 router.post('/review/:id', async function (req, res){
