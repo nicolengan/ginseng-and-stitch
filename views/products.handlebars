@@ -8,30 +8,28 @@
             <div class="col-sm-4">
                 <div class="card border-2 mb-2">
                     <div>
-                        <a href="{{posterURL}}" data-title="{{prod_name}}" data-toggle="lightbox">
-                            <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid"
+                        <a data-title="{{prod_name}}" data-toggle="lightbox">
+                            <img src="{{posterURL}}" alt="Poster" class="img-fluid"
                                 onerror="this.src='/img/home_img.jpg'">
                         </a>
                     </div>
-                    <div class="card-header col-12">
-                        <h4 class="card-title text-start">{{prod_name}}</h4>
+                    <div class="m-3">
+                        <div class="col-12">
+                            <div class="row text-start">
+                                <p class="text-secondary opacity-75 mt-0">{{difficulty}}</p>
+                            </div>
+                            <h4 class="card-title text-start">{{prod_name}}</h4>
+                        </div>
+                            {{!-- <div class="row text-start">
+                                <h5 class="text">{{prod_desc}}</h5>
+                            </div> --}}
+                            <div class="row text-start">
+
+                                <p class="text">
+                                    ${{price}}
+                                </p>
+                        </div>
                     </div>
-
-                    <div class="card-body m-0">
-                        <div class="row text-start">
-                            <p class="text-info">{{difficulty}}</p>
-                        </div>
-                        <div class="row text-start">
-                            <h5 class="text">{{prod_desc}}</h5>
-                        </div>
-                        <div class="row text-start">
-
-                            <p class="text fw-bold">
-                                ${{price}}
-                            </p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             {{/each}}
