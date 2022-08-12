@@ -5,6 +5,7 @@ const Class = require('../models/Class');
 const Course = require('../models/Course');
 const Product = require('../models/Product');
 const Review = require('../models/Review');
+const Cart = require('../models/Cart');
 
 const setUpDB = (drop) => {
 
