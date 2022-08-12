@@ -41,12 +41,28 @@ router.post('/replyEnquiries/:id', async (req, res) => {
             var subject = 'RE: ' + enquiry.subject
             var message = `<p>${reply}</p>`
             var email = enquiry.email
-            var sent = sendEmail(email, subject, message);
-            console.log(sent)
+            sendEmail(email, subject, message);
             console.log(result + ' reply sent.');
             res.redirect('/admin/enquiries');
         })
         .catch(err => console.log(err));
+});
+
+router.get('/deleteEnquiries/:id', async (req, res) => {
+    let enquiry = await Enquiry.findOne({ where: { id: req.params.id } })
+        try {
+            await enquiry.destroy()
+                .then((result) => {
+                    console.log(enquiry + ' deleted');
+                    flashMessage(res, 'success', 'Enquiry deleted')
+                    res.redirect('/admin/enquiries');
+                    
+                })
+                .catch(err => console.log(err));
+        }
+        catch (err) {
+            console.log(err);
+        }
 });
 
 router.get('/download:id', async (req, res) =>{

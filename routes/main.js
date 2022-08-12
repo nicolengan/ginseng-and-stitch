@@ -71,6 +71,7 @@ router.post('/contactUs', (req, res) => {
     )
         .then((enquiry) => {
             console.log(enquiry.toJSON());
+            flashMessage(res, 'success', 'Enquiry sent successfully!');
             res.redirect('/');
         })
         .catch(err => console.log(err))

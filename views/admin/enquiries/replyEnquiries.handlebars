@@ -1,13 +1,13 @@
 <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="card card-body">
-        <h3>Replying to <span class="text-primary">{{name}}</span></h3>
+        <h3>Replying <span class="text-primary">{{name}}</span></h3>
         <form action="/admin/enquiries/replyEnquiries/{{id}}" method="post">
             {{!-- <div class="mb-3">
                 <label for="name" class="col-form-label">Name:</label>
                 <input type="text" class="form-control name" name="name" value="{{enquiry.name}}" size="25">
             </div> --}}
             <h5 class="card-title lead">To: {{email}}</h5>
-            <p class="card-text"><span class="fw-semibold">{{subject}}</span><br>{{comments}}</p>
+            <p class="card-text"><span class="fw-semibold fs-5">RE: {{subject}}</span><br>{{comments}}</p>
             <div class="mb-3">
                 <div class="form-check form-check-inline ps-0">
                     <input type="radio" class="btn-check" name="status" id="pending" value="0">
