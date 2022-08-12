@@ -9,13 +9,30 @@ const User = require('../models/User');
 const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
 
+router.get('/', async (req, res) => {
+    const booking = await Booking.findAll({
+        include: [
+            { model: Class },
+            { model: Course }
+        ]
+    });
+    res.render('booking/listBooking', { booking });
+});
+
+
+// router.get('/api/list', async (req, res) => {
+//     return res.json({
+//         total: await Booking.count(),
+//         rows: await Booking.findAll()
+//     })
+// });
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Booking.count(),
         rows: await Booking.findAll({
             include: [
                 { model: Class },
-                { model: Course }
+                { model: Course}
             ]
         })
     })
@@ -25,7 +42,7 @@ router.get('/api/list', async (req, res) => {
 //booking id, course id, class id, user id, date created
 
 //book will be listBooking
-router.get('/listBooking/:id', ensureAuthenticated, async (req, res) => {
+router.get('/listBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
@@ -137,10 +154,10 @@ router.get('/confirm/:id', async (req, res) => {
             { model: Class },
             { model: Course }
         ],
-        where: {
+        where:{
             id: req.params.id
         }
-
+        
     });
     const courses = await Course.findAll();
     const classes = await Class.findAll();

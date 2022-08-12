@@ -5,13 +5,13 @@ class Class extends Model {}
 
 Class.init({
   // Model attributes are defined here
+  time: {
+     type: DataTypes.TIME,
+     allowNull: false   
+  },
   date: {
     type: DataTypes.DATEONLY,
     allowNull: false,
-    unique: 'date'
-  },
-  pax: {
-    type: DataTypes.INTEGER
   },
   max_pax: {
     type: DataTypes.INTEGER

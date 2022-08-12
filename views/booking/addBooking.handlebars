@@ -1,41 +1,81 @@
+<!--Popper 2.10.2, Bootstrap v4.6 JavaScript-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+<!--Javascript for table-->
+<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+<script>
+	 function draw_picture(value, row, index) {
+  return `<img style="width: 100px; height: 64px" src="${value}">`;
+  }
+  	const Booking = require('../models/Booking');
+	const Class = require('../models/Class');
+	const Course = require('../models/Course');
+	const User = require('../models/User');
+
+</script>
+
 <style>
 	label {
 		display: inline-block;
 	}
 
 	.container {
-		width: 40%;
+		width: 60%;
 		margin: auto;
 	}
 
 	.col-75 {
 		margin-top: 2px;
+		width: 200px;
 	}
 
-	.submit {
-		width: 20%;
-		margin: auto;
-		text-align: center;
+	#buttons {
+		width: 200px;
+		margin: 0 auto;
+		display: inline;
 	}
+	
 </style>
-<p>Home > Courses > Book Now </p>
-<h4><u>New Booking Creation</u></h4>
+
+<p style="float: left">Home > Courses > Book Now </p>
 <!--booking id, course id, class id,  user id, date created-->
-<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-	<p>Please book and change the details to your preferences.</p>
+<div class="container">
+	<div class="table-responsive">
+		<table class="table table-striped" id="table" data-toggle="table" data-filter-control="true"
+			data-show-columns="true" data-url="/admin/classes/api/list">
+			<thead>
+				<tr class="table-active">
+					<th data-field="Course.id">Course ID</th>
+					<th data-field="Course.title">Course Title</th>
+					<th data-field="Course.level">Course Level</th>
+					<th data-field="id">Class ID</th>
+					<th data-field="date">Class date</th>
+					<th data-field="time">Class time</th>
+				</tr>
+				<tr>
+					
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<br>
 	<div class="card card-body">
 		<form action="" method="post">
 			<div class="form-group">
+				<h4><u>New Booking Creation</u></h4>
+				<p>Please book and change the details to your preferences.</p>
 				<div class="row">
 					<div class="col-25">
 						<label for="CourseId">Course ID:</label>
 					</div>
 					<div class="col-75">
-						<select class="form-select" id="CourseId" name="CourseId" aria-label="Default">
+						<select class="form-select" id="CourseId" name="CourseId" aria-label="Default select example">
 							{{#each courses}}
-							<option value="{{id}}" name="CourseId">{{id}}</option>
+							<option value="{{id}}" id="CourseId" name="CourseId">{{id}}</option>
 							{{/each}}
 						</select>
+	
 					</div>
 				</div>
 			</div>
@@ -46,29 +86,18 @@
 						<label for="ClassId">Class ID:</label>
 					</div>
 					<div class="col-75">
-						<select class="form-select" name="ClassId" aria-label="Default select example">
+						<select class="form-select" id="ClassId" name="ClassId" aria-label="Default select example">
 							{{#each classes}}
-							<option value="{{id}}" name="ClassId">{{id}}</option>
+							<option value="{{id}}" id="ClassId" name="ClassId">{{id}}</option>
 							{{/each}}
 						</select>
 					</div>
 				</div>
 			</div>
-			<br>
-			{{!-- <div class="form-group">
-				<div class="row">
-					<div class="col-75">
-						<label for="ClassDetails">Class Start Date:</label>
-						{{#each booking}}
-						<p class="text-primary">{{classes.date}}</p>
-						{{/each}}
-					</div>
-				</div>
-			</div>
-			<br> --}}
+			<br>					
 			<div class="submit">
 				<button class="btn btn-primary waves-effect" type="submit">+ Create Booking</button>
-				<button class="btn btn-info" type="submit"><a href="/booking/listBooking/{{id}}">Current Booking</a></button>
+				<button class="btn btn-info" type="submit"><a href="/booking/listBooking">Current Booking</a></button>
 			</div>
 		</form>
 	</div>
