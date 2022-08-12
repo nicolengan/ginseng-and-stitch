@@ -41,16 +41,5 @@ router.get('/contactUs', (req, res) => {
     res.render('contactUs');
 });
 
-router.get('/products', (req, res) => {
-    Product.findAll({
-        // where: { userId: req.user.id },
-        raw: true
-    })
-        .then((products) => {
-            // pass object to listVideos.handlebar
-            res.render('products', {products});
-        })
-        .catch(err => console.log(err));
-});
 
 module.exports = router;
