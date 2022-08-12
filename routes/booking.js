@@ -7,6 +7,7 @@ const Class = require('../models/Class');
 const Course = require('../models/Course');
 const User = require('../models/User');
 const nodemailer = require("nodemailer");
+const { where, ConnectionRefusedError } = require('sequelize/types');
 
 router.get('/', async (req, res) => {
     const booking = await Booking.findAll({
@@ -56,7 +57,7 @@ router.get('/addBooking', ensureAuthenticated, async (req, res) => {
         ]
     });
     const courses = await Course.findAll();
-    const classes = await Class.findAll();
+    const classes = await Class.findAll({where: { CourseId = 'CourseId' }});
     res.render('booking/addBooking', { booking, courses, classes });
 });
 
