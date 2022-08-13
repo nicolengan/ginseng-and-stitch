@@ -10,7 +10,8 @@ const Cart = require('../models/Cart');
 
 
 router.get('/', ensureAuthenticated, async (req, res) => {
-    Cart.findAll({
+    Cart.findOrCreate({
+        where: {UserId: req.user.id},
         order: [['updatedAt', 'DESC']],
         raw: true
     })
@@ -45,10 +46,10 @@ router.get('/api/list', async (req, res) => {
 
 router.get('/deleteItemFromCart/:id', async function (req, res) {
     try {
-        await Product.destroy({ where: { id: req.params.id } })
+        await Cart.destroy({ where: { id: req.params.id } })
         .then((result) => {
             console.log(result[0] + ' deleted');
-            res.redirect('cart/cart');
+            res.redirect('/cart');
         })
         .catch(err => console.log(err));
     }
