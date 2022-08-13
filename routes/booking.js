@@ -8,14 +8,32 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
+const { where, ConnectionRefusedError } = require('sequelize/types');
 
+router.get('/', async (req, res) => {
+    const booking = await Booking.findAll({
+        include: [
+            { model: Class },
+            { model: Course }
+        ]
+    });
+    res.render('booking/listBooking', { booking });
+});
+
+
+// router.get('/api/list', async (req, res) => {
+//     return res.json({
+//         total: await Booking.count(),
+//         rows: await Booking.findAll()
+//     })
+// });
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Booking.count(),
         rows: await Booking.findAll({
             include: [
                 { model: Class },
-                { model: Course }
+                { model: Course}
             ]
         })
     })
@@ -25,13 +43,13 @@ router.get('/api/list', async (req, res) => {
 //booking id, course id, class id, user id, date created
 
 //book will be listBooking
-router.get('/listBooking/:id', ensureAuthenticated, async (req, res) => {
+router.get('/listBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
             { model: Course }
         ],
-        where:{
+        where: {
             id: req.params.id
         }
     });
@@ -39,10 +57,10 @@ router.get('/listBooking/:id', ensureAuthenticated, async (req, res) => {
 });
 
 
-router.get('/addBooking', ensureAuthenticated, async (req, res) => {
+router.get('/addBooking/:id', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
-            { model: Class, attributes: ['id'] },
+            { model: Class },
             { model: Course }
         ]
     });
@@ -51,7 +69,7 @@ router.get('/addBooking', ensureAuthenticated, async (req, res) => {
     res.render('booking/addBooking', { booking, courses, classes });
 });
 
-router.post('/addBooking', ensureAuthenticated, async (req, res) => {
+router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
     let CourseId = req.body.CourseId;
     let ClassId = req.body.ClassId;
     let UserId = req.user.id
@@ -88,9 +106,9 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     )
         .then((result) => {
             console.log(result[0] + ' booking updated');
-            var subject =  'Successful Course Booking Update'
+            var subject = 'Successful Course Booking Update'
             var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
-            sendEmail(req.user.email, subject, html );
+            sendEmail(req.user.email, subject, html);
             flashMessage(res, 'successfully updated booking');
             res.redirect('/account/listBooking');
         })
@@ -149,7 +167,7 @@ router.get('/successful/:id', async (req, res) => {
             { model: Class },
             { model: Course }
         ],
-        where:{
+        where: {
             id: req.params.id
         }
     });
@@ -158,19 +176,19 @@ router.get('/successful/:id', async (req, res) => {
     res.render('booking/successful', { booking });
 });
 
-router.get('/successful/sendEmail/:id', async (req, res) =>{
+router.get('/successful/sendEmail/:id', async (req, res) => {
     const booking = await Booking.findOne({
         include: [
             { model: Class },
             { model: Course }
         ],
-        where:{
+        where: {
             id: req.params.id
         }
     });
 
     // const user = await User.findOne({ where: { id: res.user.id } })
-        
+
     console.log(req.user.email);
     var subject = 'Successful Course Booking';
     var html = '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '

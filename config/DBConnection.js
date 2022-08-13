@@ -3,8 +3,10 @@ const User = require('../models/User');
 const Booking = require('../models/Booking');
 const Class = require('../models/Class');
 const Course = require('../models/Course');
+const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const Review = require('../models/Review');
+const Cart = require('../models/Cart');
 
 const setUpDB = (drop) => {
 
@@ -16,12 +18,11 @@ const setUpDB = (drop) => {
             console.log("The table for the Database was just (re)created!");
 
             //user_id in cart
-            // Cart.belongsTo(User);
-            // User.hasOne(Cart);
+            Cart.belongsTo(User, {foreignKey: 'UserId', targetKey: 'id', onDelete: 'CASCADE'});
+            User.hasOne(Cart, {sourceKey: 'id', foreignKey: 'UserId'});
 
-            //product_id in cart
-            // Cart.belongsTo(Product);
-            // Product.hasMany(Cart);
+            // product_id in cart
+            Product.hasMany(Cart, { sourceKey: 'prod_name', foreignKey: 'prod_name'});
 
             // //booking_id in cart
             // Cart.hasMany(Booking);

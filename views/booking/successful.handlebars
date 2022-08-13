@@ -36,13 +36,12 @@
 							<p class="text-primary">{{Course.price}}</p>
 							
 							<i class="text-dark">Number of Pax selected:</i> 
-							<p class="text-primary">{{Class.pax}}</p>
+							<p class="text-primary">{{Class.max_pax}}</p>
 						</div>	
 						<br>		
 					</div>
 						<div class="Receipt">
-							<a class="btn btn-dark" href="sendEmail/{{id}}">Receipt to Email</a>
-							{{!-- <button type="button" class="btn btn-dark">Add to Calendar</button> --}}
+							<a class="btn btn-dark" href="sendEmail/{{id}}"><a href="/booking/deleteBooking/{{id}}">Receipt to Email</a>
 						</div>
 				</div>
 		</div>

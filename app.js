@@ -112,6 +112,7 @@ app.use(function(req, res, next) {
     res.locals.user = req.user || null;
     next();
 });
+
 const isAdmin = require('./helpers/admin');
 // mainRoute is declared to point to routes/main.js
 

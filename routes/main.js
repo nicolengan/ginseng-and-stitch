@@ -4,6 +4,7 @@ const flashMessage = require('../helpers/messenger');
 const Courses = require('../models/Course');
 const Review = require('../models/Review');
 const Users = require('../models/User');
+const Product = require('../models/Product');
 const Enquiry = require('../models/Enquiry');
 const fs = require('fs');
 const upload = require('../helpers/fileUpload');
@@ -11,12 +12,13 @@ const validator = require("email-validator");
 // routes
 const booking = require("./booking");
 const account = require("./account");
-const Product = require('../models/Product');
-// const payment = require("./payment");
+const cart = require('./cart');
+const payment = require("./payment");
 
 router.use('/account', account);
 router.use('/booking', booking);
-// router.use('/payment', payment);
+router.use('/cart', cart);
+router.use('/payment', payment);
 
 router.get('/', (req, res) => {
     const title = 'Ginseng and Stitch';
@@ -69,6 +71,7 @@ router.post('/contactUs', (req, res) => {
     )
         .then((enquiry) => {
             console.log(enquiry.toJSON());
+            flashMessage(res, 'success', 'Enquiry sent successfully!');
             res.redirect('/');
         })
         .catch(err => console.log(err))
@@ -109,5 +112,6 @@ router.get('/products', (req, res) => {
         })
         .catch(err => console.log(err));
 });
+
 
 module.exports = router;
