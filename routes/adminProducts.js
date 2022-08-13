@@ -110,7 +110,8 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
     if (!fs.existsSync('./public/uploads/' + req.user.id)) {
         fs.mkdirSync('./public/uploads/' + req.user.id, { recursive: true });
     }
-
+    console.log(req.headers);
+    console.log(req.file);
     upload(req, res, (err) => {
         if (err) {
             // e.g. File too large
