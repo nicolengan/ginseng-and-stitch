@@ -10,7 +10,7 @@ const Cart = require('../models/Cart');
 
 
 router.get('/', ensureAuthenticated, async (req, res) => {
-    Cart.findOrCreate({
+    Cart.findAll({
         where: {UserId: req.user.id},
         order: [['updatedAt', 'DESC']],
         raw: true
@@ -40,7 +40,9 @@ router.post('/addProductToCart', ensureAuthenticated, (req, res) => {
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Cart.count(),
-        rows: await Cart.findAll()
+        rows: await Cart.findAll({
+            // where: UserId = req.user.id
+        })
     })
 });
 
