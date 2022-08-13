@@ -2,10 +2,8 @@
     $('[data-toggle=confirmation]').confirmation({
         rootSelector: '[data-toggle=confirmation]',
     });
-
     var myModal = document.getElementById('myModal')
     var myInput = document.getElementById('myInput')
-
     myModal.addEventListener('shown.bs.modal', function () {
         myInput.focus()
     })
@@ -119,11 +117,3 @@
     </main>
 </div>
             {{!-- <a class="btn btn-primary" href="/booking/addBooking/{{id}}">Book Class</a> --}}
-<<<<<<< HEAD
-            <div class="p-2"><a class="btn btn-primary" href="/booking/addBooking/{{id}}">Book Class</a></div>
-{{else}}
-<h3>No products yet</h3>
-{{/if}}
-</main>
-=======
->>>>>>> 61c9d57c7bbfbabf8ace5f7a9cde6b25c9e2157a

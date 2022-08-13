@@ -8,7 +8,6 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
-const { where, ConnectionRefusedError } = require('sequelize/types');
 
 router.get('/', async (req, res) => {
     const booking = await Booking.findAll({
@@ -20,13 +19,6 @@ router.get('/', async (req, res) => {
     res.render('booking/listBooking', { booking });
 });
 
-
-// router.get('/api/list', async (req, res) => {
-//     return res.json({
-//         total: await Booking.count(),
-//         rows: await Booking.findAll()
-//     })
-// });
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Booking.count(),
@@ -39,23 +31,21 @@ router.get('/api/list', async (req, res) => {
     })
 });
 
-// BOOKING SESSION
-//booking id, course id, class id, user id, date created
-
-//book will be listBooking
 router.get('/listBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
             { model: Course }
-        ],
-        where: {
-            id: req.params.id
-        }
+        ]
+        // where: {
+        //     id: req.params.id
+        // }
     });
     res.render('booking/listBooking', { booking });
 });
 
+// so req.params.id is getting ur /:id part in ur url
+// the :id in url is the course id
 
 router.get('/addBooking/:id', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
@@ -64,8 +54,20 @@ router.get('/addBooking/:id', ensureAuthenticated, async (req, res) => {
             { model: Course }
         ]
     });
-    const courses = await Course.findAll();
-    const classes = await Class.findAll();
+    const courses = await Course.findAll(
+        {
+            where: {
+                id: req.params.id
+            }
+        });
+    const classes = await Class.findAll(
+        {
+            where: {
+                CourseId: req.params.id
+            }
+        });
+    // const courses = await Course.findAll();
+    // const classes = await Class.findAll();
     res.render('booking/addBooking', { booking, courses, classes });
 });
 
@@ -79,7 +81,8 @@ router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
     )
         .then((classes) => {
             console.log(classes.toJSON());
-            res.redirect('/booking/listBooking/' + classes.id);
+            res.redirect('/booking/listBooking/');
+            // res.redirect('/booking/listBooking/' + classes.id);
         })
         .catch(err => console.log(err))
 });
