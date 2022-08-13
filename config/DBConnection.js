@@ -22,6 +22,7 @@ const setUpDB = (drop) => {
 
             // product_id in cart
             Product.hasMany(Cart, { sourceKey: 'prod_name', foreignKey: 'prod_name'});
+            // Product.hasMany(Cart, { sourceKey: 'posterURL', foreignKey: 'posterURL'});
 
             // //booking_id in cart
             // Cart.hasMany(Booking);
