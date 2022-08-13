@@ -114,3 +114,38 @@
     </main>
 </div>
 {{!-- <a class="btn btn-primary" href="/booking/addBooking/{{id}}">Book Class</a> --}}
+<script>
+  var exampleModal = document.getElementById('staticBackdrop')
+  exampleModal.addEventListener('show.bs.modal', function (event) {
+
+    // Button that triggered the modal
+    var button = event.relatedTarget
+
+    // Extract info from data-bs-* attributes
+    var title = button.getAttribute('data-bs-title')
+    var level = button.getAttribute('data-bs-level')
+    var description = button.getAttribute('data-bs-description')
+    var price = button.getAttribute('data-bs-price')
+    var name = button.getAttribute('data-bs-name')
+    var star_count = button.getAttribute('data-bs-star_count')
+    var review = button.getAttribute('data-bs-review')
+
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+    // Update the modal's content.
+    var modalTitle = exampleModal.querySelector('.modal-title')
+    var modalBodyLevel = exampleModal.querySelector('.modal-body level')
+    var modalBodyDescription = exampleModal.querySelector('.modal-body description')
+    var modalBodyPrice = exampleModal.querySelector('.modal-body price')
+    var modalBodyName = exampleModal.querySelector('.modal-body name')
+    var modalBodyStar_Count = exampleModal.querySelector('.modal-body star_count')
+    var modalBodyReview = exampleModal.querySelector('.modal-body review')
+    modalBodyLevel.value = level
+    modalBodyDescription.value = description
+    modalBodyPrice.value = price
+    modalBodyName.value = name
+    modalBodyStar_Count.value = star_count
+    modalBodyReview.value = review
+  })
+</script>
