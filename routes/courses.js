@@ -26,21 +26,22 @@ router.get('/', (req, res) => {
         .catch(err => console.log(err));
 });
 
+router.get('/api/list', async (req, res) => {
+    return res.json({
+        total: await Review.count(),
+        rows: await Review.findOne({
+            include: [
+                { model: Review },
+                { model: User },
+            ]
+        })
+    })
+});
+
+
 router.get('/addCourses' ,  ensureAuthenticated, isAdmin, (req, res) => {
     res.render('courses/addCourses');
 });
-
-// router.get('/listCourses',  ensureAuthenticated, isAdmin , (req, res) => {
-//     Courses.findAll({
-//         // where: { userId: req.user.id },
-//         raw: true
-//     })
-//         .then((courses) => {
-//             // pass object to listVideos.handlebar
-//             res.render('courses/listCourses', { courses});
-//         })
-//         .catch(err => console.log(err));
-// });
 
 router.get('/listCourses', ensureAuthenticated, isAdmin, async (req, res) => {
     const courses = await Courses.findAll({
