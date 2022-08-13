@@ -1,5 +1,75 @@
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Dashboard</h1>
-    </div>
-</main>
+  </div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  // Load the Visualization API and the corechart package.
+ google.charts.load('current', {'packages':['line']});
+  google.charts.setOnLoadCallback(drawBackgroundColor);
+
+function drawBackgroundColor() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'month');
+      data.addColumn('number', 'traffic');
+
+      
+      data.addRows([
+      {{#each traffic}}
+          [`{{month}}`, {{count}}],
+        {{/each}}
+      ]);
+      
+
+      var options = {
+        chart: {
+          title: 'Website traffic',
+          subtitle: `in the year {{year}}`
+        },
+        width: 1100,
+        height: 500,
+        axes: {
+          x: {
+            0: {side: 'top'}
+          }
+      }}
+
+      var chart = new google.charts.Line(document.getElementById('chart'));
+      chart.draw(data, google.charts.Line.convertOptions(options))}
+</script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Role', 'Number'],
+          ['Admin', {{admins}}],
+          ['User', {{users}}]
+        ]);
+
+        var options = {
+          title: 'Number of users',
+          pieHole: 0.4,
+          width: 600,
+          height: 500,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+    <div class="row">
+  <div class="col-sm-8">
+    <div class="card p-4">
+  <div id="chart">
+  </div>
+  </div>
+  </div>
+  <div class="col-sm-4">
+  <div class="card  p-4">
+  <div id="donutchart" style="width: 900px; height: 500px;"></div>
+  </div>
+  </div>
+  </div>
+</div>

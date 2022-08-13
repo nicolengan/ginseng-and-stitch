@@ -6,6 +6,7 @@ const Review = require('../models/Review');
 const Users = require('../models/User');
 const Product = require('../models/Product');
 const Enquiry = require('../models/Enquiry');
+const Traffic = require('../models/Traffic');
 const fs = require('fs');
 const upload = require('../helpers/fileUpload');
 const validator = require("email-validator");
@@ -20,9 +21,19 @@ router.use('/booking', booking);
 router.use('/cart', cart);
 router.use('/payment', payment);
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     const title = 'Ginseng and Stitch';
-
+    const month_arr = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const curr_date = new Date();
+    let month = month_arr[curr_date.getMonth()];
+    let year = curr_date.getFullYear();
+    console.log(year)
+    Traffic.findOrCreate({
+        where: {month: month, year: year}
+    })
+    var x = await Traffic.increment({count: 1}, { where: { month: month, year: year } })
+        .catch(err => console.log(err));
+    console.log(JSON.stringify(x))
     // renders views/index.handlebars, passing title as an object
     res.render('index', { title: title })
 });

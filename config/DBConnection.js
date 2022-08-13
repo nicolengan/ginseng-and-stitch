@@ -6,15 +6,14 @@ const Course = require('../models/Course');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const Review = require('../models/Review');
-const Cart = require('../models/Cart');
 
 const setUpDB = (drop) => {
 
     mySQLDB.authenticate()
-        .then(() => {
+        .then(async () => {
             console.log('Database connected');
 
-            mySQLDB.sync({ alter: true, force: drop });
+            await mySQLDB.sync({ alter: true, force: drop });
             console.log("The table for the Database was just (re)created!");
 
             //user_id in cart

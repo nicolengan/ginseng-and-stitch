@@ -8,7 +8,7 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
-const { where, ConnectionRefusedError } = require('sequelize/types');
+// const { where, ConnectionRefusedError } = require('sequelize/types');
 
 router.get('/', async (req, res) => {
     const booking = await Booking.findAll({

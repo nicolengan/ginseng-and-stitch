@@ -10,8 +10,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/list', async (req, res) => {
-    console.log("hiii")
-
     return res.json({
         total: await User.count(),
         rows: await User.findAll()
