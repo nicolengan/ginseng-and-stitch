@@ -62,19 +62,6 @@ router.get('/courses', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/moreinfo', (req, res) => {
-    Classes.findAll({
-         where: 
-         {
-             CourseId: 1
-         }
-    })
-        .then((classes) => {
-            res.render('moreinfo', {classes});
-        })
-        .catch(err => console.log(err));
-});
-
 router.get('/contactUs', (req, res) => {
     res.render('contactUs');
 });
