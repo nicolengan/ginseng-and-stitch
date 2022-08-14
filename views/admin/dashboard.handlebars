@@ -3,24 +3,24 @@
     <h1 class="h2">Dashboard</h1>
   </div>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  // Load the Visualization API and the corechart package.
- google.charts.load('current', {'packages':['line']});
-  google.charts.setOnLoadCallback(drawBackgroundColor);
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { 'packages': ['line'] });
+    google.charts.setOnLoadCallback(drawBackgroundColor);
 
-function drawBackgroundColor() {
+    function drawBackgroundColor() {
       var data = new google.visualization.DataTable();
       data.addColumn('string', 'month');
-      data.addColumn('number', 'traffic');
+      data.addColumn('number', 'visits');
 
-      
+
       data.addRows([
-      {{#each traffic}}
-          [`{{month}}`, {{count}}],
-        {{/each}}
+        {{#each traffic}}
+    [`{{month}}`, {{ count }}],
+      {{/each}}
       ]);
-      
+
 
       var options = {
         chart: {
@@ -31,45 +31,164 @@ function drawBackgroundColor() {
         height: 500,
         axes: {
           x: {
-            0: {side: 'top'}
+            0: { side: 'top' }
           }
-      }}
+        }
+      }
 
       var chart = new google.charts.Line(document.getElementById('chart'));
-      chart.draw(data, google.charts.Line.convertOptions(options))}
-</script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Role', 'Number'],
-          ['Admin', {{admins}}],
-          ['User', {{users}}]
+      chart.draw(data, google.charts.Line.convertOptions(options))
+    }
+  </script>
+  <script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Role', 'Number'],
+        ['Admin', {{ admins }}],
+    ['User', {{ users }}]
         ]);
 
-        var options = {
-          title: 'Number of enquiries',
-          pieHole: 0.4,
-          width: 600,
-          height: 500,
-        };
+    var options = {
+      title: 'User demographic',
+      pieHole: 0.4,
+      width: 600,
+      height: 500,
 
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    chart.draw(data, options);
       }
-    </script>
-    <div class="row">
-  <div class="col-sm-8">
-    <div class="card p-4">
-  <div id="chart">
-  </div>
-  </div>
-  </div>
-  <div class="col-sm-4">
-  <div class="card  p-4">
-  <div id="donutchart" style="width: 900px; height: 500px;"></div>
-  </div>
-  </div>
+  </script>
+  <script type="text/javascript">
+    function formatDate(unix) {
+      var a = new Date(unix * 1000);
+      var date = a.getDate()
+      return date
+    }
+    // Load the Visualization API and the piechart package.
+    google.charts.setOnLoadCallback(drawFromApi);
+
+    function drawFromApi() {
+      $.ajax({
+        url: "/admin/api/listCustomer",
+        dataType: "json",
+      }).done(function (jsonData) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Date');
+        data.addColumn('number', 'Customers');
+        var count = 0
+        Object.values(jsonData).reverse().forEach(function (row) {
+          row.reverse().forEach(function (b) {
+            count += 1
+            data.addRow([
+              formatDate(b.created),
+              count
+            ]);
+          })
+        });
+        const d = new Date();
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var month = months[d.getMonth()];
+
+        var options = {
+          chart: {
+            title: 'Customers',
+            subtitle: `in the month ${month}`
+          },
+          width: 900,
+          height: 500,
+          axes: {
+            x: {
+              0: { side: 'top' }
+            }
+          },
+          hAxis: { format: '0' },
+          vAxis: { format: '0' }
+        }
+
+        var chart = new google.charts.Line(document.getElementById('chartDiv'));
+        chart.draw(data, google.charts.Line.convertOptions(options))
+      })
+    }
+     google.charts.setOnLoadCallback(drawFromApi2);
+
+    function drawFromApi2() {
+      $.ajax({
+        url: "/admin/api/listInvoice",
+        dataType: "json",
+      }).done(function (jsonData) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Date');
+        data.addColumn('number', 'Gross Earnings($)');
+        var count = 0
+        Object.values(jsonData).reverse().forEach(function (row) {
+          row.forEach(function (b) {
+            count += 1
+            console.log((Object.values(b.data)[0].amount)/100)
+            data.addRow([
+              formatDate(b.created),
+              (Object.values(b.data)[0].amount)/100
+            ]);
+          })
+        });
+        const d = new Date();
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var month = months[d.getMonth()];
+
+        var options = {
+          chart: {
+            title: 'Earnings',
+            subtitle: `in the month ${month}`
+          },
+          width: 900,
+          height: 500,
+          axes: {
+            x: {
+              0: { side: 'top' }
+            }
+          },
+          hAxis: { format: '0' },
+          vAxis: { format: '0' }
+        }
+
+        var chart = new google.charts.Line(document.getElementById('chart_2'));
+        chart.draw(data, google.charts.Line.convertOptions(options))
+      })
+    }
+  </script>
+  <div class="row">
+
+    <div class="col-sm-8">
+      <div class="card p-4">
+        <div id="chart">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card  p-4">
+        <div id="donutchart" style="width: 900px; height: 500px;"></div>
+      </div>
+    </div>
+    {{!-- <form action="">
+      <select name="customers" onchange="showCustomer(this.value)">
+        <option value="">Select a customer:</option>
+        <option value="2">Alfreds Futterkiste</option>
+      </select>
+    </form>
+    <div id="txtHint">gfhfg</div> --}}
+    <div class="col-sm-6">
+      <div class="card p-4 mt-3">
+        <div id="chartDiv"></div>
+      </div>
+    </div>
+        <div class="col-sm-6">
+      <div class="card p-4 mt-3">
+        <div id="chart_2"></div>
+      </div>
+    </div>
+
   </div>
 </div>

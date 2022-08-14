@@ -1,4 +1,3 @@
-
 <script>
     $('[data-toggle=confirmation]').confirmation({
         rootSelector: '[data-toggle=confirmation]',
@@ -76,15 +75,18 @@
                                                             <div class="card-body py-4 mt-2">
                                                                 <h5 class="font-weight-bold"></h5>
                                                                 <ul class="list-unstyled d-flex justify-content-center">
-                                                                    <p>{{'Reviews.star_count'}}</p>
+                                                                    <p>{{star_count}}</p>
+
+                                                                    {{#each reviews}}
                                                                     <p class="mb-2">
+                                                                        <p>{{"name"}}</p>
                                                                         <i
-                                                                            class="fas fa-quote-left pe-2"></i>{{'Reviews.review'}}
+                                                                            class="fas fa-quote-left pe-2"></i>{{'review'}}
                                                                     </p>
+                                                                    {{/each}}
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -99,7 +101,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             {{/each}}
 

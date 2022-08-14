@@ -5,23 +5,22 @@
             <div class="col-sm-4 mx-0 pe-0 mt-4">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active accordion user-select-none" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne" aria-current="page"><i class="m-1 bi bi-person"></i>My
+                        <a class="nav-link active accordion user-select-none text-body"><i class="m-1 bi bi-person"></i>My
                             Account</a>
                         <div id="collapseOne" class="accordion-collapse collapse show">
                             <ul class="nav flex-column">
-                                <li class="nav-item accordion-item">
-                                    <a class="nav-link" href="/account">Profile</a>
+                                <li class="nav-item">
+                                    <a class="nav-link text-muted" href="/account">Profile</a>
                                 </li>
-                                <li class="nav-item accordion-item">
-                                    <a class="nav-link text-reset"
-                                        href="/account/changePassword/{{user.id}}"></i>Password</a>
+                                <li class="nav-item">
+                                    <a class="nav-link text-muted"
+                                        href="/account/changePassword"></i>Password</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/account/bookings">My bookings</a>
+                        <a class="nav-link text-body active" href="/account/bookings">My bookings</a>
                     </li>
                 </ul>
             </div>
@@ -51,7 +50,7 @@
                                     <td>{{Class.date}}</td>
                                     <td>{{Class.time}}</td>
                                     {{!-- <td><a href="/booking/editBooking/{{CourseId}}"><i class="bi bi-pencil-square text-primary fs-5"></i></a><a class="ms-1" href="/booking/deleteBooking/{{id}}"><i class="bi bi-trash text-danger fs-5"></i></a></td> --}}
-                                    <td><a href="/booking/deleteBooking/{{id}}"><i class="bi bi-trash text-danger fs-5"></i></a><a class="ms-1" href="/booking/editBooking2/{{id}}"><i class="bi bi-pencil-square text-primary fs-5"></i></a></td>
+                                    <td><a href="/booking/deleteBooking/{{id}}"><i class="bi bi-trash text-danger fs-5"></i></a><a class="ms-1" href="/booking/editBooking/{{CourseId}}"><i class="bi bi-pencil-square text-primary fs-5"></i></a></td>
                                 </tr>
                                 {{/each}}
                             </tbody>

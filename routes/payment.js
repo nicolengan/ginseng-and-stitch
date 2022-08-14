@@ -3,6 +3,7 @@ const router = express.Router();
 const Product = require('../models/Product');
 const Booking = require('../models/Booking');
 const Course = require('../models/Course');
+const Cart = require('../models/Cart');
 const stripe = require('stripe')('sk_test_51LFiQDIDLAIUfWTrXJv037R9GA5KTPZF2W98ix0WKql786N6swgCubejuSMLMIuluPGiMUyVTgp9AIz6d17fiI0T00B189hFRp');
 const YOUR_DOMAIN = 'http://localhost:5000';
 
@@ -12,35 +13,12 @@ router.get('/bookingPayment/:id', async (req, res) => {
         where: { id: req.params.id },
         include: { model: Course }
     })
-    const events = await stripe.events.list({
-        limit: 3,
-      });
-    console.log(events)    
-    // console.log(x.Course.price)
-    // const product = await stripe.products.search({
-    //     query: `name:\'${x.name}\'`,
+    // const events = await stripe.events.list({
+    //     limit: 3,
     //   });
-    // console.log(product)
-    // if (product == null) {
-    //     const product = await stripe.products.create({
-    //         id: `${x.id}`,
-    //         name: `${x.name}`,
-    //     });
-    // }
-    // const price = await stripe.prices.create({
-    //     unit_amount: x.Course.price * 100,
-    //     currency: 'sgd',
-    //     product_data: `${x.name}`
-    // });
-    // console.log(price.id)
+    // console.log(customers.count())
+    // console.log(events)    
     const session = await stripe.checkout.sessions.create({
-        // line_items: [
-        //     {
-        //         // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        //         price: price.id,
-        //         quantity: 1,
-        //     },
-        // ],
         line_items: [
             {
               price_data: {
@@ -49,6 +27,39 @@ router.get('/bookingPayment/:id', async (req, res) => {
                   name: `${x.Course.title}`,
                 },
                 unit_amount: x.Course.price * 100,
+              },
+              quantity: 1,
+            }],
+        mode: 'payment',
+        success_url: `${YOUR_DOMAIN}/booking/successful/${x.id}`,
+        cancel_url: `${YOUR_DOMAIN}`,
+    });
+
+    res.redirect(303, session.url);
+});
+
+router.get('/:id', async (req, res) => {
+    var x = await Cart.sum(
+        'price',
+        {where: { UserId: req.params.id }},
+        {include: { model: Product }}
+    )
+    var user = req.user
+    // console.log(JSON.stringify(Array.from( productName.values() )))
+    // const events = await stripe.events.list({
+    //     limit: 3,
+    //   });
+    // console.log(customers.count())
+    // console.log(events)    
+    const session = await stripe.checkout.sessions.create({
+        line_items: [
+            {
+              price_data: {
+                currency: 'SGD',
+                product_data: {
+                  name: `${req.user.name}'s cart`,
+                },
+                unit_amount: x * 100,
               },
               quantity: 1,
             }],

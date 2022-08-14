@@ -20,6 +20,9 @@ router.get('/', (req, res) => {
         raw: true
     })
         .then((courses) => {
+
+            
+            
             // pass object to listVideos.handlebar
             res.render('courses', { courses, Review });
         })
