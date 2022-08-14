@@ -8,6 +8,7 @@ const path = require('path');
 const Product = require('../models/Product');
 const Cart = require('../models/Cart');
 const db = require('../config/DBConfig');
+const { ResultWithContext } = require('express-validator/src/chain');
 // const shopController = require('../controllers/shop');
 
 
@@ -33,8 +34,9 @@ router.post('/addProductToCart', ensureAuthenticated, async (req, res) => {
     }})
 
     if (!cartItem) {
+        let newPrice = parseFloat(price) * parseInt(quantity);
         Cart.create(
-            { prod_name, quantity, price, UserId }
+            { prod_name, quantity, price: newPrice, UserId }
         )
             .then((item) => {
                 console.log(item.toJSON());
