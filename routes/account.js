@@ -19,6 +19,11 @@ router.get('/', ensureAuthenticated, async (req, res) => {
     res.render('account/account', { bookings })
 });
 
+router.get('/bookings', async (req, res) => {
+    const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
+    res.render('account/bookings', { bookings })
+});
+
 router.get('/login', (req, res) => {
     res.render('account/login');
 });
@@ -67,7 +72,7 @@ router.post('/register', async function (req, res) {
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
 
-            let user = await User.create({ name, email, password: hash });
+            let user = await User.create({ name: name, email: email, password: hash });
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/account/login');
         }

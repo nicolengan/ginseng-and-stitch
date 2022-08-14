@@ -39,43 +39,24 @@
 <!--booking id, course id, class id,  user id, date created-->
 
 <div class="container">
-	{{#if classes}}
-	<div class="card card-body">
-		<h3 class="text-dark">Classes</h3>
-		{{#each classes}}
-			<div class="card border-black mb-2">
-				<div class="card-body">
-					<div class="row">
-
-						<div class="col">
-							<p class="text-primary">Course ID</p>
-							<p class="text-dark">{{CourseId}}</p>
-						</div>
-
-						<div class="col">
-							<p class="text-primary">Class ID</p>
-							<p class="text-dark">{{id}}</p>
-						</div>
-
-						<div class="col">
-							<p class="text-primary">Time</p>
-							<p class="text-dark">{{time}}</p>
-						</div>
-
-						<div class="col">
-							<p class="text-primary">Date</p>
-							<p class="text-dark">{{date}}</p>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		{{/each}}
+	<div class="table-responsive">
+		<table class="table table-striped" id="table" data-toggle="table" data-filter-control="true"
+			data-show-columns="true" data-url="/admin/classes/api/list">
+			<thead>
+				<tr class="table-active">
+					<th data-field="Course.id">Course ID</th>
+					<th data-field="Course.title">Course Title</th>
+					<th data-field="Course.level">Course Level</th>
+					<th data-field="id">Class ID</th>
+					<th data-field="date">Class date</th>
+					<th data-field="time">Class time</th>
+				</tr>
+				<tr>
+					
+				</tr>
+			</thead>
+		</table>
 	</div>
-	{{else}}
-	<h3>No Classes</h3>
-	{{/if}}
-
 	<br>
 
 	<div class="card card-body">
@@ -115,11 +96,9 @@
 			</div>
 			<br>					
 			<div class="submit">
-				
-                </button>
                 {{!-- <a class="btn btn-primary" href="/booking/addBooking/{{id}}">+ Create Booking</a> --}}
 				<button id="buttons" class="btn btn-outline-primary" type="submit">+ Create Booking</button>
-				<button id="buttons" class="btn btn-outline-secondary" type="submit"><a href="/booking/listBooking">Current Booking</a></button>
+				<button id="buttons" class="btn btn-outline-secondary"><a href="/booking/listBooking">Current Booking</a></button>
 			</div>
 		</form>
 	</div>

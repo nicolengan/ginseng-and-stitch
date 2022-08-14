@@ -15,6 +15,12 @@ User.init({
     unique: 'email',
     allowNull: false
   },
+  birthday: {
+    type: sequelize.DATEONLY,
+  },
+  gender: {
+    type: sequelize.CHAR,
+  },
   role: {
     type: sequelize.CHAR,
     defaultValue: 'u',

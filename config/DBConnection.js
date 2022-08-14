@@ -5,7 +5,6 @@ const Class = require('../models/Class');
 const Course = require('../models/Course');
 const Product = require('../models/Product');
 const Review = require('../models/Review');
-const Cart = require('../models/Cart');
 
 const setUpDB = (drop) => {
 
@@ -22,6 +21,7 @@ const setUpDB = (drop) => {
 
             // product_id in cart
             Product.hasMany(Cart, { sourceKey: 'prod_name', foreignKey: 'prod_name'});
+            // Product.hasMany(Cart, { sourceKey: 'posterURL', foreignKey: 'posterURL'});
 
             // //booking_id in cart
             // Cart.hasMany(Booking);

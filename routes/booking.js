@@ -8,6 +8,7 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
+// const { where, ConnectionRefusedError } = require('sequelize/types');
 
 router.get('/', async (req, res) => {
     const booking = await Booking.findAll({
@@ -47,7 +48,8 @@ router.get('/api/list', async (req, res) => {
 //     res.render('booking/addBooking', { table, classes });
 // });
 
-router.get('/listBooking', ensureAuthenticated, async (req, res) => {
+//book will be listBooking
+router.get('/listBooking/:id', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
         include: [
             { model: Class },
@@ -103,36 +105,11 @@ router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
             { model: Class },
             { model: Course }
         ]
-    });
-   const classes = await Class.findAll(
-       {
-        //    where: {
-        //        id: req.params.id
-        //    }
-       });
-    res.render('booking/editBooking', { booking, classes });
+    })
+    const courses = await Course.findAll();
+    const classes = await Class.findAll();
+    res.render('booking/editBooking', { booking, courses, classes });
 });
-// router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
-//     var booking = Booking.findByPk(req.params.id, {
-//         include: [
-//             { model: Class },
-//             { model: Course }
-//         ]
-//     });
-//     const courses = await Course.findAll(
-//         {
-//             where: {
-//                 id: req.params.id
-//             }
-//         });
-//     const classes = await Class.findAll(
-//         {
-//             where: {
-//                 CourseId: req.params.id
-//             }
-//         });
-//     res.render('booking/editBooking', { booking, courses, classes });
-// });
 
 router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     let CourseId = req.body.CourseId;
@@ -144,29 +121,14 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     )
         .then((result) => {
             console.log(result[0] + ' booking updated');
-            res.redirect('/booking/listBooking');
+            var subject = 'Successful Course Booking Update'
+            var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
+            sendEmail(req.user.email, subject, html);
+            flashMessage(res, 'successfully updated booking');
+            res.redirect('/account/listBooking');
         })
         .catch(err => console.log(err))
 });
-
-// router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
-//     let CourseId = req.body.CourseId;
-//     let ClassId = req.body.ClassId;
-
-//     Booking.update(
-//         { CourseId, ClassId },
-//         { where: { id: req.params.id } }
-//     )
-//         .then((result) => {
-//             console.log(result[0] + ' booking updated');
-//             var subject = 'Successful Course Booking Update'
-//             var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
-//             sendEmail(req.user.email, subject, html);
-//             flashMessage(res, 'successfully updated booking');
-//             res.redirect('/account/listBooking');
-//         })
-//         .catch(err => console.log(err))
-// });
 
 router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) {
     try {
@@ -185,17 +147,17 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
     }
 });
 
-router.get('/checkout/', async (req, res) => {
-    const booking = await Booking.findAll({
-        include: [
-            { model: Class },
-            { model: Course }
-        ]
-    });
-    const courses = await Course.findAll();
-    const classes = await Class.findAll();
-    res.render('booking/checkout', { booking, courses, classes });
-});
+// router.get('/checkout/', async (req, res) => {
+//     const booking = await Booking.findAll({
+//         include: [
+//             { model: Class },
+//             { model: Course }
+//         ]
+//     });
+//     const courses = await Course.findAll();
+//     const classes = await Class.findAll();
+//     res.render('booking/checkout', { booking, courses, classes });
+// });
 
 router.get('/confirm/:id', async (req, res) => {
     const booking = await Booking.findAll({
@@ -215,21 +177,6 @@ router.get('/confirm/:id', async (req, res) => {
 
 
 router.get('/successful/:id', async (req, res) => {
-    const booking = await Booking.findAll({
-        include: [
-            { model: Class },
-            { model: Course }
-        ],
-        where: {
-            id: req.params.id
-        }
-    });
-    // const courses = await Course.findAll();
-    // const classes = await Class.findAll();
-    res.render('booking/successful', { booking });
-});
-
-router.get('/successful/sendEmail/:id', async (req, res) => {
     const booking = await Booking.findOne({
         include: [
             { model: Class },
@@ -239,16 +186,14 @@ router.get('/successful/sendEmail/:id', async (req, res) => {
             id: req.params.id
         }
     });
-
-    // const user = await User.findOne({ where: { id: res.user.id } })
-
-    console.log(req.user.email);
-    var subject = 'Successful Course Booking';
-    var html = '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
-    sendEmail(req.user.email, subject, html);
-
-    res.redirect('/account');
+    // console.log("hi")
+    // console.log(req.user.email);
+    // var subject = 'Successful Course Booking';
+    // var html = '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
+    // sendEmail(req.user.email, subject, html);
+    // const courses = await Course.findAll();
+    // const classes = await Class.findAll();
+    res.render('booking/successful', { booking });
 });
 
 module.exports = router;
-
