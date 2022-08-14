@@ -48,22 +48,6 @@ router.get('/listBooking/:id', async (req, res) => {
     res.render('booking/listBooking', { booking, courses, classes });
 });
 
-router.get('/editBooking2/:id', async (req, res) => {
-    const booking = await Booking.findAll({
-        include: [
-            { model: Class },
-            { model: Course }
-        ],
-        where:{
-            id: req.params.id
-        }
-        
-    });
-    const courses = await Course.findAll();
-    const classes = await Class.findAll();
-    res.render('booking/editBooking2', { booking, courses, classes });
-});
-
 // so req.params.id is getting ur /:id part in ur url
 // the :id in url is the course id
 
@@ -109,17 +93,23 @@ router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
 
 
 router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
-    var booking = Booking.findByPk(req.params.id, {
+    var booking = await Booking.findByPk(req.params.id, {
         include: [
             { model: Class },
             { model: Course }
         ]
     });
-    const courses = await Course.findAll()
+    const courses = await Course.findAll(
+        {
+            where: {
+                id: booking.CourseId
+            }
+        });
+    
     const classes = await Class.findAll(
         {
             where: {
-                CourseId: req.params.id
+                CourseId: booking.CourseId
             }
         });
     res.render('booking/editBooking', { booking, courses, classes });
@@ -135,11 +125,11 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     )
         .then((result) => {
             console.log(result[0] + ' booking updated');
-            var subject = 'Successful Course Booking Update'
-            var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
-            sendEmail(req.user.email, subject, html);
-            flashMessage(res, 'successfully updated booking');
-            res.redirect('/booking/listBooking');
+            // var subject = 'Successful Course Booking Update'
+            // var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
+            // sendEmail(req.user.email, subject, html);
+            // flashMessage(res, 'successfully updated booking');
+            res.redirect('/account/bookings');
         })
         .catch(err => console.log(err))
 });
