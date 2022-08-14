@@ -14,11 +14,68 @@
 		text-align: center;
 	}
 </style>
+{{!-- <div class="container">
+	{{#if classes}}
+	<div class="card card-body">
+		<h3 class="text-dark">Classes</h3>
+		{{#each classes}}
+			<div class="card border-black mb-2">
+				<div class="card-body">
+					<div class="row">
+
+						<div class="col">
+							<p class="text-primary">Course ID</p>
+							<p class="text-dark">{{CourseId}}</p>
+						</div>
+
+						<div class="col">
+							<p class="text-primary">Class ID</p>
+							<p class="text-dark">{{id}}</p>
+						</div>
+
+						<div class="col">
+							<p class="text-primary">Time</p>
+							<p class="text-dark">{{time}}</p>
+						</div>
+
+						<div class="col">
+							<p class="text-primary">Date</p>
+							<p class="text-dark">{{date}}</p>
+						</div>
+							
+						<div class="col">
+							<p class="text-primary">Current pax in the class:</p>
+							<p class="text-dark">{{max_pax}}</p>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		{{/each}}
+	</div>
+	{{else}}
+	<h3>No Classes</h3>
+	{{/if}} --}}
 <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-	<h3>Editing Booking: </h3>
+		<u><h3>Editing Booking: </h3></u>
+	<br>
+	<div class="table-responsive">
+		<table class="table table-striped" id="table" data-toggle="table" data-filter-control="true" data-url="/admin/classes/api/list">
+			<thead>
+				<tr class="table-active">
+					<th data-field="CourseId">Course ID</th>
+					<th data-field="Course.title">Course Title</th>
+					<th data-field="id">Class ID</th>
+					<th data-field="time">Class Time</th>
+					<th data-field="date">Class date</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<br>
 	<div class="card card-body">
 		<form action="" method="post">
-			<div class="form-group">
+			{{!-- <div class="form-group">
 				<div class="row">
 					<div class="col-25">
 						<label for="CourseId">Course ID:</label>
@@ -29,16 +86,16 @@
 						{{/each}}
 					</select>
 				</div>
-				<br>
+				<br> --}}
 
 				<div class="form-group">
 					<div class="row">
-						<div class="col-25">
-							<label for="ClassId">Class ID:</label></div>
-
-							<select class="form-select" name="ClassId" aria-label="Default select example">
+						<div class="col">
+							<label for="ClassId">Please choose your new class that you would like to join:</label>
+							<br>
+							<select class="btn btn-mini" name="ClassId" id="ClassId">
 								{{#each classes}}
-								<option value="{{id}}" name="ClassId">{{id}}</option>
+									<option value="{{id}}" id="ClassId" name="ClassId">{{id}}</option>
 								{{/each}}
 							</select>
 						</div>
