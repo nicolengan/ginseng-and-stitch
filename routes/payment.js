@@ -12,35 +12,12 @@ router.get('/bookingPayment/:id', async (req, res) => {
         where: { id: req.params.id },
         include: { model: Course }
     })
-    const events = await stripe.events.list({
-        limit: 3,
-      });
-    console.log(events)    
-    // console.log(x.Course.price)
-    // const product = await stripe.products.search({
-    //     query: `name:\'${x.name}\'`,
+    // const events = await stripe.events.list({
+    //     limit: 3,
     //   });
-    // console.log(product)
-    // if (product == null) {
-    //     const product = await stripe.products.create({
-    //         id: `${x.id}`,
-    //         name: `${x.name}`,
-    //     });
-    // }
-    // const price = await stripe.prices.create({
-    //     unit_amount: x.Course.price * 100,
-    //     currency: 'sgd',
-    //     product_data: `${x.name}`
-    // });
-    // console.log(price.id)
+    // console.log(customers.count())
+    // console.log(events)    
     const session = await stripe.checkout.sessions.create({
-        // line_items: [
-        //     {
-        //         // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        //         price: price.id,
-        //         quantity: 1,
-        //     },
-        // ],
         line_items: [
             {
               price_data: {

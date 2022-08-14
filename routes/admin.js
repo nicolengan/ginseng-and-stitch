@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
 const flashMessage = require('../helpers/messenger');
+const stripe = require('stripe')('sk_test_51LFiQDIDLAIUfWTrXJv037R9GA5KTPZF2W98ix0WKql786N6swgCubejuSMLMIuluPGiMUyVTgp9AIz6d17fiI0T00B189hFRp');
 
 const classes = require("./adminClasses");
 const courses = require("./adminCourses");
@@ -38,9 +39,10 @@ router.get('/', async (req, res) => {
     let traffic = await Traffic.findAll({where: {year: year}})
     let admins = await User.count({where: {role: 'a'}})
     let users = await User.count({where: {role: 'u'}})
+    const customers = await stripe.customers.list();
     // console.log(JSON.stringify(users))
     // console.log(users)
-    res.render('admin/dashboard', {traffic, year, admins, users});
+    res.render('admin/dashboard', {traffic, year, admins, users, customers});
 });
 
 router.get('/logout', (req, res, next) => {

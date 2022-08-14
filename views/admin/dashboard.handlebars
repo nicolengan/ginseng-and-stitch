@@ -12,7 +12,7 @@
 function drawBackgroundColor() {
       var data = new google.visualization.DataTable();
       data.addColumn('string', 'month');
-      data.addColumn('number', 'traffic');
+      data.addColumn('number', 'visits');
 
       
       data.addRows([
@@ -49,27 +49,52 @@ function drawBackgroundColor() {
         ]);
 
         var options = {
-          title: 'Number of enquiries',
+          title: 'Number of users',
           pieHole: 0.4,
           width: 600,
           height: 500,
         };
-
+        
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
         chart.draw(data, options);
       }
+      function showCustomer(str) {
+      var xhttp;
+      if (str == "") {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+      }
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("txtHint").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "/admin/users/api/list/" + str, true);
+      xhttp.send();
+    }
     </script>
     <div class="row">
+
   <div class="col-sm-8">
-    <div class="card p-4">
+  <div class="card p-4">
   <div id="chart">
   </div>
   </div>
   </div>
+
   <div class="col-sm-4">
   <div class="card  p-4">
   <div id="donutchart" style="width: 900px; height: 500px;"></div>
   </div>
   </div>
+  {{!-- <form action=""> 
+  <select name="customers" onchange="showCustomer(this.value)">
+  <option value="">Select a customer:</option>
+  <option value="2">Alfreds Futterkiste</option>
+  </select>
+  </form>
+  <div id="txtHint">gfhfg</div> --}}
+  <div id="chart_div"></div>
   </div>
 </div>
