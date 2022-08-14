@@ -133,10 +133,10 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     )
         .then((result) => {
             console.log(result[0] + ' booking updated');
-            // var subject = 'Successful Course Booking Update'
-            // var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
-            // sendEmail(req.user.email, subject, html);
-            // flashMessage(res, 'successfully updated booking');
+            var subject = 'Successful Course Booking Update'
+            var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
+            sendEmail(req.user.email, subject, html);
+            flashMessage(res, 'successfully updated booking');
             res.redirect('/booking/listBooking');
         })
         .catch(err => console.log(err))
