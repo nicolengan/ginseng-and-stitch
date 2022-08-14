@@ -73,14 +73,14 @@ router.get('/editCourses/:id', (req, res) => {
 
 router.post('/editCourses/:id', (req, res) => {
     let title = req.body.title;
-    let Description = req.body.description.slice(0, 1999);
+    let description = req.body.description.slice(0, 1999);
     let uuid = req.body.uuid;
     let price = clampnumber (req.body.price, -2147483647, 2147483647);
     let level = req.body.level;
     let coursePic = req.body.coursePic;
     
     Courses.update(
-        { title, Description, price, level, coursePic, uuid },
+        { title, description, price, level, coursePic, uuid },
         { where: { id: req.params.id } }
     )
     .then((result) => {

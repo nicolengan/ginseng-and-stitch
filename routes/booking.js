@@ -8,7 +8,7 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
-const { where, ConnectionRefusedError } = require('sequelize/types');
+// const { where, ConnectionRefusedError } = require('sequelize/types');
 
 router.get('/', async (req, res) => {
     const booking = await Booking.findAll({
@@ -109,8 +109,8 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
             var subject = 'Successful Course Booking Update'
             var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
             sendEmail(req.user.email, subject, html);
-            flashMessage(res, 'successfully updated booking');
-            res.redirect('/account/listBooking');
+            flashMessage(res, 'success', 'successfully updated booking');
+            res.redirect('/account');
         })
         .catch(err => console.log(err))
 });

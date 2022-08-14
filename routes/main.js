@@ -36,14 +36,65 @@ router.get('/courses', (req, res) => {
     Courses.findAll({
         // where: { userId: req.user.id },
         include: [
-            { model: Review,         include: [
+            { model: Review,         
+                include: [
                 { model: Users }
             ]}
         ],
         raw: true
     })
-        .then((courses) => {
-            console.log(courses)
+        .then((coursesInfo) => {
+            
+            let coursesDict = {};
+            console.log(coursesInfo);
+            
+            for (let i = 0; i < coursesInfo.length; i++)
+            {
+                const singleCourse = coursesInfo[i];
+
+                if (!(singleCourse.id in coursesDict))
+                {
+                    coursesDict[singleCourse.id] = {
+                            id: singleCourse.id,
+                            title: singleCourse.title,
+                            level: singleCourse.level,
+                            description: singleCourse.description,
+                            price: singleCourse.price,
+                            coursePic: singleCourse.coursePic,
+                            star_count : 0,
+                            reviews: []
+                        };
+                }
+                if (singleCourse["Reviews.review"] != null &&
+                singleCourse["Reviews.User.name"] != null
+                )
+
+                coursesDict[singleCourse.id].reviews.push(
+                    {
+                        name : singleCourse["Reviews.User.name"],
+                        review : singleCourse["Reviews.review"],
+                        star_count : singleCourse["Reviews.star_count"]
+                    });
+            }
+
+            
+            let courses = Object.values(coursesDict);
+
+            for (let i = 0 ; i < courses.length; i++)
+            {
+                if (courses[i].reviews.length == 0)
+                    continue;
+
+                let star = 0;
+                for (let j = 0; j < courses[i].reviews.length; j++)
+                {
+                    star += courses[i].reviews[j].star_count;
+                }
+                courses[i].star_count = star / courses[i].reviews.length;
+            }
+
+
+
             // pass object to listVideos.handlebar
             res.render('courses', { courses });
         })
