@@ -19,9 +19,9 @@ router.get('/', async (req, res) => {
     res.render('booking/listBooking', { booking });
 });
 
-router.get('/admin/classes/api/list', async (req, res) => {
-    const table = res.json({
-        //total: await Booking.count(),
+router.get('/api/list', async (req, res) => {
+    return res.json({
+        total: await Booking.count(),
         rows: await Booking.findAll({
             include: [
                 { model: Class },
@@ -29,12 +29,23 @@ router.get('/admin/classes/api/list', async (req, res) => {
             ]
         })
     })
-    const classes = await Class.findAll(
-        {
-
-        });
-    res.render('booking/addBooking', { table, classes });
 });
+// router.get('/admin/classes/api/list', async (req, res) => {
+//     const table = res.json({
+//         //total: await Booking.count(),
+//         rows: await Booking.findAll({
+//             include: [
+//                 { model: Class },
+//                 { model: Course}
+//             ]
+//         })
+//     })
+//     const classes = await Class.findAll(
+//         {
+
+//         });
+//     res.render('booking/addBooking', { table, classes });
+// });
 
 router.get('/listBooking', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
@@ -42,9 +53,6 @@ router.get('/listBooking', ensureAuthenticated, async (req, res) => {
             { model: Class },
             { model: Course }
         ]
-        // where: {
-        //     id: req.params.id
-        // }
     });
     res.render('booking/listBooking', { booking });
 });
@@ -71,9 +79,6 @@ router.get('/addBooking/:id', ensureAuthenticated, async (req, res) => {
                 CourseId: req.params.id
             }
         });
-        
-    // const courses = await Course.findAll();
-    // const classes = await Class.findAll();
     res.render('booking/addBooking', {booking, courses, classes });
 });
 
@@ -88,7 +93,6 @@ router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
         .then((classes) => {
             console.log(classes.toJSON());
             res.redirect('/booking/listBooking');
-            // res.redirect('/booking/listBooking/' + classes.id);
         })
         .catch(err => console.log(err))
 });
@@ -100,20 +104,35 @@ router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
             { model: Course }
         ]
     });
-    const courses = await Course.findAll(
-        {
-            where: {
-                id: req.params.id
-            }
-        });
-    const classes = await Class.findAll(
-        {
-            where: {
-                CourseId: req.params.id
-            }
-        });
-    res.render('booking/editBooking', { booking, courses, classes });
+   const classes = await Class.findAll(
+       {
+        //    where: {
+        //        id: req.params.id
+        //    }
+       });
+    res.render('booking/editBooking', { booking, classes });
 });
+// router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
+//     var booking = Booking.findByPk(req.params.id, {
+//         include: [
+//             { model: Class },
+//             { model: Course }
+//         ]
+//     });
+//     const courses = await Course.findAll(
+//         {
+//             where: {
+//                 id: req.params.id
+//             }
+//         });
+//     const classes = await Class.findAll(
+//         {
+//             where: {
+//                 CourseId: req.params.id
+//             }
+//         });
+//     res.render('booking/editBooking', { booking, courses, classes });
+// });
 
 router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     let CourseId = req.body.CourseId;
@@ -125,14 +144,29 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
     )
         .then((result) => {
             console.log(result[0] + ' booking updated');
-            var subject = 'Successful Course Booking Update'
-            var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
-            sendEmail(req.user.email, subject, html);
-            flashMessage(res, 'successfully updated booking');
-            res.redirect('/account/listBooking');
+            res.redirect('/booking/listBooking');
         })
         .catch(err => console.log(err))
 });
+
+// router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
+//     let CourseId = req.body.CourseId;
+//     let ClassId = req.body.ClassId;
+
+//     Booking.update(
+//         { CourseId, ClassId },
+//         { where: { id: req.params.id } }
+//     )
+//         .then((result) => {
+//             console.log(result[0] + ' booking updated');
+//             var subject = 'Successful Course Booking Update'
+//             var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
+//             sendEmail(req.user.email, subject, html);
+//             flashMessage(res, 'successfully updated booking');
+//             res.redirect('/account/listBooking');
+//         })
+//         .catch(err => console.log(err))
+// });
 
 router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) {
     try {

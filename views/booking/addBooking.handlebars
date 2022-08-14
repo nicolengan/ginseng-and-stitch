@@ -39,69 +39,50 @@
 <!--booking id, course id, class id,  user id, date created-->
 
 <div class="container">
-		{{#if classes}}
+	{{#if classes}}
 	<div class="card card-body">
 		<h3 class="text-dark">Classes</h3>
 		{{#each classes}}
-		<div class="card border-black mb-2">
-			<div class="card-body">
-				<div class="row">
+			<div class="card border-black mb-2">
+				<div class="card-body">
+					<div class="row">
 
-                    <div class="col">
-						<p class="text-primary">Course ID</p>
-						<p class="text-dark">{{CourseId}}</p>
-					</div>
+						<div class="col">
+							<p class="text-primary">Course ID</p>
+							<p class="text-dark">{{CourseId}}</p>
+						</div>
 
-					<div class="col">
-						<p class="text-primary">Class ID</p>
-						<p class="text-dark">{{id}}</p>
-					</div>
+						<div class="col">
+							<p class="text-primary">Class ID</p>
+							<p class="text-dark">{{id}}</p>
+						</div>
 
-					<div class="col">
-						<p class="text-primary">Time</p>
-						<p class="text-dark">{{time}}</p>
-					</div>
+						<div class="col">
+							<p class="text-primary">Time</p>
+							<p class="text-dark">{{time}}</p>
+						</div>
 
-					<div class="col">
-						<p class="text-primary">Date</p>
-						<p class="text-dark">{{date}}</p>
-					</div>
-						
-					<div class="col">
-						<p class="text-primary">max_pax</p>
-						<p class="text-dark">{{max_pax}}</p>
-					</div>
+						<div class="col">
+							<p class="text-primary">Date</p>
+							<p class="text-dark">{{date}}</p>
+						</div>
+							
+						<div class="col">
+							<p class="text-primary">Current pax in the class:</p>
+							<p class="text-dark">{{max_pax}}</p>
+						</div>
 
+					</div>
 				</div>
 			</div>
 		{{/each}}
-        </div>
 	</div>
 	{{else}}
 	<h3>No Classes</h3>
 	{{/if}}
 
-
-
-	<div class="table-responsive">
-		<table class="table table-striped" id="table" data-toggle="table" data-filter-control="true" data-url="/admin/classes/api/list">
-			<thead>
-				<tr class="table-active">
-					<th data-field="CourseId">Course ID</th>
-					<th data-field="Course.id">Course ID</th>
-					<th data-field="Course.title">Course Title</th>
-					{{!-- <th data-field="Course.level">Course Level</th> --}}
-					<th data-field="id">Class ID</th>
-					<th data-field="date">Class date</th>
-					<th data-field="time">Class time</th>
-				</tr>
-				<tr>
-					
-				</tr>
-			</thead>
-		</table>
-	</div>
 	<br>
+
 	<div class="card card-body">
 		<form action="" method="post">
 			<div class="form-group">
@@ -114,7 +95,9 @@
 					<div class="col-75">
 						<select class="form-select" id="CourseId" name="CourseId" aria-label="Default select example">
 							{{#each courses}}
-							<option value="{{id}}" id="CourseId" name="CourseId">{{id}}</option>
+								<option id="CourseId" name="CourseId" selected>{{id}}</option>
+							{{!-- <option value="{{id}}" id="CourseId" name="CourseId">{{id}}</option> --}}
+								{{!-- <option value="{{id}}" id="CourseId" name="CourseId" aria-disabled="{{id}}">{{id}}</option> --}}
 							{{/each}}
 						</select>
 					</div>
@@ -137,6 +120,7 @@
 			</div>
 			<br>					
 			<div class="submit">
+				
                 </button>
                 {{!-- <a class="btn btn-primary" href="/booking/addBooking/{{id}}">+ Create Booking</a> --}}
 				<button id="buttons" class="btn btn-outline-primary" type="submit">+ Create Booking</button>
