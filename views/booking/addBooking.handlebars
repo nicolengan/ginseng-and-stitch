@@ -91,8 +91,6 @@
 						<select class="form-select" id="CourseId" name="CourseId" aria-label="Default select example">
 							{{#each courses}}
 								<option id="CourseId" name="CourseId" selected>{{id}}</option>
-							{{!-- <option value="{{id}}" id="CourseId" name="CourseId">{{id}}</option> --}}
-								{{!-- <option value="{{id}}" id="CourseId" name="CourseId" aria-disabled="{{id}}">{{id}}</option> --}}
 							{{/each}}
 						</select>
 					</div>
@@ -107,7 +105,7 @@
 					<div class="col-75">
 						<select class="form-select" id="ClassId" name="ClassId" aria-label="Default select example">
 							{{#each classes}}
-							<option value="{{id}}" id="ClassId" name="ClassId">{{id}}</option>
+								<option value="{{id}}" id="ClassId" name="ClassId">{{id}}</option>
 							{{/each}}
 						</select>
 					</div>
@@ -115,12 +113,10 @@
 			</div>
 			<br>					
 			<div class="submit">
-				
-                </button>
-                {{!-- <a class="btn btn-primary" href="/booking/addBooking/{{id}}">+ Create Booking</a> --}}
-				<button id="buttons" class="btn btn-outline-primary" type="submit" >+ Create Booking</a></button>
-				<button id="buttons" class="btn btn-outline-secondary" ><a href="/booking/listBooking">Current Booking</a></button>
+				<button id="buttons" class="btn btn-outline-primary" type="submit">+ Create Booking</a></button>
+				<a class="btn btn-outline-secondary" href="/account/bookings" role="button">Current Booking</a>
 			</div>
 		</form>
 	</div>
+	
 </div>

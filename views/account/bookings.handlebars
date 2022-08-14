@@ -36,6 +36,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th scope="col">Booking ID</th>
                                     <th scope="col">Course</th>
                                     <th scope="col">Class Date</th>
                                     <th scope="col">Class Time </th>
@@ -45,9 +46,11 @@
                             <tbody>
                                 {{#each bookings}}
                                 <tr>
-                                    <th scope="row">{{Course.title}}</th>
+                                    <th scope="row">{{id}}</th>
+                                    <td>{{Course.title}}</td>
                                     <td>{{Class.date}}</td>
                                     <td>{{Class.time}}</td>
+                                    {{!-- <td><a href="/booking/editBooking/{{CourseId}}"><i class="bi bi-pencil-square text-primary fs-5"></i></a><a class="ms-1" href="/booking/deleteBooking/{{id}}"><i class="bi bi-trash text-danger fs-5"></i></a></td> --}}
                                     <td><a href="/booking/deleteBooking/{{id}}"><i class="bi bi-trash text-danger fs-5"></i></a><a class="ms-1" href="/booking/editBooking/{{id}}"><i class="bi bi-pencil-square text-primary fs-5"></i></a></td>
                                 </tr>
                                 {{/each}}

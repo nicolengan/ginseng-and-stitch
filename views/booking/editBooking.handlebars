@@ -88,8 +88,8 @@
 					</div>
 					<div class="col-75">
 						<select class="form-select" id="CourseId" name="CourseId" aria-label="Default select example">
-							{{#each courses}}
-								<option id="CourseId" name="CourseId" selected>{{id}}</option>
+							{{#each Booking}}
+								<option id="CourseId" name="CourseId" selected>{{CourseId}}</option>
 							{{/each}}
 						</select>
 					</div>
@@ -104,7 +104,7 @@
 					<div class="col-75">
 						<select class="form-select" id="ClassId" name="ClassId" aria-label="Default select example">
 							{{#each classes}}
-							<option value="{{id}}" id="ClassId" name="ClassId">{{id}}</option>
+								<option value="{{id}}" id="ClassId" name="ClassId">{{id}}</option>
 							{{/each}}
 						</select>
 					</div>
