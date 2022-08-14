@@ -15,12 +15,13 @@ const flashMessage = ('../helpers/messenger');
 
 router.get('/', ensureAuthenticated, async (req, res) => {
     let [items, metadata] = await db.query(
-        `SELECT carts.prod_name, carts.quantity, carts.price, carts.id as cartId, products.posterURL, products.id as productId
+        `SELECT carts.prod_name, carts.quantity, carts.price, carts.id as cartId, carts.UserId as UserId, products.posterURL, products.id as productId
         FROM carts JOIN products
         ON carts.prod_name = products.prod_name
         WHERE carts.UserId = ${req.user.id}`,
     )
-    res.render('cart/cart', { items });
+    let user = req.user
+    res.render('cart/cart', { items, user });
 });
 
 router.post('/addProductToCart', ensureAuthenticated, async (req, res) => {

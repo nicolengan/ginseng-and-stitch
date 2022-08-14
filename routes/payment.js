@@ -39,10 +39,13 @@ router.get('/bookingPayment/:id', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    var x = await Cart.findOne({
-        where: { id: req.params.id },
-        include: { model: Product }
-    })
+    var x = await Cart.sum(
+        'price',
+        {where: { UserId: req.params.id }},
+        {include: { model: Product }}
+    )
+    var user = req.user
+    // console.log(JSON.stringify(Array.from( productName.values() )))
     // const events = await stripe.events.list({
     //     limit: 3,
     //   });
@@ -54,9 +57,9 @@ router.get('/:id', async (req, res) => {
               price_data: {
                 currency: 'SGD',
                 product_data: {
-                  name: `${x.Product.name}`,
+                  name: `${req.user.name}'s cart`,
                 },
-                unit_amount: x.Product  .price * 100,
+                unit_amount: x * 100,
               },
               quantity: 1,
             }],
