@@ -9,12 +9,13 @@ const Product = require('../models/Product');
 const Cart = require('../models/Cart');
 const db = require('../config/DBConfig');
 const { ResultWithContext } = require('express-validator/src/chain');
+const flashMessage = ('../helpers/messenger');
 // const shopController = require('../controllers/shop');
 
 
 router.get('/', ensureAuthenticated, async (req, res) => {
     let [items, metadata] = await db.query(
-        `SELECT carts.prod_name, carts.quantity, carts.price, products.posterURL
+        `SELECT carts.prod_name, carts.quantity, carts.price, carts.id as cartId, products.posterURL, products.id as productId
         FROM carts JOIN products
         ON carts.prod_name = products.prod_name
         WHERE carts.UserId = ${req.user.id}`,
@@ -40,6 +41,7 @@ router.post('/addProductToCart', ensureAuthenticated, async (req, res) => {
         )
             .then((item) => {
                 console.log(item.toJSON());
+                flashMessage(res, 'success', item + ' has been added to cart!');
                 res.redirect('cart/cart');
             })
             .catch(err => console.log(err))

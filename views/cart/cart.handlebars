@@ -7,10 +7,13 @@
             {{#each items}}
             {{!-- <div class="col"> --}}
                 <div class="card border-2 mb-2">
-                    <div class="row card-header"> filler
-                    </div>
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-2 mt-auto">
+                            <div class="card-body row"> <input type="checkbox" id="{{productId}}-checkbox"
+                                    onclick="toggleCheckbox(event, '{{price}}')">
+                            </div>
+                        </div>
+                        <div class="col-3 mt-auto">
                             <div class="card-body row-4">
                                 <a href="{{posterURL}}" data-title="{{prod_name}}" data-toggle="lightbox">
                                     <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid"
@@ -18,7 +21,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col mt-auto">
                             <div class="card-body">
                                 <h4 class="card-title text-start">{{prod_name}}</h4>
                             </div>
@@ -36,8 +39,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col mt-5">
-                            <a href="/cart/deleteItemFromCart/{{id}}"><i class="bi bi-trash"></i></a>
+                        <div class="col mt-auto">
+                            <a href="/cart/deleteItemFromCart/{{cartId}}"><i class="bi bi-trash"></i></a>
                         </div>
                     </div>
                 </div>
@@ -45,10 +48,32 @@
             </div> --}}
             {{/each}}
         </div>
+        <div class="row">
+            <div class="col">
+                <div style="font-size: 20px">Total Price: $<b id="total-price">0.00</b></div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-outline-primary">Proceed to Checkout</button>
+            </div>
+        </div>
     </div>
 
 </div>
 {{else}}
 <h3>No products yet</h3>
 {{/if}}
+<script>
+    function toggleCheckbox(event, price) {
+        let isChecked = event.target.checked;
+        let totalPrice = parseFloat($('#total-price')[0].textContent);
+
+        if (isChecked) {
+            totalPrice += parseFloat(price);
+            $('#total-price').text(totalPrice.toFixed(2))
+        } else {
+            totalPrice -= parseFloat(price);
+            $('#total-price').text(totalPrice.toFixed(2))
+        }
+    }
+</script>
 </main>
