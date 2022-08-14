@@ -3,7 +3,6 @@ const User = require('../models/User');
 const Booking = require('../models/Booking');
 const Class = require('../models/Class');
 const Course = require('../models/Course');
-const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const Review = require('../models/Review');
 const Cart = require('../models/Cart');
