@@ -48,6 +48,22 @@ router.get('/listBooking/:id', async (req, res) => {
     res.render('booking/listBooking', { booking, courses, classes });
 });
 
+router.get('/editBooking2/:id', async (req, res) => {
+    const booking = await Booking.findAll({
+        include: [
+            { model: Class },
+            { model: Course }
+        ],
+        where:{
+            id: req.params.id
+        }
+        
+    });
+    const courses = await Course.findAll();
+    const classes = await Class.findAll();
+    res.render('booking/editBooking2', { booking, courses, classes });
+});
+
 // so req.params.id is getting ur /:id part in ur url
 // the :id in url is the course id
 

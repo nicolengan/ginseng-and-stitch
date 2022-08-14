@@ -26,6 +26,43 @@
 		<b>This are your current bookings:</b>
 		{{#each booking}}
 		<p class="text-dark" style="text-align: left"> Number {{id}}:</p>
+		<div class="card card-body">
+		<form action="" method="post">
+			<div class="form-group">
+				<h4><u>Edit Booking:</u></h4>
+				<div class="row">
+					<div class="col-25">
+						<label for="CourseId">Course ID: </label>
+					</div>
+					<div class="col-75">
+						<select class="form-select" id="CourseId" name="CourseId" aria-label="Default select example">
+							
+								<option id="CourseId" name="CourseId" selected>{{CourseId}}</option>
+						
+						</select>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-25">
+						<label for="ClassId">Please choose your new class time and date:</label>
+					</div>
+					<div class="col-75">
+						<select class="form-select" id="ClassId" name="ClassId" aria-label="Default select example">
+	
+								<option value="{{id}}" id="ClassId" name="ClassId">{{id}}</option>
+							
+						</select>
+					</div>
+				</div>
+			</div>
+			<br>					
+			<div class="update">
+				<button id="btnSubmit" type="submit" class="btn btn-primary">Update</button>
+			</div>
+		</form>
 		<div class="card border-black">
 			<div class="card-body">
 				<div class="row">			
@@ -80,7 +117,7 @@
 						</p>
 
 						<p>
-							<a href="/booking/editBooking2/{{id}}" class="card-link" data-toggle="confirmation"
+							<a href="/booking/editBooking/{{id}}" class="card-link" data-toggle="confirmation"
 								data-title="Confirm Edit?">
 								<i class="bi bi-pencil-square"></i>
 								Edit
