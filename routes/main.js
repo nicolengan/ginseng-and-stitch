@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
+const Classes = require('../models/Class');
 const Courses = require('../models/Course');
 const Review = require('../models/Review');
 const Users = require('../models/User');
@@ -46,6 +47,19 @@ router.get('/courses', (req, res) => {
             console.log(courses)
             // pass object to listVideos.handlebar
             res.render('courses', { courses });
+        })
+        .catch(err => console.log(err));
+});
+
+router.get('/moreinfo', (req, res) => {
+    Classes.findAll({
+         where: 
+         {
+             CourseId: 1
+         }
+    })
+        .then((classes) => {
+            res.render('moreinfo', {classes});
         })
         .catch(err => console.log(err));
 });

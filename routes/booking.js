@@ -19,9 +19,9 @@ router.get('/', async (req, res) => {
     res.render('booking/listBooking', { booking });
 });
 
-router.get('/api/list', async (req, res) => {
-    return res.json({
-        total: await Booking.count(),
+router.get('/admin/classes/api/list', async (req, res) => {
+    const table = res.json({
+        //total: await Booking.count(),
         rows: await Booking.findAll({
             include: [
                 { model: Class },
@@ -29,6 +29,11 @@ router.get('/api/list', async (req, res) => {
             ]
         })
     })
+    const classes = await Class.findAll(
+        {
+
+        });
+    res.render('booking/addBooking', { table, classes });
 });
 
 router.get('/listBooking', ensureAuthenticated, async (req, res) => {
@@ -49,6 +54,47 @@ router.get('/listBooking', ensureAuthenticated, async (req, res) => {
 
 router.get('/addBooking/:id', ensureAuthenticated, async (req, res) => {
     const booking = await Booking.findAll({
+         include: [
+             { model: Class },
+             { model: Course }
+         ]
+     });
+    const courses = await Course.findAll(
+        {
+            where: {
+                id: req.params.id
+            }
+        });
+    const classes = await Class.findAll(
+        {
+            where: {
+                CourseId: req.params.id
+            }
+        });
+        
+    // const courses = await Course.findAll();
+    // const classes = await Class.findAll();
+    res.render('booking/addBooking', {booking, courses, classes });
+});
+
+router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
+    let CourseId = req.body.CourseId;
+    let ClassId = req.body.ClassId;
+    let UserId = req.user.id;
+
+    Booking.create(
+        { CourseId, ClassId, UserId }
+    )
+        .then((classes) => {
+            console.log(classes.toJSON());
+            res.redirect('/booking/listBooking');
+            // res.redirect('/booking/listBooking/' + classes.id);
+        })
+        .catch(err => console.log(err))
+});
+
+router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
+    var booking = Booking.findByPk(req.params.id, {
         include: [
             { model: Class },
             { model: Course }
@@ -66,36 +112,6 @@ router.get('/addBooking/:id', ensureAuthenticated, async (req, res) => {
                 CourseId: req.params.id
             }
         });
-    // const courses = await Course.findAll();
-    // const classes = await Class.findAll();
-    res.render('booking/addBooking', { booking, courses, classes });
-});
-
-router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
-    let CourseId = req.body.CourseId;
-    let ClassId = req.body.ClassId;
-    let UserId = req.user.id
-
-    Booking.create(
-        { CourseId, ClassId, UserId }
-    )
-        .then((classes) => {
-            console.log(classes.toJSON());
-            res.redirect('/booking/listBooking/');
-            // res.redirect('/booking/listBooking/' + classes.id);
-        })
-        .catch(err => console.log(err))
-});
-
-router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
-    var booking = Booking.findByPk(req.params.id, {
-        include: [
-            { model: Class },
-            { model: Course }
-        ]
-    })
-    const courses = await Course.findAll();
-    const classes = await Class.findAll();
     res.render('booking/editBooking', { booking, courses, classes });
 });
 
@@ -201,3 +217,4 @@ router.get('/successful/sendEmail/:id', async (req, res) => {
 });
 
 module.exports = router;
+
