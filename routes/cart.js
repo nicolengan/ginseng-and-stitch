@@ -5,44 +5,68 @@ const Booking = require('../models/Booking');
 const Classes = require('../models/Class');
 const Bookings = require('../models/Booking');
 const path = require('path');
+const Product = require('../models/Product');
 const Cart = require('../models/Cart');
+const db = require('../config/DBConfig');
+const { ResultWithContext } = require('express-validator/src/chain');
+const flashMessage = ('../helpers/messenger');
 // const shopController = require('../controllers/shop');
 
 
 router.get('/', ensureAuthenticated, async (req, res) => {
-    Cart.findOrCreate({
-        where: {UserId: req.user.id},
-        order: [['updatedAt', 'DESC']],
-        raw: true
-    })
-        .then((items) => {
-            console.log(items);
-            res.render('cart/cart', { items });
-        })
+    let [items, metadata] = await db.query(
+        `SELECT carts.prod_name, carts.quantity, carts.price, carts.id as cartId, products.posterURL, products.id as productId
+        FROM carts JOIN products
+        ON carts.prod_name = products.prod_name
+        WHERE carts.UserId = ${req.user.id}`,
+    )
+    res.render('cart/cart', { items });
 });
 
-router.post('/addProductToCart', ensureAuthenticated, (req, res) => {
+router.post('/addProductToCart', ensureAuthenticated, async (req, res) => {
     let prod_name = req.body.prod_name;
     let quantity = req.body.quantity;
     let price = req.body.price;
     let UserId = req.user.id;
     console.log(req.body);
-    Cart.create(
-        { prod_name, quantity, price, UserId }
-    )
-        .then((item) => {
-            console.log(item.toJSON());
-            res.redirect('cart/cart');
-        })
-        .catch(err => console.log(err))
+    let cartItem = await Cart.findOne({ where: {
+        prod_name: prod_name,
+        UserId: req.user.id
+    }})
+
+    if (!cartItem) {
+        let newPrice = parseFloat(price) * parseInt(quantity);
+        Cart.create(
+            { prod_name, quantity, price: newPrice, UserId }
+        )
+            .then((item) => {
+                console.log(item.toJSON());
+                flashMessage(res, 'success', item + ' has been added to cart!');
+                res.redirect('cart/cart');
+            })
+            .catch(err => console.log(err))
+    }
+    else {
+        let newQuantity = parseInt(cartItem.quantity) + parseInt(quantity)
+        let newPrice = parseFloat(price) * parseInt(newQuantity)
+        Cart.update(
+            { quantity: newQuantity, price: newPrice },
+            {where: {
+                prod_name: prod_name,
+                UserId: req.user.id
+            }}
+        )
+    }
 });
 
-router.get('/api/list', async (req, res) => {
-    return res.json({
-        total: await Cart.count(),
-        rows: await Cart.findAll()
-    })
-});
+// router.get('/api/list', async (req, res) => {
+//     return res.json({
+//         total: await Cart.count(),
+//         rows: await Cart.findAll({
+//             // where: UserId = req.user.id
+//         })
+//     })
+// });
 
 router.get('/deleteItemFromCart/:id', async function (req, res) {
     try {

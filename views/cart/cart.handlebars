@@ -1,74 +1,79 @@
-{{!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Dashboard</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group me-2">
-        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-      </div>
-      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-        <span data-feather="calendar"></span>
-        This week
-      </button>
-    </div>
-  </div> --}}
-  {{!-- <script
-    src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/custom-view/bootstrap-table-custom-view.js"></script> --}}
-  <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="h2 mt-3">Cart</div>
-    <hr class="border border-secondary opacity-50">
-    <div id="toolbar">
-    </div>
-    <div class="table-responsive">
-      <table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
-        data-show-columns="true" data-toolbar="#toolbar" 
-        {{!-- data-show-custom-view="true"
-        data-custom-view="customViewFormatter" 
-        data-show-custom-view-button="true"  --}}
-        data-url="/cart/api/list">
-
-        <thead>
-          <tr>
-            <th data-field="prod_name">name</th>
-            <th data-field="quantity">quantity</th>
-            <th data-field="price">price</th>
-            <th data-field="icons" data-formatter="generate_actions">actions</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-</main>
-{{!-- <template id="profileTemplate">
-  <div class="col-4 mt-3">
-    <div class="card">
-      <div class="card-body">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
+<div class="container">
+    {{#if items}}
+    <h3 class="text">Cart</h3>
+    <div class="container">
         <div class="row">
-          <div class="col-12 col-lg-8 col-md-6">
-            <h3 class="mb-0 text-truncated">%NAME%</h3>
-            </div>
-            <div class="col-12 col-lg-4 col-md-6 text-center">
-              <img src="%IMAGE%" alt="" class="mx-auto rounded-circle img-fluid" style="height: 120px;">
-              <br>
-            </div>
-          <a class="btn btn-danger w-25" role="button">button</a>
+            {{#each items}}
+            {{!-- <div class="col"> --}}
+                <div class="card border-2 mb-2">
+                    <div class="row">
+                        <div class="col-2 mt-auto">
+                            <div class="card-body row"> <input type="checkbox" id="{{productId}}-checkbox"
+                                    onclick="toggleCheckbox(event, '{{price}}')">
+                            </div>
+                        </div>
+                        <div class="col-3 mt-auto">
+                            <div class="card-body row-4">
+                                <a href="{{posterURL}}" data-title="{{prod_name}}" data-toggle="lightbox">
+                                    <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid"
+                                        onerror="this.src='/img/home_img.jpg'">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col mt-auto">
+                            <div class="card-body">
+                                <h4 class="card-title text-start">{{prod_name}}</h4>
+                            </div>
+                            <div class="card-body m-0">
+                                <div class="row text-start">
+                                    <p class="text-info">{{quantity}}</p>
+                                </div>
+                                {{!-- <div class="row text-start">
+                                    <h5 class="text">{{prod_desc}}</h5>
+                                </div> --}}
+                                <div class="row text-start">
+                                    <p class="text fw-bold">
+                                        ${{price}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mt-auto">
+                            <a href="/cart/deleteItemFromCart/{{cartId}}"><i class="bi bi-trash"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {{!--
+            </div> --}}
+            {{/each}}
         </div>
-      </div>
+        <div class="row">
+            <div class="col">
+                <div style="font-size: 20px">Total Price: $<b id="total-price">0.00</b></div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-outline-primary">Proceed to Checkout</button>
+            </div>
+        </div>
     </div>
-  </div>
-</template> --}}
-    <script>
-      var $table = $('#table')
-      function generate_actions(value, row, index) {
-        return `
-<div>
-  <a href="/cart/deleteItemFromCart/${row.id}"><i class="bi bi-trash"></i></a>
-</div>`
-          ;
-      }
-        function draw_picture(value, row, index) {
-  return `<img style="width: 100px; height: 64px" src="${value}">`;
-  }
 
-    </script>
+</div>
+{{else}}
+<h3>No products yet</h3>
+{{/if}}
+<script>
+    function toggleCheckbox(event, price) {
+        let isChecked = event.target.checked;
+        let totalPrice = parseFloat($('#total-price')[0].textContent);
 
-  </div>
+        if (isChecked) {
+            totalPrice += parseFloat(price);
+            $('#total-price').text(totalPrice.toFixed(2))
+        } else {
+            totalPrice -= parseFloat(price);
+            $('#total-price').text(totalPrice.toFixed(2))
+        }
+    }
+</script>
+</main>
