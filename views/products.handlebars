@@ -35,6 +35,8 @@
                                 </p>
                         </div>
                     </div>
+                                                <div class="col"><input type="number" id="{{id}}-quantity" name="quantity" value="{{quantity}}" min="0" max="100"></div>
+                            <div class="col"><i class="bi bi-cart" id="{{id}}-addToCart" onclick="addToCart('{{id}}','{{price}}', '{{prod_name}}')"></i></div>
                 </div>
             </div>
             {{/each}}
