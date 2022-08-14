@@ -1,3 +1,4 @@
+
 <script>
     $('[data-toggle=confirmation]').confirmation({
         rootSelector: '[data-toggle=confirmation]',
@@ -114,8 +115,10 @@
 <script>
   var exampleModal = document.getElementById('staticBackdrop')
   exampleModal.addEventListener('show.bs.modal', function (event) {
+
     // Button that triggered the modal
     var button = event.relatedTarget
+
     // Extract info from data-bs-* attributes
     var title = button.getAttribute('data-bs-title')
     var level = button.getAttribute('data-bs-level')
@@ -124,6 +127,7 @@
     var name = button.getAttribute('data-bs-name')
     var star_count = button.getAttribute('data-bs-star_count')
     var review = button.getAttribute('data-bs-review')
+
     // If necessary, you could initiate an AJAX request here
     // and then do the updating in a callback.
     //

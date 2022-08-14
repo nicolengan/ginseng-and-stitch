@@ -6,6 +6,7 @@ const Course = require('../models/Course');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const Review = require('../models/Review');
+const Cart = require('../models/Cart');
 
 const setUpDB = (drop) => {
 
