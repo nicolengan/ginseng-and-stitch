@@ -1,8 +1,7 @@
-
 <link rel="stylesheet" href="/css/user/account.css">
 <div class="d-flex mt-3 justify-content-md-center">
   <div class="col-sm-6 p-3 border rounded-1 border-2" style="background-color:white;">
-    <div class="row"> 
+    <div class="row">
       <div class="col-sm-4 mx-0 pe-0 mt-4">
         <ul class="nav flex-column">
           <li class="nav-item">
@@ -14,7 +13,7 @@
                   <a class="nav-link" href="/account">Profile</a>
                 </li>
                 <li class="nav-item accordion-item">
-                  <a class="nav-link text-reset" href="/account/changePassword/{{user.id}}"></i>Password</a>
+                  <a class="nav-link" href="/account/changePassword"></i>Password</a>
                 </li>
               </ul>
             </div>
@@ -30,23 +29,46 @@
           <form action="/account/editUser/{{user.id}}" class="card-body w-75 mx-auto" method="post">
             <h5 class="w-25 mx-auto border-bottom pb-2">Your profile
             </h5>
-            {{!-- <hr> --}}
 
             <div class="mb-3 mt-3 row">
-              <label for="name" class="col-sm-2 col-form-label">Username</label>
-              <div class="col-sm-10">
+              <label for="name" class="col-sm-3 col-form-label">Username</label>
+              <div class="col-sm-9">
                 <input type="text" class="form-control name" name="name" value="{{user.name}}" size="25">
               </div>
             </div>
             <div class="mb-3 row">
-              <label for="email" class="col-sm-2 col-form-label">Email</label>
-              <div class="col-sm-10">
+              <label for="email" class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9">
                 <input type="email" class="form-control email" name="email" value="{{user.email}}">
               </div>
             </div>
+            <div class="mb-3 row">
+              <label for="birthday" class="col-sm-3 col-form-label">Date of birth</label>
+              <div class="col-sm-9">
+                <input type="date" class="form-control date" name="birthday" value="{{user.birthday}}">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="gender" class="col-sm-3 col-form-label">Gender</label>
+              <div class="col-sm-9">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="male" value="M">
+                  <label class="form-check-label" for="inlineRadio1">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="female" value="F">
+                  <label class="form-check-label" for="inlineRadio2">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="other" value="O">
+                  <label class="form-check-label" for="inlineRadio3">Other</label>
+                </div>
+              </div>
+            </div>
 
-            <a class="card-text btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePassword">Change
-              password</a>
+            {{!-- <a class="card-text btn btn-outline-primary" data-bs-toggle="modal"
+              data-bs-target="#changePassword">Change
+              password</a> --}}
             <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
           </form>
         </div>
@@ -62,24 +84,15 @@
 
 <!-- show courses-->
 <script>
-  var exampleModal = document.getElementById('editModal')
-  exampleModal.addEventListener('show.bs.modal', function (event) {
-
-    // Button that triggered the modal
-    var button = event.relatedTarget
-
-    // Extract info from data-bs-* attributes
-    var name = button.getAttribute('data-bs-name')
-    var email = button.getAttribute('data-bs-email')
-
-    // If necessary, you could initiate an AJAX request here
-    // and then do the updating in a callback.
-    //
-    // Update the modal's content.
-    var modalTitle = exampleModal.querySelector('.modal-title')
-    var modalBodyName = exampleModal.querySelector('.modal-body input.name')
-    var modalBodyEmail = exampleModal.querySelector('.modal-body input.email')
-    modalBodyName.value = name
-    modalBodyEmail.value = email
-  })
+  if (`{{ user.gender }}` == 'M') {
+    $('#male').prop('checked', true)
+  }
+    else if (`{{ user.gender }}` == 'F')
+  {
+    $('#female').prop('checked', true)
+  }
+        else if (`{{ user.gender }}` == 'O')
+  {
+    $('#other').prop('checked', true)
+  }
 </script>

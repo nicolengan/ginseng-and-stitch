@@ -8,10 +8,7 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
-<<<<<<< HEAD
 // const { where, ConnectionRefusedError } = require('sequelize/types');
-=======
->>>>>>> origin/simin-booking
 
 router.get('/', async (req, res) => {
     const booking = await Booking.findAll({
@@ -51,12 +48,7 @@ router.get('/api/list', async (req, res) => {
 //     res.render('booking/addBooking', { table, classes });
 // });
 
-<<<<<<< HEAD
-//book will be listBooking
-router.get('/listBooking/:id', ensureAuthenticated, async (req, res) => {
-=======
 router.get('/listBooking', ensureAuthenticated, async (req, res) => {
->>>>>>> origin/simin-booking
     const booking = await Booking.findAll({
         include: [
             { model: Class },
@@ -242,31 +234,4 @@ router.get('/successful/:id', async (req, res) => {
     // const classes = await Class.findAll();
     res.render('booking/successful', { booking });
 });
-
-<<<<<<< HEAD
 module.exports = router;
-=======
-router.get('/successful/sendEmail/:id', async (req, res) => {
-    const booking = await Booking.findOne({
-        include: [
-            { model: Class },
-            { model: Course }
-        ],
-        where: {
-            id: req.params.id
-        }
-    });
-
-    // const user = await User.findOne({ where: { id: res.user.id } })
-
-    console.log(req.user.email);
-    var subject = 'Successful Course Booking';
-    var html = '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
-    sendEmail(req.user.email, subject, html);
-
-    res.redirect('/account');
-});
-
-module.exports = router;
-
->>>>>>> origin/simin-booking

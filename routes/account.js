@@ -188,19 +188,26 @@ router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
     console.log(JSON.stringify(req.body));
     let name = req.body.name;
     let email = req.body.email;
-    console.log(name);
-    console.log(email);
-    User.update({ name, email }, { where: { id: req.params.id } })
+    let birthday = req.body.birthday;
+    let gender = req.body.gender;
+    console.log(birthday);
+    console.log(gender);
+    User.update({ name: name, email:email, birthday: birthday, gender: gender }, { where: { id: req.params.id } })
         .then((result) => {
             console.log(result);
             res.redirect('/account');
         })
         .catch(err => console.log(err));
 });
+router.get('/changePassword', function (req, res, next) {
+    // console.log(req.query.token)
+    res.render('account/changePassword');
+});
 
 router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
-    console.log("L")
-    let { newPassword, newPassword2 } = req.body;
+    console.log()
+    let { oldPassword, newPassword, newPassword2 } = req.body;
+    console.log(oldPassword)
     let isValid = true;
     if (newPassword.length < 6) {
         flashMessage(res, 'error', 'Password must be at least 6 characters');
@@ -215,15 +222,16 @@ router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
         return;
     }
     try {
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(newPassword, salt);
         // If all is well, checks if user is already registered
-        let check = await User.findOne({ where: { password: hash } });
-        if (check) {
+        check = bcrypt.compareSync(oldPassword, req.user.password);
+        console.log(check)
+        if (!check) {
             // If user is found, that means email has already been registered
-            flashMessage(res, 'error', ' current password is wrong');
-            res.redirect('/account')
+            flashMessage(res, 'error', ' Old password is wrong');
+            res.redirect('/account/changePassword')
         } else {
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(newPassword, salt);
             // Create new user record 
             // Use hashed password
             User.update({ password: hash }, { where: { id: req.params.id } })
