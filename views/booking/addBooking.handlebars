@@ -41,7 +41,7 @@
 <p style="float: left">Home > Courses > Book Now </p>
 <!--booking id, course id, class id,  user id, date created-->
 <div class="container">
-	<div class="table-responsive">
+	{{!-- <div class="table-responsive">
 		<table class="table table-striped" id="table" data-toggle="table" data-filter-control="true"
 			data-show-columns="true" data-url="/admin/classes/api/list">
 			<thead>
@@ -58,7 +58,7 @@
 				</tr>
 			</thead>
 		</table>
-	</div>
+	</div> --}}
 	<br>
 	<div class="card card-body">
 		<form action="" method="post">
@@ -95,15 +95,12 @@
 				</div>
 			</div>
 			<br>					
-			<div class="submit">
-<<<<<<< HEAD
+
                 {{!-- <a class="btn btn-primary" href="/booking/addBooking/{{id}}">+ Create Booking</a> --}}
-				<button id="buttons" class="btn btn-outline-primary" type="submit">+ Create Booking</button>
-				<button id="buttons" class="btn btn-outline-secondary"><a href="/booking/listBooking">Current Booking</a></button>
-=======
+				{{!-- <button id="buttons" class="btn btn-outline-primary" type="submit">+ Create Booking</button>
+				<button id="buttons" class="btn btn-outline-secondary"><a href="/booking/listBooking">Current Booking</a></button> --}}
 				<button class="btn btn-primary waves-effect" type="submit">+ Create Booking</button>
-				<button class="btn btn-info" type="submit"><a href="/booking/listBooking">Current Booking</a></button>
->>>>>>> 61c9d57c7bbfbabf8ace5f7a9cde6b25c9e2157a
+				<a class="btn btn-info" href="/booking/listBooking">Current Booking</a>
 			</div>
 		</form>
 	</div>

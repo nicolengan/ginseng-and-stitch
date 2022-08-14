@@ -10,10 +10,10 @@ const Review = require('../models/Review');
 const setUpDB = (drop) => {
 
     mySQLDB.authenticate()
-        .then(async () => {
+        .then(() => {
             console.log('Database connected');
 
-            await mySQLDB.sync({ alter: true, force: drop });
+            mySQLDB.sync({ alter: true, force: drop });
             console.log("The table for the Database was just (re)created!");
 
             //user_id in cart

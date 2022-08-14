@@ -1,132 +1,66 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Account</li>
-  </ol>
-</nav>
-<!-- modal for user edit-->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Update account for <span class="text-primary">{{user.name}}</span></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
 
-        <form action="/account/editUser/{{user.id}}" method="post">
-          <div class="mb-3">
-            <label for="name" class="col-form-label">Name:</label>
-            <input type="text" class="form-control name" name="name" value="name" size="25">
-          </div>
-
-          <div class="mb-3">
-            <label for="email" class="col-form-label">Email:</label>
-            <input type="email" class="form-control email" name="email" value="email">
-          </div>
+<link rel="stylesheet" href="/css/user/account.css">
+<div class="d-flex mt-3 justify-content-md-center">
+  <div class="col-sm-6 p-3 border rounded-1 border-2" style="background-color:white;">
+    <div class="row"> 
+      <div class="col-sm-4 mx-0 pe-0 mt-4">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active accordion user-select-none" data-bs-toggle="collapse"
+              data-bs-target="#collapseOne" aria-current="page"><i class="m-1 bi bi-person"></i>My Account</a>
+            <div id="collapseOne" class="accordion-collapse collapse show">
+              <ul class="nav flex-column">
+                <li class="nav-item accordion-item">
+                  <a class="nav-link" href="/account">Profile</a>
+                </li>
+                <li class="nav-item accordion-item">
+                  <a class="nav-link text-reset" href="/account/changePassword/{{user.id}}"></i>Password</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/account/bookings">My bookings</a>
+          </li>
+        </ul>
       </div>
+      <div class="col-sm-8 mx-0  border-start">
+        <div class="card m-0 border border-0">
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
+          <form action="/account/editUser/{{user.id}}" class="card-body w-75 mx-auto" method="post">
+            <h5 class="w-25 mx-auto border-bottom pb-2">Your profile
+            </h5>
+            {{!-- <hr> --}}
+
+            <div class="mb-3 mt-3 row">
+              <label for="name" class="col-sm-2 col-form-label">Username</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control name" name="name" value="{{user.name}}" size="25">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="email" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control email" name="email" value="{{user.email}}">
+              </div>
+            </div>
+
+            <a class="card-text btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePassword">Change
+              password</a>
+            <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
+          </form>
+        </div>
       </div>
-      </form>
     </div>
   </div>
 </div>
-<!-- modal for password change -->
-<div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="changePassword" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="changePasswordLabel">Update Password</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-        <form action="/account/changePassword/{{user.id}}" method="post">
-
-          <div class="mb-3">
-            <label for="newPassword" class="col-form-label">New password: </label>
-            <input type="password" class="form-control" name="newPassword" size="20">
-          </div>
-          <div class="mb-3">
-            <label for="newPassword2" class="col-form-label">Confirm new password: </label>
-            <input type="password" class="form-control" name="newPassword2" size="20">
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
-      </div>
-    </div>
-
-    <div class="modal-footer">
-    </div>
-    </form>
-  </div>
-</div>
-
-<div class="col-sm-6">
-  <div class="card mt-2 w-75">
-
-    {{!-- {{#if users}}
-    {{#each users}} --}}
-    <h5 class="card-header">Account
-    </h5>
-    <div class="card-body">
-      <p class="card-title h5">Welcome {{user.name}}
-        <button class="btn btn-outline-primary position-absolute top-0 end-0" data-bs-toggle="modal"
-          data-bs-target="#editModal" data-bs-name={{user.name}} data-bs-email={{user.email}}>Edit
-          <a class="bi bi-pencil-square">
-          </a>
-        </button>
-      </p>
-
-      <p class="card-text h5">Email: {{user.email}}</p>
-      <a class="card-text btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePassword">Change
-        password</a>
-    </div>
-  </div>
-</div>
+{{!-- </div> --}}
 
 
 
-{{!-- {{/each}}
-{{/if}} --}}
-<div class="row w-75 mx-auto my-5">
-  <!-- show courses-->
-  {{#if bookings}}
-  {{#each bookings}}
-  <div class="col-sm-6">
-    {{!-- <img src="../img/home_img.jpg" class="card-img-top" alt="..."> --}}
 
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{Course.title}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{Class.date}}</h6>
-        <p class="card-text">Description: {{Course.description}}</p>
-        {{!-- <p class="card-text">{{Classes.date}}</p> --}}
-        <a href="/booking/editBooking/{{id}}" class="btn btn-primary">Edit booking details</a>
-        <a href="/booking/deleteBooking/{{id}}" class="btn btn-danger">Delete booking</a>
-      </div>
-    </div>
 
-  </div>
-  {{/each}}
-  {{else}}
-  <div class="col-sm-3">
-    <div class="card">
-      <div class="card-body">
-        <p class="h4">No bookings found</p>
-        <a href="/courses" class="btn btn-primary">View courses</a>
-      </div>
-    </div>
-  </div>
-
-  {{/if}}
-</div>
-
+<!-- show courses-->
 <script>
   var exampleModal = document.getElementById('editModal')
   exampleModal.addEventListener('show.bs.modal', function (event) {
