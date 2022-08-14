@@ -7,33 +7,42 @@
             {{#each items}}
             {{!-- <div class="col"> --}}
                 <div class="card border-2 mb-2">
-                    <div class="col">
-                    <div class="card-header row-9">
-                        <h4 class="card-title text-start">{{prod_name}}</h4>
+                    <div class="row card-header"> filler
                     </div>
-                    <div class="card-body row-3">
-                        <a href="{{posterURL}}" data-title="{{prod_name}}" data-toggle="lightbox">
-                            <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid"
-                                onerror="this.src='/img/home_img.jpg'">
-                        </a>
-                    </div>
-                    </div>
-                    <div class="card-body col-9 m-0">
-                        <div class="row text-start">
-                            <p class="text-info">{{quantity}}</p>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="card-body row-4">
+                                <a href="{{posterURL}}" data-title="{{prod_name}}" data-toggle="lightbox">
+                                    <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid"
+                                        onerror="this.src='/img/home_img.jpg'">
+                                </a>
+                            </div>
                         </div>
-                        {{!-- <div class="row text-start">
-                            <h5 class="text">{{prod_desc}}</h5>
-                        </div> --}}
-                        <div class="row text-start">
-                            <p class="text fw-bold">
-                                ${{price}}
-                            </p>
+                        <div class="col">
+                            <div class="card-body">
+                                <h4 class="card-title text-start">{{prod_name}}</h4>
+                            </div>
+                            <div class="card-body m-0">
+                                <div class="row text-start">
+                                    <p class="text-info">{{quantity}}</p>
+                                </div>
+                                {{!-- <div class="row text-start">
+                                    <h5 class="text">{{prod_desc}}</h5>
+                                </div> --}}
+                                <div class="row text-start">
+                                    <p class="text fw-bold">
+                                        ${{price}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mt-5">
+                            <a href="/cart/deleteItemFromCart/{{id}}"><i class="bi bi-trash"></i></a>
                         </div>
                     </div>
-
                 </div>
-            {{!-- </div> --}}
+                {{!--
+            </div> --}}
             {{/each}}
         </div>
     </div>
@@ -42,4 +51,4 @@
 {{else}}
 <h3>No products yet</h3>
 {{/if}}
-</main> 
+</main>
