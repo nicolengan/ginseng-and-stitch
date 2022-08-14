@@ -12,10 +12,6 @@ Class.init({
   date: {
     type: DataTypes.DATEONLY,
     allowNull: false,
-  },
-  max_pax: {
-    type: DataTypes.INTEGER
-    // allowNull: false
   }
 }, {
    // Other model options go here
