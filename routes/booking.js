@@ -179,25 +179,5 @@ router.get('/successful/:id', async (req, res) => {
     res.render('booking/successful', { booking });
 });
 
-// router.get('/successful/sendEmail/:id', async (req, res) => {
-//     const booking = await Booking.findOne({
-//         include: [
-//             { model: Class },
-//             { model: Course }
-//         ],
-//         where: {
-//             id: req.params.id
-//         }
-//     });
-//     console.log(booking)
-//     // const user = await User.findOne({ where: { id: res.user.id } })
-
-//     console.log(req.user.email);
-//     var subject = 'Successful Course Booking';
-//     var html = '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
-//     sendEmail(req.user.email, subject, html);
-
-//     res.redirect('/account');
-// });
 
 module.exports = router;
