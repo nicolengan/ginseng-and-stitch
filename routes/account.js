@@ -8,42 +8,20 @@ const Course = require('../models/Course');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const ensureAuthenticated = require('../helpers/auth');
+const sendEmail = require('../helpers/sendEmail');
 const randtoken = require('rand-token');
-const nodemailer = require("nodemailer");
 const Review = require('../models/Review');
+const validator = require("email-validator");
 
-function sendEmail(email, token) {
-    var email = email;
-    var token = token;
-    let mail = nodemailer.createTransport({
-        // service: 'gmail',
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'skylarhiyagaming@gmail.com', // Your email id
-            pass: 'xpsuaskucepikgoe' // Your password
-        }
-    });
-    var mailOptions = {
-        from: 'skylarhiyagaming@gmail.com',
-        to: email,
-        subject: 'Reset Password Link - Ginseng and stitch',
-        html: '<p>You requested for reset password, kindly use this <a href="http://localhost:5000/account/resetPassword?token=' + token + '">link</a> to reset your password</p>'
-    };
-    mail.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error)
-        } else {
-            console.log(info)
-        }
-    });
-}
 /* home page */
 router.get('/', ensureAuthenticated, async (req, res) => {
     const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
-
     res.render('account/account', { bookings })
+});
+
+router.get('/bookings', async (req, res) => {
+    const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
+    res.render('account/bookings', { bookings })
 });
 
 router.get('/login', (req, res) => {
@@ -56,7 +34,7 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async function (req, res) {
     let { name, email, password, password2 } = req.body;
-
+    
     let isValid = true;
     if (password.length < 6) {
         flashMessage(res, 'error', 'Password must be at least 6 characters');
@@ -64,6 +42,10 @@ router.post('/register', async function (req, res) {
     }
     if (password != password2) {
         flashMessage(res, 'error', 'Passwords do not match');
+        isValid = false;
+    }
+    if (!validator.validate(email)){
+        flashMessage(res, 'error', 'Email is not in a valid format (name@email.com), please try again.');
         isValid = false;
     }
     if (!isValid) {
@@ -90,7 +72,7 @@ router.post('/register', async function (req, res) {
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
 
-            let user = await User.create({ name, email, password: hash });
+            let user = await User.create({ name: name, email: email, password: hash });
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/account/login');
         }
@@ -129,7 +111,9 @@ router.post('/sendEmail', async function (req, res) {
         }
         else {
             var token = randtoken.generate(20);
-            var sent = sendEmail(email, token);
+            var subject = 'Reset Password Link - Ginseng and stitch';
+            var message = '<p>You requested for reset password, kindly use this <a href="http://localhost:5000/account/resetPassword?token=' + token + '">link</a> to reset your password</p>';
+            var sent = sendEmail(email, subject, message);
             console.log(sent + " " + token)
             user.update({ token: token });
             flashMessage(res, 'success', 'Email sent');
@@ -204,19 +188,26 @@ router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
     console.log(JSON.stringify(req.body));
     let name = req.body.name;
     let email = req.body.email;
-    console.log(name);
-    console.log(email);
-    User.update({ name, email }, { where: { id: req.params.id } })
+    let birthday = req.body.birthday;
+    let gender = req.body.gender;
+    console.log(birthday);
+    console.log(gender);
+    User.update({ name: name, email:email, birthday: birthday, gender: gender }, { where: { id: req.params.id } })
         .then((result) => {
-            console.log(result[0] + ' account updated');
+            console.log(result);
             res.redirect('/account');
         })
         .catch(err => console.log(err));
 });
+router.get('/changePassword', function (req, res, next) {
+    // console.log(req.query.token)
+    res.render('account/changePassword');
+});
 
 router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
-    console.log("L")
-    let { newPassword, newPassword2 } = req.body;
+    console.log()
+    let { oldPassword, newPassword, newPassword2 } = req.body;
+    console.log(oldPassword)
     let isValid = true;
     if (newPassword.length < 6) {
         flashMessage(res, 'error', 'Password must be at least 6 characters');
@@ -231,15 +222,16 @@ router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
         return;
     }
     try {
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(newPassword, salt);
         // If all is well, checks if user is already registered
-        let check = await User.findOne({ where: { password: hash } });
-        if (check) {
+        check = bcrypt.compareSync(oldPassword, req.user.password);
+        console.log(check)
+        if (!check) {
             // If user is found, that means email has already been registered
-            flashMessage(res, 'error', ' current password is wrong');
-            res.redirect('/account')
+            flashMessage(res, 'error', ' Old password is wrong');
+            res.redirect('/account/changePassword')
         } else {
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(newPassword, salt);
             // Create new user record 
             // Use hashed password
             User.update({ password: hash }, { where: { id: req.params.id } })
@@ -257,10 +249,8 @@ router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
 });
 
 router.get('/review/:id', async (req, res) => {
-    const booking = await Booking.findOne({
+    const review = await Booking.findOne({
         include: [
-            { model: Class },
-            { model: User },
             { model: Course }
         ],
         where :
@@ -270,10 +260,7 @@ router.get('/review/:id', async (req, res) => {
     });
 
 
-    const user = booking.User;
-    const course = booking.Course;
-
-    res.render('account/review', { user , course });
+    res.render('account/review', { review });
 });
 
 router.post('/review/:id', async function (req, res){
@@ -307,6 +294,8 @@ router.post('/review/:id', async function (req, res){
         res.redirect('/account');
     });
 });
+
+
 
 
 

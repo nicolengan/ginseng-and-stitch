@@ -3,9 +3,9 @@ const User = require('../models/User');
 const Booking = require('../models/Booking');
 const Class = require('../models/Class');
 const Course = require('../models/Course');
+const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const Review = require('../models/Review');
-const Cart = require('../models/Cart');
 
 const setUpDB = (drop) => {
 
@@ -22,7 +22,6 @@ const setUpDB = (drop) => {
 
             // product_id in cart
             Product.hasMany(Cart, { sourceKey: 'prod_name', foreignKey: 'prod_name'});
-            // Product.hasMany(Cart, { sourceKey: 'posterURL', foreignKey: 'posterURL'});
 
             // //booking_id in cart
             // Cart.hasMany(Booking);
@@ -46,13 +45,11 @@ const setUpDB = (drop) => {
             Booking.belongsTo(User, {foreignKey: 'UserId', targetKey: 'id', onDelete: 'CASCADE'});
             User.hasMany(Booking, {sourceKey: 'id', foreignKey: 'UserId'});
 
-            
             Review.belongsTo(Course, {foreignKey : 'CourseId', targetKey :'id'});
             Course.hasMany(Review, {sourceKey: 'id', foreignKey: 'CourseId'});
 
             Review.belongsTo(User, {foreignKey: 'UserId', targetKey: 'id', onDelete: 'CASCADE'});
             User.hasMany(Review, {sourceKey: 'id', foreignKey: 'UserId'});
-
 
             // Cart_id in Booking
             // Booking.belongsTo(Cart, {foreignKey: 'CartId', targetKey: 'id', onDelete: 'CASCADE'});

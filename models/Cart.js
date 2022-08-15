@@ -7,7 +7,6 @@ Cart.init({
   // Model attributes are defined here
   quantity: {
     type: sequelize.INTEGER,
-    allowNull: false
   },
   price: {
     type: sequelize.DECIMAL,

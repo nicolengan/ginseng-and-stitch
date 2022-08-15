@@ -1,0 +1,11 @@
+h1{
+    padding-top: 15px;
+    padding-bottom: -30px;
+}
+
+.contactform-messages {
+    display: none;
+}
+.active {
+    display: block;
+}

@@ -3,24 +3,24 @@ const router = express.Router();
 const ensureAuthenticated = require("../helpers/auth");
 const Booking = require('../models/Booking');
 const Classes = require('../models/Class');
-const Bookings = require('../models/Booking');
 const path = require('path');
 const Product = require('../models/Product');
 const Cart = require('../models/Cart');
 const db = require('../config/DBConfig');
 const { ResultWithContext } = require('express-validator/src/chain');
-const flashMessage = ('../helpers/messenger');
+const flashMessage = require('../helpers/messenger');
 // const shopController = require('../controllers/shop');
 
 
 router.get('/', ensureAuthenticated, async (req, res) => {
     let [items, metadata] = await db.query(
-        `SELECT carts.prod_name, carts.quantity, carts.price, carts.id as cartId, products.posterURL, products.id as productId
+        `SELECT carts.prod_name, carts.quantity, carts.price, carts.id as cartId, carts.UserId as UserId, products.posterURL, products.id as productId
         FROM carts JOIN products
         ON carts.prod_name = products.prod_name
         WHERE carts.UserId = ${req.user.id}`,
     )
-    res.render('cart/cart', { items });
+    let user = req.user
+    res.render('cart/cart', { items, user });
 });
 
 router.post('/addProductToCart', ensureAuthenticated, async (req, res) => {
@@ -41,7 +41,7 @@ router.post('/addProductToCart', ensureAuthenticated, async (req, res) => {
         )
             .then((item) => {
                 console.log(item.toJSON());
-                flashMessage(res, 'success', item + ' has been added to cart!');
+                flashMessage(res, 'success', 'Item has been added into the cart');
                 res.redirect('cart/cart');
             })
             .catch(err => console.log(err))
@@ -74,6 +74,7 @@ router.get('/deleteItemFromCart/:id', async function (req, res) {
         await Cart.destroy({ where: { id: req.params.id } })
         .then((result) => {
             console.log(result[0] + ' deleted');
+            flashMessage(res, 'success', 'Successfully deleted item from cart');
             res.redirect('/cart');
         })
         .catch(err => console.log(err));
