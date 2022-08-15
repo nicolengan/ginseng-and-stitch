@@ -84,7 +84,7 @@ router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
     )
 
         .then((classes) => {
-            console.log(classes.toJSON());
+            // console.log(classes.toJSON());
             res.redirect('/booking/listbooking/' + classes.id);
             // res.redirect('/booking/confirm/');
         })
@@ -93,7 +93,7 @@ router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
 
 
 router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
-    var booking = Booking.findByPk(req.params.id, {
+    var booking = await Booking.findByPk(req.params.id, {
         include: [
             { model: Class },
             { model: Course }
@@ -103,7 +103,7 @@ router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
     const classes = await Class.findAll(
         {
             where: {
-                CourseId: req.params.id
+                CourseId: booking.CourseId
             }
         });
     res.render('booking/editBooking', { booking, courses, classes });
@@ -122,7 +122,7 @@ router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
             var subject = 'Successful Course Booking Update'
             var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
             sendEmail(req.user.email, subject, html);
-            flashMessage(res, 'successfully updated booking');
+            flashMessage(res, 'success', 'successfully updated booking');
             res.redirect('/booking/listBooking');
         })
         .catch(err => console.log(err))
@@ -138,7 +138,8 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
         }
         let result = await booking.destroy({ where: { id: booking.id } });
         console.log(result + ' booking deleted');
-        res.redirect('/account');
+        flashMessage(res, 'success','Booking deleted');
+        res.redirect('/account/bookings');
     }
     catch (err) {
         console.log(err);

@@ -31,6 +31,7 @@ router.get('/bookingPayment/:id', async (req, res) => {
               quantity: 1,
             }],
         mode: 'payment',
+        allow_promotion_codes: true,
         success_url: `${YOUR_DOMAIN}/booking/successful/${x.id}`,
         cancel_url: `${YOUR_DOMAIN}`,
     });

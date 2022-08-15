@@ -16,7 +16,7 @@ const products = require("./adminProducts");
 const users = require("./adminUsers");
 const enquiries = require("./adminEnquiries");
 const reviews = require("./adminReviews");
-const sequelize = require('sequelize');
+const codes = require("./adminCodes");
 
 
 router.all('/*', (req, res, next) => {
@@ -32,6 +32,8 @@ router.use('/products', products);
 router.use('/users', users);
 router.use('/enquiries', enquiries);
 router.use('/reviews', reviews);
+router.use('/codes', codes);
+
 
 router.get('/', async (req, res) => {
     const curr_date = new Date();
@@ -46,7 +48,10 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/api/listCustomer', async (req, res) => {
-    const customers = await stripe.customers.list()
+    const customers = await stripe.customers.list(
+        {limit: 100},
+    )
+    // console.log(customers.length)
     // .then((result)=>{
     //     console.log(result.data.length)
     // })
@@ -57,12 +62,9 @@ router.get('/api/listCustomer', async (req, res) => {
 
 router.get('/api/listInvoice', async (req, res) => {
     const events = await stripe.events.list({
+        limit: 100,
         type: 'charge.succeeded',
       });
-    // .then((result)=>{
-    //     console.log(result.data.length)
-    // })
-    // console.log(events.data.created)
     return res.json({
         rows: events.data
     })
