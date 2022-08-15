@@ -18,7 +18,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-body" href="/account/bookings">My bookings</a>
+            <a class="nav-link text-body" href="/account/bookings"><i class="m-1 bi bi-calendar"></i>My bookings</a>
           </li>
         </ul>
       </div>
@@ -44,7 +44,7 @@
             <div class="mb-3 row">
               <label for="birthday" class="col-sm-3 col-form-label">Date of birth</label>
               <div class="col-sm-9">
-                <input type="date" class="form-control date" name="birthday" value="{{user.birthday}}">
+                <input type="date" class="form-control date" id="txtDate" name="birthday" value="{{user.birthday}}">
               </div>
             </div>
             <div class="mb-3 row">
@@ -94,4 +94,19 @@
   {
     $('#other').prop('checked', true)
   }
+$(function(){
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var maxDate = year + '-' + month + '-' + day;    
+    $('#txtDate').attr('max', maxDate);
+});
 </script>

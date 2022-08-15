@@ -189,6 +189,10 @@ router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
     let birthday = req.body.birthday;
+    if (birthday.length == 0)
+    {
+        birthday = null
+    }
     let gender = req.body.gender;
     console.log(birthday);
     console.log(gender);
@@ -218,7 +222,7 @@ router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
         isValid = false;
     }
     if (!isValid) {
-        res.redirect('/account');
+        res.redirect('/account/changePassword');
         return;
     }
     try {
@@ -258,7 +262,7 @@ router.get('/review/:id', async (req, res) => {
             id: req.params.id
         }
     });
-
+    console.log(review)
 
     res.render('account/review', { review });
 });

@@ -17,6 +17,7 @@ const users = require("./adminUsers");
 const enquiries = require("./adminEnquiries");
 const reviews = require("./adminReviews");
 const codes = require("./adminCodes");
+const Enquiry = require('../models/Enquiry');
 
 
 router.all('/*', (req, res, next) => {
@@ -40,10 +41,11 @@ router.get('/', async (req, res) => {
     let traffic = await Traffic.findAll({where: {year: year}})
     let admins = await User.count({where: {role: 'a'}})
     let users = await User.count({where: {role: 'u'}})
+    let enquiries = await Enquiry.count({where: {status: 0}})
     // console.log(data)
     // console.log(JSON.stringify(users))
     // console.log(users)
-    res.render('admin/dashboard', {traffic, year, admins, users});
+    res.render('admin/dashboard', {traffic, year, admins, users, enquiries});
 });
 
 router.get('/api/listCustomer', async (req, res) => {
