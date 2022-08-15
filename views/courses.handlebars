@@ -12,12 +12,14 @@
 </script>
 
 <style>
-    ul.reviews{
-        display: inline-block;
-        text-align: center;
+    #review-card{
+        width:fit-content;
+        padding-left: 20px;
+        padding-right: 20px;
+        inline-size: min-content;
+        display: flex;
     }
 </style>
-
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
 <div class="container">
@@ -75,14 +77,14 @@
                                             <h3>{{star_count}}</h3>
                                             <div class="row text-center">
                                                 <div class="col-md-4 mx-auto">
-                                                    <ul class="reviews">
+                                                    <ul class="reviews p-0 mx-auto">
                                                         {{#each reviews}}
                                                         <br>
-                                                            <div class="card " >
+                                                            <div class="card" id="review-card">
                                                                 <div class="card-body">
-                                                                    <b><h5 class="card-title">{{"name"}}</h5></b>
+                                                                    <h5 class="card-title"><b>{{"name"}}</b></h5>
                                                                     <hr>
-                                                                    <p class="card-text">{{'review'}}</p>
+                                                                    <p id="review-text" class="card-text">{{'review'}}</p>
                                                                 </div>
                                                             </div>
                                                         <br>
