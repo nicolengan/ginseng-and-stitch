@@ -9,6 +9,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const ensureAuthenticated = require('../helpers/auth');
 const sendEmail = require('../helpers/sendEmail');
+const validateDetails = require('../helpers/validateDetails');
 const randtoken = require('rand-token');
 const Review = require('../models/Review');
 const validator = require("email-validator");
@@ -17,6 +18,11 @@ const validator = require("email-validator");
 router.get('/', ensureAuthenticated, async (req, res) => {
     const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
     res.render('account/account', { bookings })
+});
+
+router.get('/bookings', async (req, res) => {
+    const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
+    res.render('account/bookings', { bookings })
 });
 
 router.get('/bookings', async (req, res) => {
@@ -36,18 +42,7 @@ router.post('/register', async function (req, res) {
     let { name, email, password, password2 } = req.body;
     
     let isValid = true;
-    if (password.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 characters');
-        isValid = false;
-    }
-    if (password != password2) {
-        flashMessage(res, 'error', 'Passwords do not match');
-        isValid = false;
-    }
-    if (!validator.validate(email)){
-        flashMessage(res, 'error', 'Email is not in a valid format (name@email.com), please try again.');
-        isValid = false;
-    }
+    isValid = validateDetails(res, isValid, password, password2, email)
     if (!isValid) {
         res.render('account/register', {
             name,
@@ -72,7 +67,7 @@ router.post('/register', async function (req, res) {
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
 
-            let user = await User.create({ name: name, email: email, password: hash });
+            let user = await User.create({ name: name: name, email: email: email, password: hash });
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/account/login');
         }
@@ -135,14 +130,7 @@ router.post('/resetPassword', async function (req, res, next) {
     var password = req.body.password;
     var password2 = req.body.password2;
     let isValid = true;
-    if (password.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 characters');
-        isValid = false;
-    }
-    if (password != password2) {
-        flashMessage(res, 'error', 'Passwords do not match');
-        isValid = false;
-    }
+    isValid = validateDetails(res, isValid, password, password2)
     if (!isValid) {
         console.log("valid false")
         flashMessage(res, 'error', 'Unable to reset password, please try again.');
@@ -189,9 +177,11 @@ router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
     let birthday = req.body.birthday;
+    if (birthday.length == 0)
+    {
+        birthday = null
+    }
     let gender = req.body.gender;
-    console.log(birthday);
-    console.log(gender);
     User.update({ name: name, email:email, birthday: birthday, gender: gender }, { where: { id: req.params.id } })
         .then((result) => {
             console.log(result);
@@ -203,22 +193,18 @@ router.get('/changePassword', function (req, res, next) {
     // console.log(req.query.token)
     res.render('account/changePassword');
 });
+router.get('/changePassword', function (req, res, next) {
+    // console.log(req.query.token)
+    res.render('account/changePassword');
+});
 
 router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
-    console.log()
     let { oldPassword, newPassword, newPassword2 } = req.body;
     console.log(oldPassword)
     let isValid = true;
-    if (newPassword.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 characters');
-        isValid = false;
-    }
-    if (newPassword != newPassword2) {
-        flashMessage(res, 'error', 'Passwords do not match');
-        isValid = false;
-    }
+    isValid = validateDetails(res, isValid, newPassword, newPassword2)
     if (!isValid) {
-        res.redirect('/account');
+        res.redirect('/account/changePassword');
         return;
     }
     try {
@@ -230,6 +216,8 @@ router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
             flashMessage(res, 'error', ' Old password is wrong');
             res.redirect('/account/changePassword')
         } else {
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(newPassword, salt);
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(newPassword, salt);
             // Create new user record 
@@ -258,7 +246,7 @@ router.get('/review/:id', async (req, res) => {
             id: req.params.id
         }
     });
-
+    console.log(review)
 
     res.render('account/review', { review });
 });

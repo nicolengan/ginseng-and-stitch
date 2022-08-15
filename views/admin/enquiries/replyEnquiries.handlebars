@@ -1,5 +1,12 @@
 <div class="container-fluid col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
     <div class="card card-body">
+        {{#if fileURL}}
+        <div class="alert alert-primary me-3 px-4" role="alert">
+            An attatchement is availble for this enquiry! <a href="/admin/enquiries/download/{{id}}" class="alert-link">Click here</a> to
+            download.
+        </div>
+        {{/if}}
         <h3>Replying <span class="text-primary">{{name}}</span></h3>
         <form action="/admin/enquiries/replyEnquiries/{{id}}" method="post">
             {{!-- <div class="mb-3">
@@ -7,6 +14,7 @@
                 <input type="text" class="form-control name" name="name" value="{{enquiry.name}}" size="25">
             </div> --}}
             <h5 class="card-title lead">To: {{email}}</h5>
+
             <p class="card-text"><span class="fw-semibold fs-5">RE: {{subject}}</span><br>{{comments}}</p>
             <div class="mb-3">
                 <div class="form-check form-check-inline ps-0">
@@ -24,7 +32,8 @@
                     value="{{reply}}"></textarea>
             </div>
             <div class="d-flex flex-row ps-1">
-                <div class="p-2 ms-auto"><a href="/admin/enquiries" class="btn btn-secondary me-2">Close</a><button class="btn btn-primary" type="submit" value="Submit">Save changes</button></div>
+                <div class="p-2 ms-auto"><a href="/admin/enquiries" class="btn btn-secondary me-2">Close</a><button
+                        class="btn btn-primary" type="submit" value="Submit">Save changes</button></div>
             </div>
         </form>
     </div>

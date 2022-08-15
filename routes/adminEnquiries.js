@@ -4,8 +4,6 @@ const Enquiry = require('../models/Enquiry');
 const bcrypt = require('bcryptjs');
 const flashMessage = require('../helpers/messenger');
 const sendEmail = require('../helpers/sendEmail');
-var http = require('http');
-var fs = require('fs');
 
 
 router.get('/', (req, res) => {
@@ -15,9 +13,7 @@ router.get('/', (req, res) => {
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Enquiry.count(),
-        rows: await Enquiry.findAll(
-
-        )
+        rows: await Enquiry.findAll( {order: ['status']})
     })
 });
 router.get('/replyEnquiries/:id', (req, res) => {
@@ -41,7 +37,7 @@ router.post('/replyEnquiries/:id', async (req, res) => {
     enquiry.update({ reply: reply, status: status })
         .then((result) => {
             var subject = 'RE: ' + enquiry.subject
-            var message = `<p>Hello, ${enquiry.name},<br> thank you for contacting us. ${reply}</p>`
+            var message = `<p>Hello, ${enquiry.name},<br> thank you for contacting us. Hello, ${enquiry.name},<br> thank you for contacting us. ${reply}</p>`
             var email = enquiry.email
             sendEmail(email, subject, message);
             console.log(result + ' reply sent.');
@@ -67,11 +63,10 @@ router.get('/deleteEnquiries/:id', async (req, res) => {
         }
 });
 
-router.get('/download:id', async (req, res) =>{
+router.get('/download/:id', async (req, res) =>{
     let enquiry = await Enquiry.findOne({ where: { id: req.params.id } })
     const file = `./public${enquiry.fileURL}`;
     res.download(file); 
-    res.redirect(`/admin/enquiries/replyEnquiries/${req.params.id}`)
 });
 
 module.exports = router;
