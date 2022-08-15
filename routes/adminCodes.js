@@ -36,8 +36,7 @@ router.post('/addCode', async (req, res) => {
             console.log(percentage)
             var coupon = await stripe.coupons.create({
                 percent_off: percentage,
-                duration: 'repeating',
-                duration_in_months: 3,
+                duration: 'forever'
             });
             coupon_id = coupon.id
             await Coupon.create({ percentage: percentage, coupon: coupon.id });

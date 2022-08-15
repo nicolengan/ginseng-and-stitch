@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const crypto = require('crypto');
 const flashMessage = require('../helpers/messenger');
+const { Op } = require("sequelize");
 const stripe = require('stripe')('sk_test_51LFiQDIDLAIUfWTrXJv037R9GA5KTPZF2W98ix0WKql786N6swgCubejuSMLMIuluPGiMUyVTgp9AIz6d17fiI0T00B189hFRp');
 
 const classes = require("./adminClasses");
@@ -24,7 +25,7 @@ router.all('/*', (req, res, next) => {
     req.app.locals.layout = 'admin'
     // set your layout here
     next(); // pass control to the next handler
-  });
+});
 
 router.use('/classes', classes);
 router.use('/courses', courses);
@@ -38,19 +39,20 @@ router.use('/codes', codes);
 router.get('/', async (req, res) => {
     const curr_date = new Date();
     let year = curr_date.getFullYear();
-    let traffic = await Traffic.findAll({where: {year: year}})
-    let admins = await User.count({where: {role: 'a'}})
-    let users = await User.count({where: {role: 'u'}})
-    let enquiries = await Enquiry.count({where: {status: 0}})
+    let traffic = await Traffic.findAll({ where: { year: year } })
+    let admins = await User.count({ where: { role: 'F' } })
+    let users = await User.count({ where: { gender: 'M' } })
+    // console.log(JSON.stringify(x))
+    let enquiries = await Enquiry.count({ where: { status: 0 } })
     // console.log(data)
     // console.log(JSON.stringify(users))
     // console.log(users)
-    res.render('admin/dashboard', {traffic, year, admins, users, enquiries});
+    res.render('admin/dashboard', { traffic, year, admins, users, enquiries});
 });
 
 router.get('/api/listCustomer', async (req, res) => {
     const customers = await stripe.customers.list(
-        {limit: 100},
+        { limit: 100 },
     )
     // console.log(customers.length)
     // .then((result)=>{
@@ -65,10 +67,21 @@ router.get('/api/listInvoice', async (req, res) => {
     const events = await stripe.events.list({
         limit: 100,
         type: 'charge.succeeded',
-      });
+    });
     return res.json({
         rows: events.data
     })
+});
+
+router.get('/api/listUser', async (req, res) => {
+    return res.json(
+        await User.findAll(
+            {
+                attributes: ['gender'],
+                where: { gender: {[Op.not]: null} }
+            }
+        )
+    )
 });
 
 router.get('/logout', (req, res, next) => {

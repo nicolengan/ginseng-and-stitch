@@ -8,19 +8,14 @@ $('#submit').on('click', function () {
     let file = $("#fileUpload")[0].files[0];
     if (file != null) {
         let formdata = new FormData();
-        // alert(file)
         formdata.append('fileUpload', file);
-        // alert(JSON.stringify(file))
         fetch('/fileUpload', {
             method: 'POST',
             body: formdata
         })
             .then(res => res.json())
             .then((data) => {
-                // alert(data.file)
-                // $('#poster').attr('src', data.file);
-                $('#fileURL').attr('value', data.file); // sets posterURL hidden field
-                alert($('#fileURL').attr('value'))
+                $('#fileURL').attr('value', data.file);
                 if (data.err) {
                     $('#fileErr').show();
                     $('#fileErr').text(data.err.message);

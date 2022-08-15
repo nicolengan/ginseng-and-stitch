@@ -43,14 +43,26 @@
       chart.draw(data, google.charts.Line.convertOptions(options))
     }
   </script>
+
   <script type="text/javascript">
-    google.charts.load("current", { packages: ["corechart"] });
+    const gender_arr = []
+    $.ajax({
+      url: "/admin/api/listUser",
+      dataType: "json",
+    }).done(function (jsonData){
+      Object.values(jsonData).forEach(function (row) {
+        var x = row.gender
+        gender_arr.push(`${x}`)
+      })
+      console.log(gender_arr)
+          google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
-        ['Role', 'Number'],
-        ['Admin', {{ admins }}],
-    ['User', {{ users }}]
+        ['Gender', 'Number'],
+        ['Female', gender_arr.filter(x => x == 'F').length],
+    ['Male', gender_arr.filter(x => x == 'M').length],
+    ['Others', gender_arr.filter(x => x == 'O').length]
         ]);
 
     var options = {
@@ -64,7 +76,10 @@
     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
     chart.draw(data, options);
       }
+
+    })
   </script>
+
   <script type="text/javascript">
     function getCurrMonth() {
       const d = new Date();
@@ -92,8 +107,6 @@
         Object.values(jsonData).reverse().forEach(function (row) {
           row.reverse().forEach(function (b) {
             count += 1
-            console.log(formatDate(b.created))
-            console.log(b.created)
             data.addRow([
               formatDate(b.created),
               count

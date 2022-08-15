@@ -63,11 +63,10 @@ router.get('/deleteEnquiries/:id', async (req, res) => {
         }
 });
 
-router.get('/download:id', async (req, res) =>{
+router.get('/download/:id', async (req, res) =>{
     let enquiry = await Enquiry.findOne({ where: { id: req.params.id } })
     const file = `./public${enquiry.fileURL}`;
     res.download(file); 
-    res.redirect(`/admin/enquiries/replyEnquiries/${req.params.id}`)
 });
 
 module.exports = router;

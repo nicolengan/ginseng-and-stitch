@@ -9,6 +9,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const ensureAuthenticated = require('../helpers/auth');
 const sendEmail = require('../helpers/sendEmail');
+const validateDetails = require('../helpers/validateDetails');
 const randtoken = require('rand-token');
 const Review = require('../models/Review');
 const validator = require("email-validator");
@@ -36,18 +37,7 @@ router.post('/register', async function (req, res) {
     let { name, email, password, password2 } = req.body;
     
     let isValid = true;
-    if (password.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 characters');
-        isValid = false;
-    }
-    if (password != password2) {
-        flashMessage(res, 'error', 'Passwords do not match');
-        isValid = false;
-    }
-    if (!validator.validate(email)){
-        flashMessage(res, 'error', 'Email is not in a valid format (name@email.com), please try again.');
-        isValid = false;
-    }
+    isValid = validateDetails(res, isValid, password, password2, email)
     if (!isValid) {
         res.render('account/register', {
             name,
@@ -135,14 +125,7 @@ router.post('/resetPassword', async function (req, res, next) {
     var password = req.body.password;
     var password2 = req.body.password2;
     let isValid = true;
-    if (password.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 characters');
-        isValid = false;
-    }
-    if (password != password2) {
-        flashMessage(res, 'error', 'Passwords do not match');
-        isValid = false;
-    }
+    isValid = validateDetails(res, isValid, password, password2)
     if (!isValid) {
         console.log("valid false")
         flashMessage(res, 'error', 'Unable to reset password, please try again.');
@@ -194,8 +177,6 @@ router.post('/editUser/:id', ensureAuthenticated, (req, res) => {
         birthday = null
     }
     let gender = req.body.gender;
-    console.log(birthday);
-    console.log(gender);
     User.update({ name: name, email:email, birthday: birthday, gender: gender }, { where: { id: req.params.id } })
         .then((result) => {
             console.log(result);
@@ -209,18 +190,10 @@ router.get('/changePassword', function (req, res, next) {
 });
 
 router.post('/changePassword/:id', ensureAuthenticated, async (req, res) => {
-    console.log()
     let { oldPassword, newPassword, newPassword2 } = req.body;
     console.log(oldPassword)
     let isValid = true;
-    if (newPassword.length < 6) {
-        flashMessage(res, 'error', 'Password must be at least 6 characters');
-        isValid = false;
-    }
-    if (newPassword != newPassword2) {
-        flashMessage(res, 'error', 'Passwords do not match');
-        isValid = false;
-    }
+    isValid = validateDetails(res, isValid, newPassword, newPassword2)
     if (!isValid) {
         res.redirect('/account/changePassword');
         return;
