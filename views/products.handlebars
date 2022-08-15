@@ -6,38 +6,37 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
 <div class="container">
     {{#if products}}
-    <h3 class="text">Products</h3>
-    <div class="container">
+    {{!-- <h3 class="text">Products</h3> --}}
+    <div class="container m-4">
         <div class="row">
             {{#each products}}
             <div class="col-sm-4">
                 <div class="card border-2 mb-2">
                     <div>
-                        <a href="{{posterURL}}" data-title="{{prod_name}}" data-toggle="lightbox">
-                            <img src="{{posterURL}}" alt="Poster" class="img-thumbnail img-fluid"
+                        <a data-title="{{prod_name}}" data-toggle="lightbox">
+                            <img src="{{posterURL}}" alt="Poster" class="img-fluid"
                                 onerror="this.src='/img/home_img.jpg'">
                         </a>
                     </div>
-                    <div class="card-header col-12">
-                        <h4 class="card-title text-start">{{prod_name}}</h4>
-                    </div>
+                    <div class="m-3">
+                        <div class="col-12">
+                            <div class="row text-start">
+                                <p class="text-secondary opacity-75 mt-0">{{difficulty}}</p>
+                            </div>
+                            <h4 class="card-title text-start">{{prod_name}}</h4>
+                        </div>
+                            {{!-- <div class="row text-start">
+                                <h5 class="text">{{prod_desc}}</h5>
+                            </div> --}}
+                            <div class="row text-start">
 
-                    <div class="card-body m-0">
-                        <div class="row text-start">
-                            <p class="text-info">{{difficulty}}</p>
+                                <p class="text">
+                                    ${{price}}
+                                </p>
                         </div>
-                        <div class="row text-start">
-                            <h5 class="text">{{prod_desc}}</h5>
-                        </div>
-                        <div class="row text-start">
-                            <p class="text fw-bold">
-                                ${{price}}
-                            </p>
-                            <div class="col"><input type="number" id="{{id}}-quantity" name="quantity" value="{{quantity}}" min="0" max="100"></div>
+                    </div>
+                                                <div class="col"><input type="number" id="{{id}}-quantity" name="quantity" value="{{quantity}}" min="0" max="100"></div>
                             <div class="col"><i class="bi bi-cart" id="{{id}}-addToCart" onclick="addToCart('{{id}}','{{price}}', '{{prod_name}}')"></i></div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             {{/each}}

@@ -16,6 +16,16 @@ router.get('/api/list', async (req, res) => {
     })
 });
 
+// router.get('/api/list/:id', async (req, res) => {
+//     return res.json({
+//         // total: await User.count(),
+//         rows: await User.findOne({
+//             where: { id: req.params.id },
+//             raw: true
+//         })
+//     })
+// });
+
 router.get('/editUsers/:id', (req, res) => {
     User.findOne({
         where: { id: req.params.id },
@@ -36,7 +46,7 @@ router.get('/editUsers/:id', (req, res) => {
 
 router.post('/editUsers/:id', (req, res) => {
     console.log(JSON.stringify(req.body));
-    let { name, email,role } = req.body;
+    let { name, email, role } = req.body;
     let isValid = true;
     if (!isValid) {
         res.redirect('/admin/users');
@@ -59,10 +69,6 @@ router.post('/editUsers/:id', (req, res) => {
 
 router.get('/deleteUser/:id', async (req, res) => {
     let user = await User.findOne({ where: { id: req.params.id } })
-    // if (user.role != 'a')
-    // {
-
-    // }
     if (user.email == "admin@gmail.com") {
         flashMessage(res, 'error', 'Unable to delete root admin account, please try again')
         res.redirect('/admin/users')
@@ -72,7 +78,9 @@ router.get('/deleteUser/:id', async (req, res) => {
             await user.destroy()
                 .then((result) => {
                     console.log(user + ' deleted');
+                    flashMessage(res, 'success', 'Account deleted')
                     res.redirect('/admin/users');
+
                 })
                 .catch(err => console.log(err));
         }

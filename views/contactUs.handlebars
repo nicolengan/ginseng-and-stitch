@@ -1,1 +1,43 @@
-<h1>contact us</h1>
+
+<div class="col-md-5 mt-4">
+    <form class="needs-validation" id="contactForm" method="post" action="" novalidate>
+        <div class="mb-3">
+            <div class="row g-3">
+                <div class="col">
+                    <label for="name" class="text-start form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+
+            </div>
+        </div>
+        <div class="mb-3 ">
+            <label for="email" class="text-start form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="text-start form-label">Subject</label>
+            <input type="text" class="form-control" id="subject" name="subject" aria-describedby="subjectHelp">
+
+        </div>
+        <div class="mb-3">
+            <label for="textarea2" class="text-start form-label">Comments</label>
+            <textarea class="form-control" placeholder="Leave a comment here" id="textarea2" style="height: 300px"
+                name="comments"></textarea>
+
+        </div>
+        <div class="mb-3">
+            <div class="custom-file mb-2">
+                <label for="img form-label">Select file(s):</label>
+                <input type="file" class="custom-file-input" id="fileUpload" name="fileUpload"
+                    accept="image/png, image/jpeg, image/jpg, image/gif, video/mp4, .docx, .doc, .txt, .pdf ">
+
+            </div>
+            <div class="text-danger small mb-2" id="fileErr" type="hidden" style="display:none"></div>
+            <input id="fileURL" type="hidden" name="fileURL">
+        </div>
+        <div class="d-flex flex-row mb-3">
+            <div class="p-2"> <a id="submit" class="mt-1 btn btn-primary">Submit</a></div>
+        </div>
+    </form>
+    <script src="/js/fileUpload.js"></script>
+</div>

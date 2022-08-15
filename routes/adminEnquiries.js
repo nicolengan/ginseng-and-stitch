@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const Enquiry = require('../models/Enquiry');
 const bcrypt = require('bcryptjs');
 const flashMessage = require('../helpers/messenger');
+const sendEmail = require('../helpers/sendEmail');
+var http = require('http');
+var fs = require('fs');
 
 
 router.get('/', (req, res) => {
@@ -11,32 +14,51 @@ router.get('/', (req, res) => {
 
 router.get('/api/list', async (req, res) => {
     return res.json({
-        total: await User.count(),
-        rows: await User.findAll()
+        total: await Enquiry.count(),
+        rows: await Enquiry.findAll(
+
+        )
     })
 });
+router.get('/replyEnquiries/:id', (req, res) => {
+    Enquiry.findOne({
+        where: { id: req.params.id },
+        raw: true
+    })
+        .then((enquiry) => {
+            res.render('admin/enquiries/replyEnquiries', enquiry);
+        })
+        .catch(err => console.log(err));
 
-// router.get('/editUser/:id', (req, res) => {
-//     console.log(JSON.stringify(req.body));
-//     let name = req.body.name;
-//     let email = req.body.email;
-//     console.log(name);
-//     console.log(email);
-//     User.update({ name, email}, { where: { id: req.params.id } })
-//         .then((result) => {
-//             console.log(result[0] + ' account updated');
-//             res.redirect('/account');
-//         })
-//         .catch(err => console.log(err));
-// });
+});
 
-router.get('/deleteUser/:id', async (req, res) => {
-    let enquiries = await User.findOne({ where: { id: req.params.id } })
+router.post('/replyEnquiries/:id', async (req, res) => {
+    console.log(JSON.stringify(req.body));
+    let reply = req.body.reply;
+    let status = req.body.status;
+    console.log(reply)
+    let enquiry = await Enquiry.findOne({ where: { id: req.params.id } })
+    enquiry.update({ reply: reply, status: status })
+        .then((result) => {
+            var subject = 'RE: ' + enquiry.subject
+            var message = `<p>Hello, ${enquiry.name},<br> thank you for contacting us. ${reply}</p>`
+            var email = enquiry.email
+            sendEmail(email, subject, message);
+            console.log(result + ' reply sent.');
+            res.redirect('/admin/enquiries');
+        })
+        .catch(err => console.log(err));
+});
+
+router.get('/deleteEnquiries/:id', async (req, res) => {
+    let enquiry = await Enquiry.findOne({ where: { id: req.params.id } })
         try {
-            await enquiries.destroy()
+            await enquiry.destroy()
                 .then((result) => {
-                    console.log(enquiries + ' deleted');
+                    console.log(enquiry + ' deleted');
+                    flashMessage(res, 'success', 'Enquiry deleted')
                     res.redirect('/admin/enquiries');
+                    
                 })
                 .catch(err => console.log(err));
         }
@@ -44,4 +66,12 @@ router.get('/deleteUser/:id', async (req, res) => {
             console.log(err);
         }
 });
+
+router.get('/download:id', async (req, res) =>{
+    let enquiry = await Enquiry.findOne({ where: { id: req.params.id } })
+    const file = `./public${enquiry.fileURL}`;
+    res.download(file); 
+    res.redirect(`/admin/enquiries/replyEnquiries/${req.params.id}`)
+});
+
 module.exports = router;

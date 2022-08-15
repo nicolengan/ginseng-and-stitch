@@ -1,28 +1,70 @@
-<p>Home > Courses > Book Now > Booking In Progress</p>
+<style>
+	label {
+		display: inline-block;
+	}
+
+	.container {
+		width: 60%;
+		margin: auto;
+	}
+
+	.col-75 {
+		margin-top: 2px;
+		width: 200px;
+	}
+
+	.submit {
+		width: 20%;
+		margin: auto;
+		text-align: center;
+	}
+</style>
+<p style="float: left">Home > Courses > Book Now > Confirmation</p>
+<br>
 <div class="container">
 	{{#if booking}}
-		 <p>This are your current booking:</p>
+		<b>This are your current bookings:</b>
 		{{#each booking}}
-		<!--booking id, course id, class id,  user id, date created-->
-		<div class="card border-black mb-2">
+		<p class="text-dark" style="text-align: left"> Number {{id}}:</p>
+		<div class="card border-black">
 			<div class="card-body">
 				<div class="row">			
 					<!-- automated-->
-					<div class="col">
-						<p class="text-primary">This is your current Booking ID</p>
-						<p class="text-dark">{{id}}</p>
-					</div>
 					<br>
 
 					<div class="col">
-						<p class="text-primary">This is the ID of the course you have picked:</p>
+						<p class="text-primary">Title of the course:</p>
 						<p class="text-dark">{{CourseId}}</p>
 					</div>
 					<br>
 
 					<div class="col">
-						<p class="text-primary">This is the ID of the Class you have picked:</p>
+						<p class="text-primary">Level of the course:</p>
+						<p class="text-dark">{{Course.level}}</p>
+					</div>
+					<br>
+
+					<div class="col">
+						<p class="text-primary">Description of the course:</p>
+						<p class="text-dark">{{Course.description}}</p>
+					</div>
+					<br>
+
+					<div class="col">
+						<p class="text-primary">Class ID that you will be attending:</p>
 						<p class="text-dark">{{ClassId}}</p>
+					</div>
+					<br>
+
+					<div class="col">
+						<p class="text-primary">Timing of class:</p>
+						<p class="text-dark">{{Class.time}}</p>
+					</div>
+					<br>
+
+					<div class="col">
+						<p class="text-primary">Date of class:</p>
+						<p class="text-dark">{{Class.date}}</p>
 					</div>
 					<br>
 
@@ -36,11 +78,19 @@
 								Delete
 							</a>
 						</p>
+
+						<p>
+							<a href="/booking/editBooking/{{id}}" class="card-link" data-toggle="confirmation"
+								data-title="Confirm Edit?">
+								<i class="bi bi-pencil-square"></i>
+								Edit
+							</a>
+						</p>
 						<br>
 					</div>
 				</div>
 					<div class="submit">
-					<button class="btn btn-primary" type="submit"><a href="/booking/confirm/{{id}}">Confirm Now</a></button>
+                    <a class="btn btn-primary waves-effect" type="submit"><a href="/payment/bookingPayment/{{id}}">Confirm</a></button>
 					</div>
 			</div>
 		</div>
@@ -50,26 +100,3 @@
 <h3>No Booking Available</h3>
 {{/if}}
 </div>
-
-						{{!-- <p>
-							<a href="/booking/editBooking/{{id}}" class="card-link mb-2">
-								<i class="fas fa-pencil-alt"></i>
-								Edit
-							</a>
-						</p> --}}
-					{{!-- <div class="col">
-						<p class="course_id">Course ID</p>
-						<p class="text-primary">{{course_id}}</p>
-					</div>
-                    <br>
-
-                    <div class="col">
-						<p class="class_id">Class ID</p>
-						<p class="text-primary">{{class_id}}</p>
-					</div>
-					<br> --}}
-					{{!-- <div class="col">
-						<p class="text-primary">Cart ID:</p>
-						<p class="text-dark">{{CartId}}</p>
-					</div>
-					<br> --}}
