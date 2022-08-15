@@ -19,7 +19,7 @@
 		text-align: center;
 	}
 </style>
-<p style="float: left">Home > Courses > Book Now > Booking In Progress</p>
+<p style="float: left">Home > Courses > Book Now > Confirmation</p>
 <br>
 <div class="container">
 	{{#if booking}}
@@ -33,14 +33,8 @@
 					<br>
 
 					<div class="col">
-						<p class="text-primary">ID of the course:</p>
-						<p class="text-dark">{{CourseId}}</p>
-					</div>
-					<br>
-
-					<div class="col">
 						<p class="text-primary">Title of the course:</p>
-						<p class="text-dark">{{Course.title}}</p>
+						<p class="text-dark">{{CourseId}}</p>
 					</div>
 					<br>
 
@@ -74,14 +68,6 @@
 					</div>
 					<br>
 
-					{{!-- <div class="col">
-						{{#each courses}}
-						<a href="{{coursePic}}" data-title="{{title}}" data-toggle="lightbox">
-                            <img src="{{coursePic}}" width="100px" height= "64px" onerror="this.src='/img/home_img.jpg'">
-                        </a>
-						{{/each}}
-					</div> --}}
-
 					<div class="col">
 						<br>
 						<br>
@@ -92,11 +78,19 @@
 								Delete
 							</a>
 						</p>
+
+						<p>
+							<a href="/booking/editBooking/{{id}}" class="card-link" data-toggle="confirmation"
+								data-title="Confirm Edit?">
+								<i class="bi bi-pencil-square"></i>
+								Edit
+							</a>
+						</p>
 						<br>
 					</div>
 				</div>
 					<div class="submit">
-					<button class="btn btn-primary" type="submit"><a href="/booking/confirm">Confirm Now</a></button>
+                    <a class="btn btn-primary waves-effect" type="submit" href="/payment/bookingPayment/{{id}}">Confirm</a>
 					</div>
 			</div>
 		</div>

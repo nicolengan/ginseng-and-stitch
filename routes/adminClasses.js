@@ -30,11 +30,10 @@ router.get('/addClasses', ensureAuthenticated, async (req, res) => {
 router.post('/addClasses', ensureAuthenticated, (req, res) => {
     let time = req.body.time;
     let date = req.body.date;
-    let max_pax = req.body.max_pax;
     let CourseId = req.body.CourseId;
 
     Classes.create(
-        { time, date, max_pax, CourseId}
+        { time, date, CourseId}
     )
         .then((classes) => {
             console.log(classes.toJSON());
@@ -54,11 +53,10 @@ router.get('/editClasses/:id', ensureAuthenticated, (req, res) => {
 router.post('/editClasses/:id', ensureAuthenticated, (req, res) => {
     let time = req.body.time;
     let date = req.body.date;
-    let max_pax = req.body.max_pax;
     let courseId = req.body.courseId;
 
     Classes.update(
-        { time, date, max_pax, courseId}, 
+        { time, date, courseId}, 
         { where: { id: req.params.id} }
     )
         .then((result) => {

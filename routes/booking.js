@@ -8,7 +8,7 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const sendEmail = require('../helpers/sendEmail');
 const nodemailer = require("nodemailer");
-// const { where, ConnectionRefusedError } = require('sequelize/types');
+//const { where, ConnectionRefusedError } = require('sequelize/types');
 
 router.get('/', async (req, res) => {
     const booking = await Booking.findAll({
@@ -21,12 +21,7 @@ router.get('/', async (req, res) => {
 });
 
 
-// router.get('/api/list', async (req, res) => {
-//     return res.json({
-//         total: await Booking.count(),
-//         rows: await Booking.findAll()
-//     })
-// });
+
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Booking.count(),
@@ -157,7 +152,7 @@ router.get('/confirm/:id', async (req, res) => {
     });
     const courses = await Course.findAll();
     const classes = await Class.findAll();
-    res.render('booking/confirm', { booking, courses, classes });
+    res.render('booking/confirm' , { booking, courses, classes });
 });
 
 
@@ -173,28 +168,33 @@ router.get('/successful/:id', async (req, res) => {
     });
     // const courses = await Course.findAll();
     // const classes = await Class.findAll();
+    var subject = 'Successful Booked Your Course '
+    var html = '<p>Hurray! You have successfully booked your course.' + booking.Course.title +' <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
+    sendEmail(req.user.email, subject, html);
+    flashMessage(res, 'success', 'successfully updated booking');
+
     res.render('booking/successful', { booking });
 });
 
-router.get('/successful/sendEmail/:id', async (req, res) => {
-    const booking = await Booking.findOne({
-        include: [
-            { model: Class },
-            { model: Course }
-        ],
-        where: {
-            id: req.params.id
-        }
-    });
+// router.get('/successful/sendEmail/:id', async (req, res) => {
+//     const booking = await Booking.findOne({
+//         include: [
+//             { model: Class },
+//             { model: Course }
+//         ],
+//         where: {
+//             id: req.params.id
+//         }
+//     });
+//     console.log(booking)
+//     // const user = await User.findOne({ where: { id: res.user.id } })
 
-    // const user = await User.findOne({ where: { id: res.user.id } })
+//     console.log(req.user.email);
+//     var subject = 'Successful Course Booking';
+//     var html = '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
+//     sendEmail(req.user.email, subject, html);
 
-    console.log(req.user.email);
-    var subject = 'Successful Course Booking';
-    var html = '<p>Successful booking. We hope you enjoy your class. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated <br>Review Link: http://localhost:5000/account/review/' + booking.id + '</p> '
-    sendEmail(req.user.email, subject, html);
-
-    res.redirect('/account');
-});
+//     res.redirect('/account');
+// });
 
 module.exports = router;
