@@ -134,7 +134,12 @@ router.post('/contactUs', (req, res) => {
         { name, email, subject, comments, fileURL }
     )
         .then((enquiry) => {
-            console.log(enquiry.toJSON());
+            // console.log(enquiry.toJSON());
+            var subject = 'RE: ' + enquiry.subject
+            var message = `<p>Hello, ${enquiry.name},<br> thank you for contacting us. Your enquiry has been received. Our team will get back to your enquiry in 1-3 business days.</p>`
+            var email = enquiry.email
+            sendEmail(email, subject, message);
+            console.log(result + ' reply sent.');
             flashMessage(res, 'success', 'Enquiry sent successfully!');
             res.redirect('/');
         })
