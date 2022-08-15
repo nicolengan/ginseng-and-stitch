@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Traffic = require('../models/Traffic');
+const Traffic = require('../models/Traffic');
 const User = require('../models/User');
 const ensureAuthenticated = require('../helpers/auth');
 const defaultPartial = require('../helpers/default')
@@ -33,6 +34,7 @@ router.use('/products', products);
 router.use('/users', users);
 router.use('/enquiries', enquiries);
 router.use('/reviews', reviews);
+router.use('/codes', codes);
 router.use('/codes', codes);
 
 

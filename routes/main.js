@@ -30,7 +30,7 @@ router.use('/booking', booking);
 router.use('/cart', cart);
 router.use('/payment', payment);
 
-router.get('/', async (req, res) => {
+router.get('/', async async (req, res) => {
     const title = 'Ginseng and Stitch';
     const month_arr = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     const curr_date = new Date();
@@ -48,6 +48,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/about', (req, res) => {
+    
     
     res.render('about');
 });

@@ -2,22 +2,22 @@
     $('[data-toggle=confirmation]').confirmation({
         rootSelector: '[data-toggle=confirmation]',
     });
-
     var myModal = document.getElementById('myModal')
     var myInput = document.getElementById('myInput')
-
     myModal.addEventListener('shown.bs.modal', function () {
         myInput.focus()
     })
 </script>
 
 <style>
-    ul.reviews{
-        display: inline-block;
-        text-align: center;
+    #review-card{
+        width:fit-content;
+        padding-left: 20px;
+        padding-right: 20px;
+        inline-size: min-content;
+        display: flex;
     }
 </style>
-
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
 <div class="container">
@@ -59,7 +59,7 @@
                         <!-- Modal -->
                         <div class="modal fade" id="staticBackdrop{{id}}" data-bs-backdrop="static" data-bs-keyboard="false"
                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
@@ -74,21 +74,16 @@
                                             <i class="fas fa-star" style="font-size:30px;color:#FFE331"></i>
                                             <h3>{{star_count}}</h3>
                                             <div class="row text-center">
-                                                <div class="col-md-4 mx-auto">
-                                                    <ul class="reviews p-0 mx-auto">
                                                         {{#each reviews}}
-                                                        <br>
-                                                            <div class="card " >
-                                                                <div class="card-body mx-auto">
-                                                                    <b><h5 class="card-title">{{"name"}}</h5></b>
+                                                            <div class="card col-md-8 mx-auto" id="review-card">
+                                                                <p class="px-5 mx-auto">
+                                                                    <h5 class=""><b>{{"name"}}</b></h5>
                                                                     <hr>
-                                                                    <p class="card-text">{{'review'}}</p>
-                                                                </div>
+                                                                    <p id="review-text" class="">{{'review'}}</p>
+                                                                </p>
                                                             </div>
-                                                        <br>
                                                         {{/each}}
-                                                    </ul>
-                                                </div>
+                                                
                                             </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"

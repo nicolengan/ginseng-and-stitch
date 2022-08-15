@@ -37,7 +37,7 @@ router.post('/replyEnquiries/:id', async (req, res) => {
     enquiry.update({ reply: reply, status: status })
         .then((result) => {
             var subject = 'RE: ' + enquiry.subject
-            var message = `<p>Hello, ${enquiry.name},<br> thank you for contacting us. ${reply}</p>`
+            var message = `<p>Hello, ${enquiry.name},<br> thank you for contacting us. Hello, ${enquiry.name},<br> thank you for contacting us. ${reply}</p>`
             var email = enquiry.email
             sendEmail(email, subject, message);
             console.log(result + ' reply sent.');

@@ -18,6 +18,16 @@ router.get('/api/list', async (req, res) => {
     })
 });
 
+// router.get('/api/list/:id', async (req, res) => {
+//     return res.json({
+//         // total: await User.count(),
+//         rows: await User.findOne({
+//             where: { id: req.params.id },
+//             raw: true
+//         })
+//     })
+// });
+
 router.get('/editUsers/:id', (req, res) => {
     User.findOne({
         where: { id: req.params.id },

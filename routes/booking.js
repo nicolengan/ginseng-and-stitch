@@ -109,11 +109,11 @@ router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
     res.render('booking/editBooking', { booking, courses, classes });
 });
 
-router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
+router.post('/editBooking/:id', ensureAuthenticated, async (req, res) => {
     let CourseId = req.body.CourseId;
     let ClassId = req.body.ClassId;
 
-    Booking.update(
+    await Booking.update(
         { CourseId, ClassId },
         { where: {  id: req.params.id} }
     )
@@ -173,5 +173,6 @@ router.get('/successful/:id', async (req, res) => {
     // const user = await User.findOne({ where: { id: res.user.id } })
     res.render('booking/successful', { booking });
 });
+
 
 module.exports = router;
