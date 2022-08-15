@@ -86,16 +86,17 @@ router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
             { model: Course }
         ]
     })
+    console.log(booking)
     const courses = await Course.findAll();
     const classes = await Class.findAll();
     res.render('booking/editBooking', { booking, courses, classes });
 });
 
-router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
+router.post('/editBooking/:id', ensureAuthenticated, async (req, res) => {
     let CourseId = req.body.CourseId;
     let ClassId = req.body.ClassId;
 
-    Booking.update(
+    await Booking.update(
         { CourseId, ClassId },
         { where: { id: req.params.id } }
     )
@@ -140,7 +141,7 @@ router.get('/checkout/', async (req, res) => {
 });
 
 router.get('/confirm/:id', async (req, res) => {
-    const booking = await Booking.findAll({
+    const booking = await Booking.findOne({
         include: [
             { model: Class },
             { model: Course }
@@ -166,10 +167,12 @@ router.get('/successful/:id', async (req, res) => {
             id: req.params.id
         }
     });
+    console.log(booking)
+    console.log(booking.id)
     // const courses = await Course.findAll();
     // const classes = await Class.findAll();
     var subject = 'Successful Booked Your Course '
-    var html = '<p>Hurray! You have successfully booked your course.' + booking.Course.title +' <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
+    var html = `<p>Hurray! You have successfully booked your course. ${booking.Course.title} <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/${req.params.id}</p> `
     sendEmail(req.user.email, subject, html);
     flashMessage(res, 'success', 'successfully updated booking');
 
