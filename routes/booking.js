@@ -84,7 +84,7 @@ router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
     )
 
         .then((classes) => {
-            console.log(classes.toJSON());
+            // console.log(classes.toJSON());
             res.redirect('/booking/listbooking/' + classes.id);
             // res.redirect('/booking/confirm/');
         })

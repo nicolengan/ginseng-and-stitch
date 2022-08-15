@@ -6,6 +6,8 @@ const Course = require('../models/Course');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const Review = require('../models/Review');
+const Code = require('../models/Code');
+const Coupon = require('../models/Coupon');
 
 const setUpDB = (drop) => {
 
@@ -19,6 +21,9 @@ const setUpDB = (drop) => {
             //user_id in cart
             Cart.belongsTo(User, {foreignKey: 'UserId', targetKey: 'id', onDelete: 'CASCADE'});
             User.hasOne(Cart, {sourceKey: 'id', foreignKey: 'UserId'});
+
+            Code.belongsTo(Coupon, {foreignKey: 'coupon', targetKey: 'coupon', onDelete: 'CASCADE'});
+            Coupon.hasMany(Code, {sourceKey: 'coupon', foreignKey: 'coupon'});
 
             // product_id in cart
             Product.hasMany(Cart, { sourceKey: 'prod_name', foreignKey: 'prod_name'});

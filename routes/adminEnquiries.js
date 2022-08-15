@@ -15,7 +15,9 @@ router.get('/', (req, res) => {
 router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Enquiry.count(),
-        rows: await Enquiry.findAll()
+        rows: await Enquiry.findAll(
+
+        )
     })
 });
 router.get('/replyEnquiries/:id', (req, res) => {
