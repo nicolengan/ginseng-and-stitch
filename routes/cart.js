@@ -45,6 +45,7 @@ router.post('/addProductToCart', ensureAuthenticated, async (req, res) => {
                 res.redirect('cart/cart');
             })
             .catch(err => console.log(err))
+        
     }
     else {
         let newQuantity = parseInt(cartItem.quantity) + parseInt(quantity)
