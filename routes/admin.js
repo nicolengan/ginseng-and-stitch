@@ -20,11 +20,10 @@ const codes = require("./adminCodes");
 
 
 router.all('/*', (req, res, next) => {
-    req.app.locals.layout = 'admin',
-    'whichPartial', function(context, options) { return "_admin" }
+    req.app.locals.layout = 'admin'
     // set your layout here
     next(); // pass control to the next handler
-});
+  });
 
 router.use('/classes', classes);
 router.use('/courses', courses);

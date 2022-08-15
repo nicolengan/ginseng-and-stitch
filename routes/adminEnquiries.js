@@ -16,7 +16,6 @@ router.get('/api/list', async (req, res) => {
     return res.json({
         total: await Enquiry.count(),
         rows: await Enquiry.findAll(
-
         )
     })
 });

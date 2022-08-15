@@ -50,7 +50,7 @@ router.post('/addCode', async (req, res) => {
             { where: { code: name } }
         )
         if (code) {
-            flashMessage(res, 'error', 'Code' + name + ' already exists.');
+            flashMessage(res, 'error', 'Code ' + name + ' already exists.');
             res.redirect('/admin/codes');
         }
         else{
@@ -59,7 +59,7 @@ router.post('/addCode', async (req, res) => {
                 code: `${name}`,
             });
             await Code.create({ code: name, coupon: coupon_id });
-            flashMessage(res, 'success', 'Code' + name + ' added successfully');
+            flashMessage(res, 'success', 'Code ' + name + ' added successfully');
             res.redirect('/admin/codes');
         }
 

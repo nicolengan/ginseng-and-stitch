@@ -7,7 +7,6 @@ const Cart = require('../models/Cart');
 const stripe = require('stripe')('sk_test_51LFiQDIDLAIUfWTrXJv037R9GA5KTPZF2W98ix0WKql786N6swgCubejuSMLMIuluPGiMUyVTgp9AIz6d17fiI0T00B189hFRp');
 const YOUR_DOMAIN = 'http://localhost:5000';
 
-
 router.get('/bookingPayment/:id', async (req, res) => {
     var x = await Booking.findOne({
         where: { id: req.params.id },
@@ -65,7 +64,7 @@ router.get('/:id', async (req, res) => {
               quantity: 1,
             }],
         mode: 'payment',
-        success_url: `${YOUR_DOMAIN}/booking/successful/${x.id}`,
+        success_url: `${YOUR_DOMAIN}`,
         cancel_url: `${YOUR_DOMAIN}`,
     });
 
