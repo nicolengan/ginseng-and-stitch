@@ -24,6 +24,11 @@ router.get('/bookings', async (req, res) => {
     res.render('account/bookings', { bookings })
 });
 
+router.get('/bookings2', async (req, res) => {
+    const bookings = await Booking.findAll({ where: { userId: req.user.id }, include: [{ model: Class }, { model: Course }] });
+    res.render('account/bookings2', { bookings })
+});
+
 router.get('/login', (req, res) => {
     res.render('account/login');
 });

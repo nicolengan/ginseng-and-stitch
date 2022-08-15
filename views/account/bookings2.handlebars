@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="/css/user/account.css">
+<div class="d-flex mt-3 justify-content-md-center">
+    <div class="col-sm-6 p-3 border rounded-1 border-2" style="background-color:white;">
+        <div class="row">
+            <div class="col-sm-4 mx-0 pe-0 mt-4">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active accordion user-select-none text-body"><i class="m-1 bi bi-person"></i>My
+                            Account</a>
+                        <div id="collapseOne" class="accordion-collapse collapse show">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link text-muted" href="/account">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-muted"
+                                        href="/account/changePassword"></i>Password</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-body active" href="/account/bookings">My bookings</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-8 mx-0  border-start">
+                <div class="card m-0 border border-0">
+
+                    <form action="/account/editUser/{{user.id}}" class="card-body w-100 mx-auto px-5" method="post">
+                        <h5 class="w-25 mx-auto border-bottom pb-2">Your bookings
+                        </h5>
+                        {{!--
+                        <hr> --}}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Booking ID</th>
+                                    <th scope="col">Course</th>
+                                    <th scope="col">Class Date</th>
+                                    <th scope="col">Class Time </th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each bookings}}
+                                <tr>
+                                    <th scope="row">{{id}}</th>
+                                    <td>{{Course.title}}</td>
+                                    <td>{{Class.date}}</td>
+                                    <td>{{Class.time}}</td>
+                                    {{!-- <td><a href="/booking/editBooking/{{CourseId}}"><i class="bi bi-pencil-square text-primary fs-5"></i></a><a class="ms-1" href="/booking/deleteBooking/{{id}}"><i class="bi bi-trash text-danger fs-5"></i></a></td> --}}
+                                    <td><a href="/booking/deleteBooking/{{id}}"><i class="bi bi-trash text-danger fs-5"></i></a><a class="ms-1" href="/booking/editBooking/{{id}}"><i class="bi bi-pencil-square text-primary fs-5"></i></a><a class="ms-1" href="/payment/bookingPayment/{{id}}"><i class="bi bi-check text-dark fs-5"></i></a></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
