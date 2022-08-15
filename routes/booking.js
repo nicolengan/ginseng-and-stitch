@@ -84,7 +84,7 @@ router.post('/addBooking/:id', ensureAuthenticated, async (req, res) => {
     )
 
         .then((classes) => {
-            // console.log(classes.toJSON());
+            console.log(classes.toJSON());
             res.redirect('/booking/listbooking/' + classes.id);
             // res.redirect('/booking/confirm/');
         })
@@ -99,7 +99,13 @@ router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
             { model: Course }
         ]
     });
-    const courses = await Course.findAll()
+    const courses = await Course.findAll(
+        {
+            where: {
+                id: booking.CourseId
+            }
+        });
+    
     const classes = await Class.findAll(
         {
             where: {
@@ -115,15 +121,15 @@ router.post('/editBooking/:id', ensureAuthenticated, async (req, res) => {
 
     await Booking.update(
         { CourseId, ClassId },
-        { where: {  id: req.params.id} }
+        { where: { id: req.params.id } }
     )
         .then((result) => {
             console.log(result[0] + ' booking updated');
             var subject = 'Successful Course Booking Update'
             var html = '<p>Successful booking update. <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/' + req.params.id + '</p> '
             sendEmail(req.user.email, subject, html);
-            flashMessage(res, 'success', 'successfully updated booking');
-            res.redirect('/booking/listBooking');
+            flashMessage(res, 'success', 'Successfully updated booking');
+            res.redirect('/account/bookings');
         })
         .catch(err => console.log(err))
 });
@@ -138,8 +144,8 @@ router.get('/deleteBooking/:id', ensureAuthenticated, async function (req, res) 
         }
         let result = await booking.destroy({ where: { id: booking.id } });
         console.log(result + ' booking deleted');
-        flashMessage(res, 'success','Booking deleted');
-        res.redirect('/account/bookings');
+        flashMessage(res, 'success', 'Successfully deleted booking');
+        res.redirect('/account');
     }
     catch (err) {
         console.log(err);
@@ -158,21 +164,5 @@ router.get('/successful/:id', async (req, res) => {
     });
     res.render('booking/successful', { booking });
 });
-
-router.get('/successful/:id', async (req, res) => {
-    const booking = await Booking.findOne({
-        include: [
-            { model: Class },
-            { model: Course }
-        ],
-        where: {
-            id: req.params.id
-        }
-    });
-
-    // const user = await User.findOne({ where: { id: res.user.id } })
-    res.render('booking/successful', { booking });
-});
-
 
 module.exports = router;

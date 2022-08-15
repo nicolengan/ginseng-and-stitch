@@ -34,7 +34,7 @@
 
 					<div class="col">
 						<p class="text-primary">Title of the course:</p>
-						<p class="text-dark">{{CourseId}}</p>
+						<p class="text-dark">{{Course.title}}</p>
 					</div>
 					<br>
 
@@ -51,12 +51,6 @@
 					<br>
 
 					<div class="col">
-						<p class="text-primary">Class ID that you will be attending:</p>
-						<p class="text-dark">{{ClassId}}</p>
-					</div>
-					<br>
-
-					<div class="col">
 						<p class="text-primary">Timing of class:</p>
 						<p class="text-dark">{{Class.time}}</p>
 					</div>
@@ -68,37 +62,9 @@
 					</div>
 					<br>
 
-					<div class="col">
-						<br>
-						<br>
-						<p>
-							<a href="/booking/deleteBooking/{{id}}" class="card-link" data-toggle="confirmation"
-								data-title="Confirm delete?">
-								<i class="far fa-trash-alt"></i>
-								Delete
-							</a>
-						</p>
-
-						<p>
-							<a href="/booking/editBooking/{{id}}" class="card-link" data-toggle="confirmation"
-								data-title="Confirm Edit?">
-								<i class="bi bi-pencil-square"></i>
-								Edit
-							</a>
-						</p>
-
-						<p>
-							<a href="/booking/editBooking/{{id}}" class="card-link" data-toggle="confirmation"
-								data-title="Confirm Edit?">
-								<i class="bi bi-pencil-square"></i>
-								Edit
-							</a>
-						</p>
-						<br>
-					</div>
 				</div>
 					<div class="submit">
-                    <a class="btn btn-primary waves-effect" type="submit"><a href="/payment/bookingPayment/{{id}}">Confirm</a></button>
+                    	<a class="btn btn-outline-info" type="submit" href="/payment/bookingPayment/{{id}}">Confirm</a>
 					</div>
 			</div>
 		</div>
