@@ -1,7 +1,10 @@
-function test(price, prod_name) {
-    console.log(price, prod_name);
+function addToCart(id, price, prod_name) {
+    console.log(id, price, prod_name);
+    let quantity = $(`#${id}-quantity`)[0].value;
+    if (quantity == '') {
+        return
+    }
     let formdata = new FormData();
-    let quantity = 1;
     formdata.append('price', price);
     formdata.append('quantity', quantity);
     formdata.append('prod_name', prod_name);
