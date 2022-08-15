@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Traffic = require('../models/Traffic');
-const Traffic = require('../models/Traffic');
 const User = require('../models/User');
 const ensureAuthenticated = require('../helpers/auth');
 const defaultPartial = require('../helpers/default')

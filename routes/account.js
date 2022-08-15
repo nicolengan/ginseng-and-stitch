@@ -67,7 +67,7 @@ router.post('/register', async function (req, res) {
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
 
-            let user = await User.create({ name: name: name, email: email: email, password: hash });
+            let user = await User.create({ name: name, email: email, password: hash });
             flashMessage(res, 'success', email + ' registered successfully');
             res.redirect('/account/login');
         }
