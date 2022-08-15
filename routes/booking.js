@@ -157,7 +157,7 @@ router.get('/confirm/:id', async (req, res) => {
 
 
 router.get('/successful/:id', async (req, res) => {
-    const booking = await Booking.findAll({
+    const booking = await Booking.findOne({
         include: [
             { model: Class },
             { model: Course }
