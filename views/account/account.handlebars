@@ -18,7 +18,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-body" href="/account/bookings">My bookings</a>
+            <a class="nav-link text-body" href="/account/bookings"><i class="m-1 bi bi-calendar"></i>My bookings</a>
           </li>
         </ul>
       </div>
@@ -44,7 +44,7 @@
             <div class="mb-3 row">
               <label for="birthday" class="col-sm-3 col-form-label">Date of birth</label>
               <div class="col-sm-9">
-                <input type="date" class="form-control date" name="birthday" value="{{user.birthday}}">
+                <input type="date" class="form-control date" id="txtDate" name="birthday" value="{{user.birthday}}">
               </div>
             </div>
             <div class="mb-3 row">
@@ -68,7 +68,7 @@
             {{!-- <a class="card-text btn btn-outline-primary" data-bs-toggle="modal"
               data-bs-target="#changePassword">Change
               password</a> --}}
-            <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
+            <button class="btn btn-primary" id="submitID"type="submit" value="Submit">Save changes</button>
           </form>
         </div>
       </div>
@@ -95,3 +95,4 @@
     $('#other').prop('checked', true)
   }
 </script>
+<script src="/js/dateRestrict.js"></script>

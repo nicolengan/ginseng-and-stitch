@@ -1,0 +1,84 @@
+<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="card card-body w-50 mx-auto mt-3">
+    <h3 class="">Add user</h3>
+    <form action="/admin/users/addUser" class="" method="post" novalidate>
+
+        <div class="mb-3 row">
+            <label for="name" class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="name" placeholder="First Name" name="name" value="{{name}}"
+                    required>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+                <input type="email" class="form-control" id="email" placeholder="Email" aria-describedby="emailHelp"
+                    name="email">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="select" class="col-sm-3 col-form-label">Choose Role</label>
+            <div class="col-sm-9">
+                <select class="form-select" id="select" aria-label="select example" name="role">
+                    <option selected>Choose Role</option>
+                    <option value="a">Admin</option>
+                    <option value="u">User</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="password" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+            <div class="col-sm-9">
+                <input type="password" class="form-control" id="confirmPassword" name="password2"
+                    placeholder="Confirm Password">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="birthday" class="col-sm-3 col-form-label">Date of birth</label>
+            <div class="col-sm-9">
+                <input type="date" class="form-control date" id="txtDate" name="birthday">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="gender" class="col-sm-3 col-form-label">Gender</label>
+
+            <div class="col-sm-9">
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="M">
+                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="F">
+                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="other" value="O">
+                    <label class="form-check-label" for="inlineRadio3">Other</label>
+                </div>
+
+            </div>
+        </div>
+        <div class="">
+            <a href="/admin/users" class="btn btn-secondary">Close</a>
+            <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
+        </div>
+    </form>
+    </div>
+    </div>
+
+    <script src="/js/dateRestrict.js"></script>

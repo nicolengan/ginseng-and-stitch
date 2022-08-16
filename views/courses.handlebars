@@ -9,8 +9,15 @@
     })
 </script>
 
-
-
+<style>
+    #review-card{
+        width:fit-content;
+        padding-left: 20px;
+        padding-right: 20px;
+        inline-size: min-content;
+        display: flex;
+    }
+</style>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></main>
 <div class="container">
@@ -52,7 +59,7 @@
                         <!-- Modal -->
                         <div class="modal fade" id="staticBackdrop{{id}}" data-bs-backdrop="static" data-bs-keyboard="false"
                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
@@ -61,40 +68,29 @@
                                         <p>{{level}}</p>
                                         <p>{{description}}</p>
                                         <p>${{price}}</p>
-                                        <section style="color: #000; background-color: #f3f2f2;">
-                                            <div class="container py-5">
-                                                <div class="row d-flex justify-content-center">
-                                                    <div class="col-md-10 col-xl-8 text-center">
-                                                        <h3 class="fw-bold mb-4">Reviews</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="row text-center">
-
-                                                    <div class="col-md-4 mb-4 mb-md-0">
-                                                        <div class="card">
-                                                            <div class="card-body py-4 mt-2">
-                                                                <h5 class="font-weight-bold"></h5>
-                                                                <ul class="list-unstyled d-flex justify-content-center">
-                                                                    <p>{{star_count}}</p>
-
-                                                                    {{#each reviews}}
-                                                                    <p class="mb-2">
-                                                                        <p>{{"name"}}</p>
-                                                                        <i
-                                                                            class="fas fa-quote-left pe-2"></i>{{'review'}}
-                                                                    </p>
-                                                                    {{/each}}
+                                            <div class="row d-flex justify-content-center">
+                                                <h3 class="fw-bold mb-4">Reviews from our Students</h3>
+                                            </div>
+                                            <i class="fas fa-star" style="font-size:30px;color:#FFE331"></i>
+                                            <h3>{{star_count}}</h3>
+                                            <div class="row text-center">
+                                                        {{#each reviews}}
+                                                            <div class="card col-md-8 mx-auto" id="review-card">
+                                                                <p class="px-5 mx-auto">
+                                                                    <h5 class=""><b>{{"name"}}</b></h5>
+                                                                    <hr>
+                                                                    <p id="review-text" class="">{{'review'}}</p>
+                                                                </p>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                        {{/each}}
+                                                
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <div class="p-2"><a class="btn btn-primary"
-                                                        href="/booking/addBooking/{{id}}">Book Class</a></div>
-                                            </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <div class="p-2"><a class="btn btn-primary"
+                                                    href="/booking/addBooking/{{id}}">Book Class</a></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -5,8 +5,8 @@
     <div class="h2 mt-3">Enquiries</div>
     <hr class="border border-secondary opacity-50">
     <table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
-        data-show-columns="true" data-toolbar="#toolbar" data-show-custom-view="true"
-        data-custom-view="customViewFormatter" data-show-custom-view-button="true" data-id-field="id"
+        data-toolbar="#toolbar" data-show-custom-view="true"
+        data-custom-view="customViewFormatter"data-id-field="id"
         data-url="/admin/enquiries/api/list">
         <thead>
             <tr>
@@ -15,8 +15,6 @@
                 <th data-field="email">email</th>
                 <th data-field="subject">subject</th>
                 <th data-field="comments">comments</th>
-                <th data-field="icons" data-formatter="generate_actions" data-events="window.operateEvents" id="action">
-                    actions</th>
             </tr>
         </thead>
     </table>
@@ -78,22 +76,4 @@
             return `<div class="row mx-0">${view}</div>`
         }
         var $table = $('#table')
-        $table.bootstrapTable('filterBy', {status: 0).
-        window.operateEvents = {
-        }
     </script>
-
-    {{!-- <button onclick="sorter()">
-  Sort by name
-</button>
-
-<script>
-
-  function sorter() {
-    console.log("here")
-    $("#table").bootstrapTable("refreshOptions", {
-    sortName: "name",
-    sortOrder: "desc",
-  });
-  }
-</script> --}}

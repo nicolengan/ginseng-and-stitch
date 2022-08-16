@@ -47,94 +47,24 @@
     <div class="h2 mt-3">Users</div>
     <hr class="border border-secondary opacity-50">
     <div id="toolbar">
-      <a id="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addUser">Add User</a>
+      <a id="button" class="btn btn-secondary" href="/admin/users/addUser">Add User</a>
     </div>
     <div class="table-responsive">
       <table id="table" data-show-refresh="true" data-auto-refresh="true" data-toggle="table" data-search="true"
-        data-toolbar="#toolbar" {{!-- data-show-custom-view="true"
-        data-custom-view="customViewFormatter" data-show-custom-view-button="true" --}}data-id-field="id"
-        data-url="/admin/users/api/list">
+        data-toolbar="#toolbar" {{!-- data-show-custom-view="true" data-custom-view="customViewFormatter"
+        data-show-custom-view-button="true" --}}data-id-field="id" data-url="/admin/users/api/list">
 
         <thead>
           <tr>
-            <th data-field="id" data-searchable="false">id</th>
+            <th data-field="id" data-searchable="false" data-searchable="false">id</th>
             <th data-field="name">name</th>
             <th data-field="email">email</th>
-            <th data-field="role" data-searchable="false">role</th>
+            <th data-field="role" data-searchable="false" data-searchable="false">role</th>
             <th data-field="icons" data-formatter="generate_actions" data-events="window.operateEvents" id="action">
               actions</th>
           </tr>
         </thead>
       </table>
-    </div>
-  </div>
-
-  <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="adduserLabel">Add user</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-          <form action="/admin/users/addUser" method="post">
-            <div class="mb-3">
-              <div class="row">
-                <div class="col">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingFirstName" placeholder="First Name" name="name"
-                      value="{{name}}" required>
-                    <label for="floatingFirstName">First Name</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <div class="form-floating">
-                <input type="email" class="form-control" id="floatingEmail" placeholder="Email"
-                  aria-describedby="emailHelp" name="email" value="{{email}}">
-                <label for="floatingEmail">Email</label>
-              </div>
-            </div>
-            <div class="mb-3">
-            <div class="form-floating">
-              <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="role">
-                <option selected>Choose Role</option>
-                <option value="a">Admin</option>
-                <option value="u">User</option>
-              </select>
-              <label for="floatingSelect">Choose Role</label>
-            </div>
-            </div>
-
-            <div class="mb-3">
-              <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" name="password"
-                  placeholder="Password">
-                <label for="floatingPassword">Password</label>
-              </div>
-            </div>
-            <div class="mb-3">
-              <div class="form-floating">
-                <input type="password" class="form-control" id="floatingConfirmPassword" name="password2"
-                  placeholder="Confirm Password">
-                <label for="floatingConfirmPassword">Confirm Password</label>
-              </div>
-            </div>
-
-
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button class="btn btn-primary" type="submit" value="Submit">Save changes</button>
-        </div>
-        </form>
-      </div>
-
     </div>
   </div>
 
@@ -175,9 +105,8 @@
         if (row.role == 'u') {
           window.location.href = `/admin/users/deleteUser/${row.id}`;
         }
-      },
-      'click .edit': function(e, value, row, index){
-
       }
-      }
+    }
   </script>
+
+  <script src="/js/dateRestrict.js"></script>

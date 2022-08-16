@@ -115,11 +115,11 @@ router.get('/editBooking/:id', ensureAuthenticated, async (req, res) => {
     res.render('booking/editBooking', { booking, courses, classes });
 });
 
-router.post('/editBooking/:id', ensureAuthenticated, (req, res) => {
+router.post('/editBooking/:id', ensureAuthenticated, async (req, res) => {
     let CourseId = req.body.CourseId;
     let ClassId = req.body.ClassId;
 
-    Booking.update(
+    await Booking.update(
         { CourseId, ClassId },
         { where: { id: req.params.id } }
     )

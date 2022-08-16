@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const flashMessage = require('../helpers/messenger');
+const fs = require('fs');
+const validator = require("email-validator");
+
+
+// models
 const Classes = require('../models/Class');
 const Courses = require('../models/Course');
 const Review = require('../models/Review');
@@ -8,9 +12,13 @@ const Users = require('../models/User');
 const Product = require('../models/Product');
 const Enquiry = require('../models/Enquiry');
 const Traffic = require('../models/Traffic');
-const fs = require('fs');
+
+
+// helpers
 const upload = require('../helpers/fileUpload');
-const validator = require("email-validator");
+const sendEmail = require('../helpers/sendEmail');
+const flashMessage = require('../helpers/messenger');
+
 // routes
 const booking = require("./booking");
 const account = require("./account");
@@ -40,6 +48,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/about', (req, res) => {
+    
     
     res.render('about');
 });
@@ -139,7 +148,7 @@ router.post('/contactUs', (req, res) => {
             var message = `<p>Hello, ${enquiry.name},<br> thank you for contacting us. Your enquiry has been received. Our team will get back to your enquiry in 1-3 business days.</p>`
             var email = enquiry.email
             sendEmail(email, subject, message);
-            console.log(result + ' reply sent.');
+            console.log('Reply sent to ' + enquiry.email);
             flashMessage(res, 'success', 'Enquiry sent successfully!');
             res.redirect('/');
         })
