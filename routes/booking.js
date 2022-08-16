@@ -162,7 +162,17 @@ router.get('/successful/:id', async (req, res) => {
             id: req.params.id
         }
     });
+    console.log(booking)
+    console.log(booking.id)
+    // const courses = await Course.findAll();
+    // const classes = await Class.findAll();
+    var subject = 'Successful Booked Your Course '
+    var html = `<p>Hurray! You have successfully booked your course. ${booking.Course.title} <br> Please remember to drop us a review after you have completed your class. <br> Your feedback is much appreciated. <br> Review Link: http://localhost:5000/account/review/${req.params.id}</p> `
+    sendEmail(req.user.email, subject, html);
+    flashMessage(res, 'success', 'successfully updated booking');
+
     res.render('booking/successful', { booking });
 });
+
 
 module.exports = router;
